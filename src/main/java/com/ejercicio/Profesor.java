@@ -8,6 +8,10 @@ public class Profesor extends Persona {
         TipoContrato = tipoContrato;
     }
 
+    public Profesor(){
+
+    }
+
     public Profesor(String tipoContrato) {
         TipoContrato = tipoContrato;
     }
