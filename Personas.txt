@@ -2,41 +2,16 @@ PERSONAS
 
 
 ID=0.0
-Nombre='sdfgfdguat'
-Apellidos='lohdhfdr'
+Nombre='Camilo'
+Apellidos='Londoño'
 Email='suagffgt@gmail.com'
 
 ID=0.0
-Nombre='sufgdat'
-Apellidos='lo344r'
+Nombre=Ken
+Apellidos=Thompson
 Email='1212@gmail.com'
 
 ID=0.0
-Nombre='sjferterat'
-Apellidos='lweovfdfser'
-Email='sfghguat@gmail.com'
-
-ID=0.0
-Nombre='asadsuat'
-Apellidos='gdflodfgvher'
-Email='ertr@gmail.com'
-
-ID=0.0
-Nombre='suat'
-Apellidos='lover'
-Email='suat@gmail.com'
-
-ID=0.0
-Nombre='suat'
-Apellidos='lover'
-Email='suat@gmail.com'
-
-ID=0.0
-Nombre=suat
-Apellidos=lover
-Email=suat@gmail.com
-
-ID=0.0
-Nombre=suat
-Apellidos=lover
-Email=suat@gmail.com
+Nombre=Juan
+Apellidos=Burgos
+Email=sfghguat@gmail.com

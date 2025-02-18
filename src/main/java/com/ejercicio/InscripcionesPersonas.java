@@ -86,11 +86,13 @@ public class InscripcionesPersonas {
         String nuevoNombre = null;
         String nuevosApellidos = null;
         String nuevoEmail = null;
-        Persona nuevaPersona = new Persona();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
+            Persona nuevaPersona = new Persona();
             String linea;
             while ((linea = reader.readLine()) != null) {
                 if (linea.contains("ID=")){
+                    nuevaPersona = new Persona();
                     String nuevoID = linea.substring(3);
                     nuevoIDDouble = Double.parseDouble(nuevoID);
                     nuevaPersona.setID(nuevoIDDouble);
