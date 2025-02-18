@@ -52,8 +52,8 @@ public class Persona {
     public String toString() {
         return
                 "ID=" + ID +
-                "\nNombre='" + Nombre + '\'' +
-                "\nApellidos='" + Apellidos + '\'' +
-                "\nEmail='" + Email + '\'';
+                "\nNombre=" + Nombre +
+                "\nApellidos=" + Apellidos +
+                "\nEmail=" + Email;
     }
 }

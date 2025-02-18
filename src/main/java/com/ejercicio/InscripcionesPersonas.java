@@ -1,5 +1,6 @@
 package com.ejercicio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -10,7 +11,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class InscripcionesPersonas {
-    List<Persona> listado;
+    private List<Persona> listado = new ArrayList<>();
+
 
     public InscripcionesPersonas(List<Persona> listado) {
         this.listado = listado;
@@ -78,16 +80,37 @@ public class InscripcionesPersonas {
         }
     }
 
-    public void cargarDatos(){
+    public Void cargarDatos(){
         String nombreArchivo = "Personas.txt";
+        Double nuevoIDDouble = null;
+        String nuevoNombre = null;
+        String nuevosApellidos = null;
+        String nuevoEmail = null;
+        Persona nuevaPersona = new Persona();
         try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
-                System.out.println(linea);
+                if (linea.contains("ID=")){
+                    String nuevoID = linea.substring(3);
+                    nuevoIDDouble = Double.parseDouble(nuevoID);
+                    nuevaPersona.setID(nuevoIDDouble);
+                } else if (linea.contains("Nombre=")) {
+                    nuevoNombre = linea.substring(7);
+                    nuevaPersona.setNombre(nuevoNombre);
+                }else if (linea.contains("Apellidos=")) {
+                    nuevosApellidos = linea.substring(10);
+                    nuevaPersona.setApellidos(nuevosApellidos);
+                }else if (linea.contains("Email=")) {
+                    nuevoEmail = linea.substring(6);
+                    nuevaPersona.setEmail(nuevoEmail);
+                    this.listado.add(nuevaPersona);
+                }
             }
         } catch (IOException e) {
             System.err.println("Ocurrió un error al leer el archivo: " + e.getMessage());
         }
+        return null;
     }
+
 
 }
