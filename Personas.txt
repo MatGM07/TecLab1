@@ -2,16 +2,26 @@ PERSONAS
 
 
 ID=0.0
-Nombre='Camilo'
-Apellidos='Londoño'
-Email='suagffgt@gmail.com'
+Nombre=Camilo
+Apellidos=Londoño
+Email=suagffgt@gmail.com
 
 ID=0.0
 Nombre=Ken
 Apellidos=Thompson
-Email='1212@gmail.com'
+Email=1212@gmail.com
 
 ID=0.0
 Nombre=Juan
 Apellidos=Burgos
 Email=sfghguat@gmail.com
+
+ID=0.0
+Nombre=Richard
+Apellidos=Stallman
+Email=sust@gmail.com
+
+ID=0.0
+Nombre=Richard
+Apellidos=Stallman
+Email=sust@gmail.com
