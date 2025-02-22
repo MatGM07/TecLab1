@@ -7,10 +7,10 @@ import java.util.List;
 public class CursosProfesores {
     private List<CursoProfesor> listado = new ArrayList<>();
 
-
     public CursosProfesores(List<CursoProfesor> listado) {
         this.listado = listado;
     }
+
     public CursosProfesores(){
     }
 

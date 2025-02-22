@@ -80,38 +80,36 @@ public class InscripcionesPersonas {
         }
     }
 
-    public Void cargarDatos(){
-        String nombreArchivo = "Personas.txt";
-        Double nuevoIDDouble = null;
-        String nuevoNombre = null;
-        String nuevosApellidos = null;
-        String nuevoEmail = null;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
-            Persona nuevaPersona = new Persona();
-            String linea;
-            while ((linea = reader.readLine()) != null) {
-                if (linea.contains("ID=")){
-                    nuevaPersona = new Persona();
-                    String nuevoID = linea.substring(3);
-                    nuevoIDDouble = Double.parseDouble(nuevoID);
-                    nuevaPersona.setID(nuevoIDDouble);
-                } else if (linea.contains("Nombre=")) {
-                    nuevoNombre = linea.substring(7);
-                    nuevaPersona.setNombre(nuevoNombre);
-                }else if (linea.contains("Apellidos=")) {
-                    nuevosApellidos = linea.substring(10);
-                    nuevaPersona.setApellidos(nuevosApellidos);
-                }else if (linea.contains("Email=")) {
-                    nuevoEmail = linea.substring(6);
-                    nuevaPersona.setEmail(nuevoEmail);
-                    this.listado.add(nuevaPersona);
-                }
-            }
+    public void cargarDatos() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Personas.txt"))) {
+            procesarArchivo(reader);
         } catch (IOException e) {
-            System.err.println("Ocurrió un error al leer el archivo: " + e.getMessage());
+            System.err.println("Error al leer el archivo: " + e.getMessage());
         }
-        return null;
+    }
+
+    private void procesarArchivo(BufferedReader reader) throws IOException {
+        String linea;
+        Persona personaActual = null;
+
+        while ((linea = reader.readLine()) != null) {
+            if (linea.startsWith("ID=")) {
+                personaActual = new Persona();
+                personaActual.setID(Double.parseDouble(linea.substring(3)));
+            } else if (personaActual != null) {
+                asignarDatoPersona(personaActual, linea);
+            }
+        }
+    }
+    private void asignarDatoPersona(Persona persona, String linea) {
+        if (linea.startsWith("Nombre=")) {
+            persona.setNombre(linea.substring(7));
+        } else if (linea.startsWith("Apellidos=")) {
+            persona.setApellidos(linea.substring(10));
+        } else if (linea.startsWith("Email=")) {
+            persona.setEmail(linea.substring(6));
+            listado.add(persona);
+        }
     }
 
 
