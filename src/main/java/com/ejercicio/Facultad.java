@@ -41,10 +41,9 @@ public class Facultad {
 
     @Override
     public String toString() {
-        return "Facultad{" +
-                "ID=" + ID +
-                ", nombre='" + nombre + '\'' +
-                ", decano=" + decano +
-                '}';
+        return
+                "\nID=" + ID +
+                "\nnombre='" + nombre +
+                "\ndecano=" + decano.toString();
     }
 }

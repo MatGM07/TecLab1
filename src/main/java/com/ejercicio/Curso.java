@@ -40,10 +40,9 @@ public class Curso{
 
     @Override
     public String toString() {
-        return "Curso{" +
+        return
                 "ID=" + ID +
-                ", activo=" + activo +
-                ", programa=" + programa +
-                '}';
+                "\nactivo=" + activo +
+                "\nprograma{\n" + programa.toString() + "\n}" ;
     }
 }

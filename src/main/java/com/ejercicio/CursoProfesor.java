@@ -51,11 +51,10 @@ public class CursoProfesor {
 
     @Override
     public String toString() {
-        return "CursoProfesor{" +
-                "profesor=" + profesor +
-                ", año=" + año +
-                ", semestre=" + semestre +
-                ", curso=" + curso +
-                '}';
+        return
+                "\nAño=" + año +
+                "\nSemestre=" + semestre +
+                "\nProfesor{\n" + profesor.toString() + "\n}" +
+                "\nCurso{\n" + curso.toString() + "\n}";
     }
 }

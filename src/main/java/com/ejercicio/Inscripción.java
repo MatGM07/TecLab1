@@ -50,11 +50,10 @@ public class Inscripción {
 
     @Override
     public String toString() {
-        return "Inscripción{" +
-                "curso=" + curso +
-                ", año=" + año +
-                ", semestre=" + semestre +
-                ", estudiante=" + estudiante +
-                '}';
+        return
+                "año=" + año +
+                "\nsemestre=" + semestre +
+                "\ncurso{\n" + curso.toString() + "\n}"+
+                "\nestudiante{\n" + estudiante.toString() + "\n}" ;
     }
 }

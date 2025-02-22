@@ -61,12 +61,11 @@ public class Programa {
 
     @Override
     public String toString() {
-        return "Programa{" +
+        return
                 "ID=" + ID +
-                ", nombre='" + nombre + '\'' +
-                ", duracion=" + duracion +
-                ", registro='" + registro + '\'' +
-                ", facultad=" + facultad +
-                '}';
+                "\nnombre=" + nombre +
+                "\nduracion=" + duracion +
+                "\nregistro=" + registro +
+                "\nfacultad{\n" + facultad.toString() + "\n}";
     }
 }
