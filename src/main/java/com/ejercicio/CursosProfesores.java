@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CursosProfesores {
+public class CursosProfesores implements Servicios {
     private List<CursoProfesor> listado = new ArrayList<>();
 
     public CursosProfesores(List<CursoProfesor> listado) {
@@ -121,6 +121,26 @@ public class CursosProfesores {
         return resultado;
     }
 
+    @Override
+    public Integer cantidadActual(){
+        Integer cantidadCursosProfesores = listado.size();
+        return cantidadCursosProfesores;
+    }
+
+    @Override
+    public String imprimirPosicion(Integer posicion){
+        String contenidoPosicion = listado.get(posicion).toString();
+        System.out.println(contenidoPosicion);
+        return  contenidoPosicion;
+    }
+
+    @Override
+    public List<String> imprimirListado(){
+        List<String> listadoString = toStringList();
+        System.out.println(listadoString);
+        return  listadoString;
+    }
+    
 
 
 }
