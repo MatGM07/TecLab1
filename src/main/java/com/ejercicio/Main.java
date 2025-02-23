@@ -1,12 +1,12 @@
 package com.ejercicio;
 
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        /*
+/*
 
         Persona d = new Persona();
         d.setNombre("sqs");
@@ -21,7 +21,10 @@ public class Main {
 
         Programa p = new Programa();
         p.setFacultad(f);
-        Date fecha = new Date(1995,3,12);
+        String fechaStr = "2024-02-23";
+
+        // Convertir a java.sql.Date
+        java.sql.Date fecha = Date.valueOf(fechaStr);
         p.setRegistro(fecha);
         p.setDuracion(230.4);
         p.setNombre("eofddkeokf");
@@ -48,11 +51,13 @@ public class Main {
         CursosProfesores cursosProfesores = new CursosProfesores();
 
         cursosProfesores.guardarInformacion(cursoProfesor);
-
 */
+
         CursosProfesores cursosProfesores = new CursosProfesores();
         cursosProfesores.cargarDatos();
-        List<String> listado = cursosProfesores.toStringList();
-        System.out.println(listado);
+
+        System.out.println(cursosProfesores.cantidadActual());
+
+
     }
 }
