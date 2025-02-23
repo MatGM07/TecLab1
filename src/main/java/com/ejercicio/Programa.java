@@ -1,13 +1,15 @@
 package com.ejercicio;
 
+import java.util.Date;
+
 public class Programa {
     Double ID;
     String nombre;
     Double duracion;
-    String registro;
+    Date registro;
     Facultad facultad;
 
-    public Programa(Double ID, String nombre, Double duracion, String registro, Facultad facultad) {
+    public Programa(Double ID, String nombre, Double duracion, Date registro, Facultad facultad) {
         this.ID = ID;
         this.nombre = nombre;
         this.duracion = duracion;
@@ -43,11 +45,11 @@ public class Programa {
         this.duracion = duracion;
     }
 
-    public String getRegistro() {
+    public Date getRegistro() {
         return registro;
     }
 
-    public void setRegistro(String registro) {
+    public void setRegistro(Date registro) {
         this.registro = registro;
     }
 
@@ -62,8 +64,8 @@ public class Programa {
     @Override
     public String toString() {
         return
-                "ID=" + ID +
-                "\nnombre=" + nombre +
+                "IDPrograma=" + ID +
+                "\nnombrePrograma=" + nombre +
                 "\nduracion=" + duracion +
                 "\nregistro=" + registro +
                 "\nfacultad{\n" + facultad.toString() + "\n}";
