@@ -92,7 +92,7 @@ public class CursosProfesores implements Servicios {
         for (Map.Entry<String, Consumer<String>> entry : procesadores.entrySet()) {
             if (linea.startsWith(entry.getKey())) {
                 entry.getValue().accept(linea.substring(entry.getKey().length()));
-                return; // Evita seguir iterando innecesariamente
+                return; 
             }
         }
     }
