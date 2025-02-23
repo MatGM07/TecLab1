@@ -4,11 +4,13 @@ public class Curso{
     Integer ID;
     Boolean activo;
     Programa programa;
+    String nombre;
 
-    public Curso(Integer ID, Boolean activo, Programa programa) {
+    public Curso(Integer ID, Boolean activo, Programa programa, String nombre) {
         this.ID = ID;
         this.activo = activo;
         this.programa = programa;
+        this.nombre = nombre;
     }
 
     public Curso(){
@@ -38,10 +40,19 @@ public class Curso{
         this.programa = programa;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     @Override
     public String toString() {
         return
-                "ID=" + ID +
+                "IDCurso=" + ID +
+                "\nnombreCurso=" + nombre +
                 "\nactivo=" + activo +
                 "\nprograma{\n" + programa.toString() + "\n}" ;
     }
