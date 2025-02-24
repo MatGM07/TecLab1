@@ -92,7 +92,7 @@ public class CursosProfesores implements Servicios {
         for (Map.Entry<String, Consumer<String>> entry : procesadores.entrySet()) {
             if (linea.startsWith(entry.getKey())) {
                 entry.getValue().accept(linea.substring(entry.getKey().length()));
-                return; 
+                return;
             }
         }
     }
@@ -112,9 +112,9 @@ public class CursosProfesores implements Servicios {
     public void guardarInformacion(CursoProfesor cursoProfesor){
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("CursosProfesores.txt", true));
-            writer.write("\n");
+            writer.write("---------------------------\n");
             writer.write(cursoProfesor.toString());
-            writer.write("\n");
+            writer.write("\n---------------------------\n");
             writer.close();
             System.out.println("Datos guardados exitosamente.");
         } catch (IOException e) {

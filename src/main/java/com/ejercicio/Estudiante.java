@@ -58,10 +58,12 @@ public class Estudiante extends Persona {
 
     @Override
     public String toString() {
-        return  super.toString()+
-                "\nCodigo=" + Codigo +
-                "\nactivo=" + activo +
-                "\npromedio=" + promedio+
-                "\nprograma{\n" + programa.toString() + "\n}"  ;
+        return  "IDEstudiante=" + this.getID()+
+                "\nnombreEstudiante=" + this.getNombre() +
+                "\napellidosEstudiante=" + this.getApellidos() +
+                "\nemailEstudiante=" + this.getEmail() +
+                "\nCodigoEstudiante=" + Codigo +
+                "\nactivoEstudiante=" + activo +
+                "\npromedioEstudiante=" + promedio;
     }
 }

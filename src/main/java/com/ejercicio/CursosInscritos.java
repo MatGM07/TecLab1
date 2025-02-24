@@ -66,7 +66,7 @@ public class CursosInscritos {
     }
 
     public void cargarDatos() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("CursosInscritos.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Inscripciones.txt"))) {
             procesarArchivo(reader);
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());
@@ -97,8 +97,8 @@ public class CursosInscritos {
     ) {
         Map<String, Consumer<String>> procesadores = new HashMap<>();
 
-        procesadores.put("Año=", valor -> inscripcionActual.setAño(Integer.parseInt(valor)));
-        procesadores.put("Semestre=", valor -> inscripcionActual.setSemestre(Integer.parseInt(valor)));
+        procesadores.put("año=", valor -> inscripcionActual.setAño(Integer.parseInt(valor)));
+        procesadores.put("semestre=", valor -> inscripcionActual.setSemestre(Integer.parseInt(valor)));
         procesadores.put("IDEstudiante=", valor -> estudianteActual.setID(Double.parseDouble(valor)));
         procesadores.put("nombreEstudiante=", estudianteActual::setNombre);
         procesadores.put("apellidosEstudiante=", estudianteActual::setApellidos);
@@ -113,10 +113,10 @@ public class CursosInscritos {
         procesadores.put("nombrePrograma=", programaActual::setNombre);
         procesadores.put("IDFacultad=", valor -> facultadActual.setID(Double.parseDouble(valor)));
         procesadores.put("nombreFacultad=", facultadActual::setNombre);
-        procesadores.put("IDDecano=", valor -> decanoActual.setID(Double.parseDouble(valor)));
-        procesadores.put("NombreDecano=", decanoActual::setNombre);
-        procesadores.put("ApellidosDecano=", decanoActual::setApellidos);
-        procesadores.put("EmailDecano=", valor -> {
+        procesadores.put("ID=", valor -> decanoActual.setID(Double.parseDouble(valor)));
+        procesadores.put("Nombre=", decanoActual::setNombre);
+        procesadores.put("Apellidos=", decanoActual::setApellidos);
+        procesadores.put("Email=", valor -> {
             decanoActual.setEmail(valor);
             asignarRelaciones(inscripcionActual, estudianteActual, cursoActual, programaActual, facultadActual, decanoActual);
         });
@@ -140,6 +140,7 @@ public class CursosInscritos {
         facultadActual.setDecano(decanoActual);
         programaActual.setFacultad(facultadActual);
         cursoActual.setPrograma(programaActual);
+        estudianteActual.setPrograma(programaActual);
         inscripcionActual.setEstudiante(estudianteActual);
         inscripcionActual.setCurso(cursoActual);
         listado.add(inscripcionActual);
@@ -148,11 +149,20 @@ public class CursosInscritos {
 
     public void guardarInformacion(Inscripción inscripcion) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Inscripciones.txt", true))) {
-            writer.write(inscripcion.toString() + "\n");
+            writer.write("---------------------------\n");
+            writer.write(inscripcion.toString() + "\n---------------------------\n");
             System.out.println("Datos guardados exitosamente.");
         } catch (IOException e) {
             System.out.println("Ocurrió un error al guardar el archivo: " + e.getMessage());
         }
+    }
+
+    public List<String> toStringList() {
+        List<String> resultado = new ArrayList<>();
+        for (Inscripción i : listado) {
+            resultado.add(i.toString());
+        }
+        return resultado;
     }
 }
 

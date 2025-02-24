@@ -53,7 +53,7 @@ public class Inscripción {
         return
                 "año=" + año +
                 "\nsemestre=" + semestre +
-                "\ncurso{\n" + curso.toString() + "\n}"+
-                "\nestudiante{\n" + estudiante.toString() + "\n}" ;
+                "\nestudiante{\n" + estudiante.toString() + "\n}" +
+                "\ncurso{\n" + curso.toString() + "\n}";
     }
 }
