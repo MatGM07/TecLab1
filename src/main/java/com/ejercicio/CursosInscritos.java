@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.HashMap;
 
-public class CursosInscritos {
+public class CursosInscritos implements Servicios{
     private List<Inscripción> listado = new ArrayList<>();
 
     public CursosInscritos(List<Inscripción> listado) {
@@ -163,6 +163,26 @@ public class CursosInscritos {
             resultado.add(i.toString());
         }
         return resultado;
+    }
+
+    @Override
+    public Integer cantidadActual(){
+        Integer cantidadCursosInscritos = listado.size();
+        return cantidadCursosInscritos;
+    }
+
+    @Override
+    public String imprimirPosicion(Integer posicion){
+        String contenidoPosicion = listado.get(posicion).toString();
+        System.out.println(contenidoPosicion);
+        return  contenidoPosicion;
+    }
+
+    @Override
+    public List<String> imprimirListado(){
+        List<String> listadoString = toStringList();
+        System.out.println(listadoString);
+        return  listadoString;
     }
 }
 
