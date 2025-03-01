@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.HashMap;
 
-public class CursosInscritos {
+    public class CursosInscritos implements Servicios{
     private List<Inscripción> listado = new ArrayList<>();
 
     public CursosInscritos(List<Inscripción> listado) {
@@ -155,5 +155,36 @@ public class CursosInscritos {
         }
     }
 }
+
+
+
+    @Override
+    public Integer cantidadActual() {
+        return listado.size();
+    }
+
+    @Override
+    public String imprimirPosicion(Integer posicion) {
+        if (posicion >= 0 && posicion < listado.size()) {
+            String contenidoPosicion = listado.get(posicion).toString();
+            System.out.println(contenidoPosicion);
+            return contenidoPosicion;
+        } else {
+            System.out.println("Posición fuera de rango.");
+            return "Posición fuera de rango.";
+        }
+    }
+
+    @Override
+    public List<String> imprimirListado() {
+        List<String> listadoString = listado.stream()
+                .map(Inscripcion::toString)
+                .collect(Collectors.toList());
+        System.out.println(listadoString);
+        return listadoString;
+    }
+
+
+
 
 
