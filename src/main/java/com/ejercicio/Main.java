@@ -11,14 +11,12 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         try {
-            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/universidad", "root", "clave");
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/universidad", "root", "zzz");
 
-            FacultadService facultadService = new FacultadService(conexion);
             ProgramaService programaService = new ProgramaService(conexion);
+            EstudianteService estudianteService = new EstudianteService(conexion);
 
-
-            programaService.eliminarPrograma(2);
-
+            estudianteService.eliminarEstudiante(2);
 
         } catch (SQLException e) {
             e.printStackTrace();

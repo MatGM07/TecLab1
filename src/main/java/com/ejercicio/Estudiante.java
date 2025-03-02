@@ -14,12 +14,14 @@ public class Estudiante extends Persona {
         this.promedio = promedio;
     }
 
-    public Estudiante(Double codigo, Programa programa, Boolean activo, Double promedio) {
-        codigo = codigo;
-        this.programa = programa;
+    public Estudiante(Integer ID, Double codigo, Integer programa_id, Boolean activo, Double promedio) {
+        this.ID = ID;
+        this.codigo = codigo;
+        this.programa = new Programa(programa_id,null,null,null,-1);
         this.activo = activo;
         this.promedio = promedio;
     }
+
 
     public Estudiante(){
     }

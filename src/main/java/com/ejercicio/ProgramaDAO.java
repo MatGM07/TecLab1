@@ -8,4 +8,5 @@ public interface ProgramaDAO {
     List<Programa> obtenerTodos();
     void actualizar(Programa Programa);
     void eliminar(int id);
+
 }
