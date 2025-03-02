@@ -75,7 +75,7 @@ public class CursosProfesores implements Servicios {
         procesadores.put("nombrePrograma=", programaActual::setNombre);
         procesadores.put("duracion=", valor -> programaActual.setDuracion(Double.parseDouble(valor)));
         procesadores.put("registro=", valor -> programaActual.setRegistro(Date.valueOf(valor)));
-        procesadores.put("IDFacultad=", valor -> facultadActual.setID(Double.parseDouble(valor)));
+        procesadores.put("IDFacultad=", valor -> facultadActual.setID(Integer.parseInt(valor)));
         procesadores.put("nombreFacultad=", facultadActual::setNombre);
         procesadores.put("ID=", valor -> decanoActual.setID(Integer.parseInt(valor)));
         procesadores.put("Nombre=", decanoActual::setNombre);

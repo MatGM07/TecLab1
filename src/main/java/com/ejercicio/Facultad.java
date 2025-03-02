@@ -1,25 +1,31 @@
 package com.ejercicio;
 
 public class Facultad {
-    Double ID;
+    Integer ID;
     String nombre;
     Persona decano;
 
-    public Facultad(Double ID, String nombre, Persona decano) {
+    public Facultad(Integer ID, String nombre, Persona decano) {
         this.ID = ID;
         this.nombre = nombre;
         this.decano = decano;
+    }
+
+    public Facultad(Integer ID, String nombre, Integer decanoId) {
+        this.ID = ID;
+        this.nombre = nombre;
+        this.decano = new Persona(decanoId,null,null,null); // Se asignará después en el servicio
     }
 
     public Facultad(){
 
     }
 
-    public Double getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(Double ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
