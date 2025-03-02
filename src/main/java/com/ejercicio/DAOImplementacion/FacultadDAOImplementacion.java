@@ -1,10 +1,13 @@
-package com.ejercicio;
+package com.ejercicio.DAOImplementacion;
+
+import com.ejercicio.DAO.FacultadDAO;
+import com.ejercicio.modelos.Facultad;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FacultadDAOImplementacion implements FacultadDAO{
+public class FacultadDAOImplementacion implements FacultadDAO {
     private Connection conexion;
 
     public FacultadDAOImplementacion(Connection conexion) {

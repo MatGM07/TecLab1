@@ -1,4 +1,7 @@
-package com.ejercicio;
+package com.ejercicio.DAOImplementacion;
+import com.ejercicio.DAO.EstudianteDAO;
+import com.ejercicio.modelos.Estudiante;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

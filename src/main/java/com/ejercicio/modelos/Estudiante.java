@@ -1,4 +1,4 @@
-package com.ejercicio;
+package com.ejercicio.modelos;
 
 public class Estudiante extends Persona {
     Double codigo;

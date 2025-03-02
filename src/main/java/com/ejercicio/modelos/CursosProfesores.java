@@ -1,4 +1,6 @@
-package com.ejercicio;
+package com.ejercicio.modelos;
+
+import com.ejercicio.DAOServicios.Servicios;
 
 import java.io.*;
 import java.sql.Date;

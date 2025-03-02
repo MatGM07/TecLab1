@@ -1,4 +1,4 @@
-package com.ejercicio;
+package com.ejercicio.DAOServicios;
 
 import java.util.List;
 

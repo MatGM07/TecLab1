@@ -1,4 +1,6 @@
-package com.ejercicio;
+package com.ejercicio.DAO;
+
+import com.ejercicio.modelos.Facultad;
 
 import java.util.List;
 

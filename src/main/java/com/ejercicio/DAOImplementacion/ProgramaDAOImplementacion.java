@@ -1,10 +1,13 @@
-package com.ejercicio;
+package com.ejercicio.DAOImplementacion;
+
+import com.ejercicio.DAO.ProgramaDAO;
+import com.ejercicio.modelos.Programa;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProgramaDAOImplementacion implements ProgramaDAO{
+public class ProgramaDAOImplementacion implements ProgramaDAO {
     private Connection conexion;
 
     public ProgramaDAOImplementacion(Connection conexion) {

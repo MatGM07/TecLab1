@@ -1,4 +1,6 @@
-package com.ejercicio;
+package com.ejercicio.modelos;
+
+import com.ejercicio.DAOServicios.Servicios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.HashMap;
 
-public class CursosInscritos implements Servicios{
+public class CursosInscritos implements Servicios {
     private List<Inscripción> listado = new ArrayList<>();
 
     public CursosInscritos(List<Inscripción> listado) {

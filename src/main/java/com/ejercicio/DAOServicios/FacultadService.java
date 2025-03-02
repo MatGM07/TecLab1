@@ -1,4 +1,9 @@
-package com.ejercicio;
+package com.ejercicio.DAOServicios;
+
+import com.ejercicio.DAO.FacultadDAO;
+import com.ejercicio.DAOImplementacion.FacultadDAOImplementacion;
+import com.ejercicio.modelos.Facultad;
+import com.ejercicio.modelos.Persona;
 
 import java.sql.Connection;
 import java.util.List;

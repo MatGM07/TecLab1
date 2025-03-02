@@ -1,4 +1,4 @@
-package com.ejercicio;
+package com.ejercicio.modelos;
 
 import java.sql.Date;
 
