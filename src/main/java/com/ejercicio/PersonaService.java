@@ -18,7 +18,7 @@ public class PersonaService {
         return personaDAO.obtenerTodos();
     }
 
-    public Persona buscarPorId(int id) {
+    public Persona obtenerPorId(int id) {
         return personaDAO.obtenerPorId(id);
     }
 

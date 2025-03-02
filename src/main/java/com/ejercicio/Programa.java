@@ -1,6 +1,6 @@
 package com.ejercicio;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Programa {
     Integer ID;
@@ -15,6 +15,14 @@ public class Programa {
         this.duracion = duracion;
         this.registro = registro;
         this.facultad = facultad;
+    }
+
+    public Programa(Integer ID, String nombre, Double duracion, Date registro, Integer facultad_id) {
+        this.ID = ID;
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.registro = registro;
+        this.facultad = new Facultad(facultad_id,null,-1);
     }
 
     public Programa(){

@@ -14,7 +14,7 @@ public class Facultad {
     public Facultad(Integer ID, String nombre, Integer decanoId) {
         this.ID = ID;
         this.nombre = nombre;
-        this.decano = new Persona(decanoId,null,null,null); // Se asignará después en el servicio
+        this.decano = new Persona(decanoId,null,null,null);
     }
 
     public Facultad(){

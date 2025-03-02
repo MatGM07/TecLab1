@@ -19,7 +19,7 @@ public class FacultadService {
     public Facultad obtenerPorId(int id) {
         Facultad facultad = facultadDAO.obtenerPorId(id);
         if (facultad != null && facultad.getDecano().getID() > 0) {
-            Persona decanoCompleto = personaService.buscarPorId(facultad.getDecano().getID());
+            Persona decanoCompleto = personaService.obtenerPorId(facultad.getDecano().getID());
             facultad.setDecano(decanoCompleto);
         }
         return facultad;
@@ -30,7 +30,7 @@ public class FacultadService {
         for (Facultad facultad : facultades){
             if (facultad != null && facultad.getDecano().getID() > 0) {
                 Persona decanoCompleto = new Persona();
-                decanoCompleto = personaService.buscarPorId(facultad.getDecano().getID());
+                decanoCompleto = personaService.obtenerPorId(facultad.getDecano().getID());
                 facultad.setDecano(decanoCompleto);
             }
         }
