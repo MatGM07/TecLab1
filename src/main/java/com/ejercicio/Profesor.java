@@ -3,7 +3,7 @@ package com.ejercicio;
 public class Profesor extends Persona {
     String TipoContrato;
 
-    public Profesor(Double ID, String nombre, String apellidos, String email, String tipoContrato) {
+    public Profesor(Integer ID, String nombre, String apellidos, String email, String tipoContrato) {
         super(ID, nombre, apellidos, email);
         TipoContrato = tipoContrato;
     }

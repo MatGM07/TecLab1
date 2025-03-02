@@ -63,7 +63,7 @@ public class CursosProfesores implements Servicios {
 
         procesadores.put("Año=", valor -> cursoProfesorActual.setAño(Integer.parseInt(valor)));
         procesadores.put("Semestre=", valor -> cursoProfesorActual.setSemestre(Integer.parseInt(valor)));
-        procesadores.put("IDProfesor=", valor -> profesorActual.setID(Double.parseDouble(valor)));
+        procesadores.put("IDProfesor=", valor -> profesorActual.setID(Integer.parseInt(valor)));
         procesadores.put("nombreProfesor=", profesorActual::setNombre);
         procesadores.put("apellidosProfesor=", profesorActual::setApellidos);
         procesadores.put("emailProfesor=", profesorActual::setEmail);
@@ -71,13 +71,13 @@ public class CursosProfesores implements Servicios {
         procesadores.put("IDCurso=", valor -> cursoActual.setID(Integer.parseInt(valor)));
         procesadores.put("nombreCurso=", cursoActual::setNombre);
         procesadores.put("activo=", valor -> cursoActual.setActivo(Boolean.parseBoolean(valor)));
-        procesadores.put("IDPrograma=", valor -> programaActual.setID(Double.parseDouble(valor)));
+        procesadores.put("IDPrograma=", valor -> programaActual.setID(Integer.parseInt(valor)));
         procesadores.put("nombrePrograma=", programaActual::setNombre);
         procesadores.put("duracion=", valor -> programaActual.setDuracion(Double.parseDouble(valor)));
         procesadores.put("registro=", valor -> programaActual.setRegistro(Date.valueOf(valor)));
         procesadores.put("IDFacultad=", valor -> facultadActual.setID(Double.parseDouble(valor)));
         procesadores.put("nombreFacultad=", facultadActual::setNombre);
-        procesadores.put("ID=", valor -> decanoActual.setID(Double.parseDouble(valor)));
+        procesadores.put("ID=", valor -> decanoActual.setID(Integer.parseInt(valor)));
         procesadores.put("Nombre=", decanoActual::setNombre);
         procesadores.put("Apellidos=", decanoActual::setApellidos);
         procesadores.put("Email=", valor -> {

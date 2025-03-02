@@ -1,21 +1,21 @@
 package com.ejercicio;
 
 public class Estudiante extends Persona {
-    Double Codigo;
+    Double codigo;
     Programa programa;
     Boolean activo;
     Double promedio;
 
-    public Estudiante(Double ID, String nombre, String apellidos, String email, Double codigo, Programa programa, Boolean activo, Double promedio) {
+    public Estudiante(Integer ID, String nombre, String apellidos, String email, Double codigo, Programa programa, Boolean activo, Double promedio) {
         super(ID, nombre, apellidos, email);
-        Codigo = codigo;
+        this.codigo = codigo;
         this.programa = programa;
         this.activo = activo;
         this.promedio = promedio;
     }
 
     public Estudiante(Double codigo, Programa programa, Boolean activo, Double promedio) {
-        Codigo = codigo;
+        codigo = codigo;
         this.programa = programa;
         this.activo = activo;
         this.promedio = promedio;
@@ -25,11 +25,11 @@ public class Estudiante extends Persona {
     }
 
     public Double getCodigo() {
-        return Codigo;
+        return codigo;
     }
 
     public void setCodigo(Double codigo) {
-        Codigo = codigo;
+        codigo = codigo;
     }
 
     public Programa getPrograma() {
@@ -62,7 +62,7 @@ public class Estudiante extends Persona {
                 "\nnombreEstudiante=" + this.getNombre() +
                 "\napellidosEstudiante=" + this.getApellidos() +
                 "\nemailEstudiante=" + this.getEmail() +
-                "\nCodigoEstudiante=" + Codigo +
+                "\nCodigoEstudiante=" + codigo +
                 "\nactivoEstudiante=" + activo +
                 "\npromedioEstudiante=" + promedio;
     }

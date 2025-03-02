@@ -3,13 +3,13 @@ package com.ejercicio;
 import java.util.Date;
 
 public class Programa {
-    Double ID;
+    Integer ID;
     String nombre;
     Double duracion;
     Date registro;
     Facultad facultad;
 
-    public Programa(Double ID, String nombre, Double duracion, Date registro, Facultad facultad) {
+    public Programa(Integer ID, String nombre, Double duracion, Date registro, Facultad facultad) {
         this.ID = ID;
         this.nombre = nombre;
         this.duracion = duracion;
@@ -21,11 +21,11 @@ public class Programa {
 
     }
 
-    public Double getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(Double ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
