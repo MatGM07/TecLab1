@@ -1,21 +1,21 @@
 package com.ejercicio;
 
 public class Estudiante extends Persona {
-    Double Codigo;
+    Double codigo;
     Programa programa;
     Boolean activo;
     Double promedio;
 
-    public Estudiante(Double ID, String nombre, String apellidos, String email, Double codigo, Programa programa, Boolean activo, Double promedio) {
+    public Estudiante(Integer ID, String nombre, String apellidos, String email, Double codigo, Programa programa, Boolean activo, Double promedio) {
         super(ID, nombre, apellidos, email);
-        Codigo = codigo;
+        this.codigo = codigo;
         this.programa = programa;
         this.activo = activo;
         this.promedio = promedio;
     }
 
     public Estudiante(Double codigo, Programa programa, Boolean activo, Double promedio) {
-        Codigo = codigo;
+        this.codigo = codigo;
         this.programa = programa;
         this.activo = activo;
         this.promedio = promedio;
@@ -24,12 +24,16 @@ public class Estudiante extends Persona {
     public Estudiante(){
     }
 
+    public Integer getID(){
+        return ID;
+    }
+
     public Double getCodigo() {
-        return Codigo;
+        return codigo;
     }
 
     public void setCodigo(Double codigo) {
-        Codigo = codigo;
+        this.codigo = codigo;
     }
 
     public Programa getPrograma() {
@@ -58,10 +62,12 @@ public class Estudiante extends Persona {
 
     @Override
     public String toString() {
-        return  super.toString()+
-                "\nCodigo=" + Codigo +
-                "\nactivo=" + activo +
-                "\npromedio=" + promedio+
-                "\nprograma{\n" + programa.toString() + "\n}"  ;
+        return  "IDEstudiante=" + this.getID()+
+                "\nnombreEstudiante=" + this.getNombre() +
+                "\napellidosEstudiante=" + this.getApellidos() +
+                "\nemailEstudiante=" + this.getEmail() +
+                "\nCodigoEstudiante=" + codigo +
+                "\nactivoEstudiante=" + activo +
+                "\npromedioEstudiante=" + promedio;
     }
 }

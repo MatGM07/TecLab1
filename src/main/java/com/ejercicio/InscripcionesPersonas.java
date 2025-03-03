@@ -34,8 +34,8 @@ public class InscripcionesPersonas {
 
     public Optional<Integer> encontrar(Persona persona){
         for (Integer i = 0; i < listado.size(); i++){
-            Double IDaBuscar = persona.getID();
-            Double IDListado = listado.get(i).getID();
+            Integer IDaBuscar = persona.getID();
+            Integer IDListado = listado.get(i).getID();
             if (Objects.equals(IDaBuscar, IDListado)){
                 return Optional.of(i);
             }
@@ -95,7 +95,7 @@ public class InscripcionesPersonas {
         while ((linea = reader.readLine()) != null) {
             if (linea.startsWith("ID=")) {
                 personaActual = new Persona();
-                personaActual.setID(Double.parseDouble(linea.substring(3)));
+                personaActual.setID(Integer.parseInt(linea.substring(3)));
             } else if (personaActual != null) {
                 asignarDatoPersona(personaActual, linea);
             }

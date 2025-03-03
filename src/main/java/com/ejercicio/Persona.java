@@ -1,12 +1,12 @@
 package com.ejercicio;
 
 public class Persona {
-    Double ID;
+    Integer ID;
     String Nombre;
     String Apellidos;
     String Email;
 
-    public Persona(Double ID, String nombre, String apellidos, String email) {
+    public Persona(Integer ID, String nombre, String apellidos, String email) {
         this.ID = ID;
         Nombre = nombre;
         Apellidos = apellidos;
@@ -16,11 +16,11 @@ public class Persona {
     public Persona(){
     }
 
-    public Double getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(Double ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
