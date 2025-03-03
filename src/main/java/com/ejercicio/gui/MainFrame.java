@@ -1,6 +1,8 @@
 package com.ejercicio.gui;
+import com.ejercicio.gui.estudiante.PanelEstudiante;
 import com.ejercicio.gui.facultad.PanelFacultad;
 import com.ejercicio.gui.persona.PanelPersona;
+import com.ejercicio.gui.programa.PanelPrograma;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +53,7 @@ public class MainFrame extends JFrame {
         btnEstudiante.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Estudiante " + (++tabCount)));
         btnProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Profesor " + (++tabCount)));
         btnFacultad.addActionListener(e -> agregarNuevaPestaña(new PanelFacultad(this), "Facultad " + (++tabCount)));
-        btnPrograma.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Programa " + (++tabCount)));
+        btnPrograma.addActionListener(e -> agregarNuevaPestaña(new PanelPrograma(this), "Programa " + (++tabCount)));
         btnCurso.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Curso " + (++tabCount)));
         btnInscripcion.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Inscripción " + (++tabCount)));
         btnCursoProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "CursoProfesor " + (++tabCount)));

@@ -94,7 +94,7 @@ public class EstudianteDAOImplementacion implements EstudianteDAO {
 
     @Override
     public void actualizar(Estudiante estudiante) {
-        String sql = "UPDATE Estudiante SET codigo=?, programa_id=?, activo=?, promedio=? WHERE persona_id=?";
+        String sql = "UPDATE Estudiante SET codigo=?, programa_id=?, activo=?, promedio=? WHERE id=?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setDouble(1, estudiante.getCodigo());
             stmt.setInt(2, estudiante.getPrograma().getID());
@@ -109,7 +109,7 @@ public class EstudianteDAOImplementacion implements EstudianteDAO {
 
     @Override
     public void eliminar(int id) {
-        String sql = "DELETE FROM Estudiante WHERE persona_id=?";
+        String sql = "DELETE FROM Estudiante WHERE id=?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();

@@ -17,10 +17,11 @@ public class EditarFacultad extends JPanel {
     private PanelFacultad panelFacultad;
     private Facultad facultad;
 
-    public EditarFacultad(Facultad facultad, FacultadService facultadService, PanelFacultad panelFacultad) {
+    public EditarFacultad(Facultad facultad, FacultadService facultadService, PersonaService personaService, PanelFacultad panelFacultad) {
         this.facultad = facultad;
         this.facultadService = facultadService;
         this.panelFacultad = panelFacultad;
+        this.personaService = personaService;
 
         setLayout(new GridLayout(5, 2, 5, 5));
         setBorder(new EmptyBorder(20, 20, 20, 20)); // Padding
@@ -35,7 +36,7 @@ public class EditarFacultad extends JPanel {
         add(txtNombre);
 
         add(new JLabel("ID Decano:"));
-        txtDecano_id = new JTextField(facultad.getDecano().getID());
+        txtDecano_id = new JTextField(String.valueOf(facultad.getDecano().getID()));
         add(txtDecano_id);
 
         btnGuardar = new JButton("Guardar Cambios");

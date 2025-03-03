@@ -42,6 +42,10 @@ public class EstudianteService {
         return estudiantes;
     }
 
+    public Integer obtenerNumeroId(int id){
+        return estudianteDAO.obtenerPersonaID(id);
+    }
+
     public Estudiante obtenerPorId(int id) {
         Estudiante estudiante = estudianteDAO.obtenerPorId(id);
 

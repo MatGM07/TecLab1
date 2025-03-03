@@ -2,6 +2,7 @@ package com.ejercicio.gui.facultad;
 
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.FacultadService;
+import com.ejercicio.DAOServicios.PersonaService;
 import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
 import com.ejercicio.gui.facultad.*;
@@ -13,12 +14,14 @@ import java.sql.Connection;
 
 public class PanelFacultad extends PanelBase {
     private FacultadService facultadService;
+    private PersonaService personaService;
 
     public PanelFacultad(MainFrame mainFrame) {
         super(mainFrame);
 
         Connection connection = ConexionDB.obtenerConexion();
         this.facultadService = new FacultadService(connection);
+        this.personaService = new PersonaService(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarFacultad());
 
@@ -117,7 +120,7 @@ public class PanelFacultad extends PanelBase {
     }
 
     private void abrirEditarFacultad(Facultad facultad) {
-        EditarFacultad editarFacultad = new EditarFacultad(facultad, facultadService, this);
+        EditarFacultad editarFacultad = new EditarFacultad(facultad, facultadService, personaService,this);
         removeAll();
         setLayout(new BorderLayout());
         add(editarFacultad, BorderLayout.CENTER);
