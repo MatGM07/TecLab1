@@ -55,7 +55,7 @@ public class AgregarEstudiante extends JPanel {
         btnCancelar.addActionListener(e -> {
             Window window = SwingUtilities.getWindowAncestor(this);
             if (window != null) {
-                window.dispose(); // Cierra la ventana sin importar si es JFrame o JDialog
+                window.dispose();
             }
         });
         add(btnCancelar);

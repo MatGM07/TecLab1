@@ -22,17 +22,17 @@ public class ListarPersonas extends JPanel {
 
         setLayout(new BorderLayout());
 
-        // Agregar padding alrededor del panel
+
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // Crear tabla con modelo
+
         modeloTabla = new DefaultTableModel(new String[]{"ID", "Nombre", "Apellidos", "Email"}, 0);
         tablaPersonas = new JTable(modeloTabla);
         JScrollPane scrollPane = new JScrollPane(tablaPersonas);
 
         add(scrollPane, BorderLayout.CENTER);
 
-        // Panel de botones en la parte inferior
+
         JPanel panelBotones = new JPanel();
         btnVolver = new JButton("Volver");
         btnVolver.addActionListener(e -> panelPersona.mostrarVistaPrincipal());
@@ -40,18 +40,18 @@ public class ListarPersonas extends JPanel {
 
         add(panelBotones, BorderLayout.SOUTH);
 
-        // Cargar datos en la tabla
+
         cargarDatos();
     }
 
     private void cargarDatos() {
-        // Limpiar tabla antes de cargar datos nuevos
+
         modeloTabla.setRowCount(0);
 
-        // Obtener la lista de personas
+
         List<Persona> personas = personaService.obtenerTodasLasPersonas();
 
-        // Llenar la tabla con los datos
+
         for (Persona p : personas) {
             modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getApellidos(), p.getEmail()});
         }

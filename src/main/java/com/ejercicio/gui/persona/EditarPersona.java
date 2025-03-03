@@ -23,7 +23,7 @@ public class EditarPersona extends JPanel {
 
         add(new JLabel("ID:"));
         JTextField txtID = new JTextField(String.valueOf(persona.getID()));
-        txtID.setEditable(false); // No se puede modificar el ID
+        txtID.setEditable(false);
         add(txtID);
 
         add(new JLabel("Nombre:"));

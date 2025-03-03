@@ -1,4 +1,5 @@
 package com.ejercicio.gui;
+import com.ejercicio.gui.facultad.PanelFacultad;
 import com.ejercicio.gui.persona.PanelPersona;
 
 import javax.swing.*;

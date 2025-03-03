@@ -18,14 +18,13 @@ public class PanelPersona extends PanelBase {
         this.personaService = new PersonaService(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarPersona());
+
         btnEditar.addActionListener(e -> {
             String idStr = JOptionPane.showInputDialog(this, "Ingrese el ID de la persona a editar:", "Editar Persona", JOptionPane.QUESTION_MESSAGE);
-
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
                     Persona persona = personaService.obtenerPorId(id);
-
                     if (persona != null) {
                         abrirEditarPersona(persona);
                     } else {
@@ -36,6 +35,7 @@ public class PanelPersona extends PanelBase {
                 }
             }
         });
+
         btnEliminar.addActionListener(e -> {
             String idStr = JOptionPane.showInputDialog(this, "Ingrese el ID de la persona a eliminar:", "Eliminar Persona", JOptionPane.QUESTION_MESSAGE);
 
@@ -54,12 +54,32 @@ public class PanelPersona extends PanelBase {
                 }
             }
         });
+
+        btnConsultar.addActionListener(e -> {
+            String idStr = JOptionPane.showInputDialog(this, "Ingrese el ID de la persona a consultar:", "Consultar Persona", JOptionPane.QUESTION_MESSAGE);
+
+            if (idStr != null && !idStr.trim().isEmpty()) {
+                try {
+                    int id = Integer.parseInt(idStr.trim());
+                    Persona persona = personaService.obtenerPorId(id);
+
+                    if (persona != null) {
+                        abrirConsultarPersona(persona);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se encontró una persona con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Ingrese un ID válido", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
         btnListar.addActionListener(e -> abrirListarPersonas());
     }
 
     private void abrirAgregarPersona() {
         AgregarPersona agregarPersona = new AgregarPersona(personaService, this);
-        removeAll(); // Elimina los componentes actuales
+        removeAll();
         setLayout(new BorderLayout());
         add(agregarPersona, BorderLayout.CENTER);
         revalidate();
@@ -69,12 +89,14 @@ public class PanelPersona extends PanelBase {
     public void mostrarVistaPrincipal() {
         removeAll();
         setLayout(new BorderLayout());
-        JPanel panelBotones = new JPanel(new GridLayout(1, 4, 10, 10));
+        JPanel panelBotones = new JPanel();
 
         panelBotones.add(btnAgregar);
         panelBotones.add(btnEditar);
         panelBotones.add(btnEliminar);
         panelBotones.add(btnListar);
+        panelBotones.add(btnConsultar);
+        panelBotones.add(btnCerrar);
 
         add(panelBotones, BorderLayout.NORTH);
 
@@ -105,6 +127,15 @@ public class PanelPersona extends PanelBase {
         removeAll();
         setLayout(new BorderLayout());
         add(eliminarPersona, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    private void abrirConsultarPersona(Persona persona) {
+        ConsultarPersona consultarPersona = new ConsultarPersona(persona, this);
+        removeAll();
+        setLayout(new BorderLayout());
+        add(consultarPersona, BorderLayout.CENTER);
         revalidate();
         repaint();
     }
