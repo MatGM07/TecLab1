@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-abstract class PanelBase extends JPanel {
+public abstract class PanelBase extends JPanel {
     protected JButton btnAgregar, btnEditar, btnEliminar, btnListar, btnCerrar;
     protected JTable tabla;
     protected MainFrame mainFrame;
@@ -28,7 +28,7 @@ abstract class PanelBase extends JPanel {
         panelBotones.add(btnListar);
         panelBotones.add(btnCerrar);
 
-        tabla = new JTable(); // Se puede configurar con un modelo de datos
+        tabla = new JTable();
 
         add(panelBotones, BorderLayout.NORTH);
         add(new JScrollPane(tabla), BorderLayout.CENTER);
