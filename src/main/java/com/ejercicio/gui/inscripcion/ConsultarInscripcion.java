@@ -17,7 +17,7 @@ public class ConsultarInscripcion extends JPanel {
         setLayout(new GridLayout(6, 1, 5, 5));
         setBorder(new EmptyBorder(20, 20, 20, 20)); // Padding
 
-        add(new JLabel("Información de la Inscripción"));
+        add(new JLabel("Información de la Relación"));
 
         add(new JLabel("Estudiante ID: " + inscripcion.getEstudiante().getID()));
         add(new JLabel("Estudiante Nombre: " + inscripcion.getEstudiante().getNombre()));

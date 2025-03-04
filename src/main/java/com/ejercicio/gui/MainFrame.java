@@ -1,5 +1,6 @@
 package com.ejercicio.gui;
 import com.ejercicio.gui.curso.PanelCurso;
+import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.gui.estudiante.PanelEstudiante;
 import com.ejercicio.gui.facultad.PanelFacultad;
 import com.ejercicio.gui.inscripcion.PanelInscripcion;
@@ -55,7 +56,7 @@ public class MainFrame extends JFrame {
         btnPrograma.addActionListener(e -> agregarNuevaPestaña(new PanelPrograma(this), "Programa " + (++tabCount)));
         btnCurso.addActionListener(e -> agregarNuevaPestaña(new PanelCurso(this), "Curso " + (++tabCount)));
         btnInscripcion.addActionListener(e -> agregarNuevaPestaña(new PanelInscripcion(this), "Inscripción " + (++tabCount)));
-        btnCursoProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "CursoProfesor " + (++tabCount)));
+        btnCursoProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelCursoProfesor(this), "CursoProfesor " + (++tabCount)));
 
         tabbedPane.add("Inicio", panelInicio);
         setVisible(true);

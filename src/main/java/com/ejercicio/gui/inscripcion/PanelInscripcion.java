@@ -16,7 +16,6 @@ import java.sql.Connection;
 
 public class PanelInscripcion extends PanelBase {
     private InscripcionService inscripcionService;
-    private FacultadService facultadService;
     private CursoService cursoService;
     private EstudianteService estudianteService;
 
@@ -25,7 +24,6 @@ public class PanelInscripcion extends PanelBase {
 
         Connection connection = ConexionDB.obtenerConexion();
         this.inscripcionService = new InscripcionService(connection);
-        this.facultadService = new FacultadService(connection);
         this.cursoService = new CursoService(connection);
         this.estudianteService = new EstudianteService(connection);
 
