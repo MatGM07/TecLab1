@@ -13,6 +13,7 @@ public class Inscripción {
         this.estudiante = estudiante;
     }
 
+
     public Inscripción(){
     }
 

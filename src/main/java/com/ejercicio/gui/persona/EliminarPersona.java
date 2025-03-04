@@ -16,7 +16,7 @@ public class EliminarPersona extends JPanel {
         this.panelPersona = panelPersona;
 
         setLayout(new GridLayout(5, 1, 5, 5));
-        setBorder(new EmptyBorder(20, 20, 20, 20)); // Padding
+        setBorder(new EmptyBorder(20, 20, 20, 20));
 
         add(new JLabel("¿Está seguro de que desea eliminar esta persona?"));
 

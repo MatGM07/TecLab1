@@ -1,6 +1,8 @@
 package com.ejercicio.gui;
+import com.ejercicio.gui.curso.PanelCurso;
 import com.ejercicio.gui.estudiante.PanelEstudiante;
 import com.ejercicio.gui.facultad.PanelFacultad;
+import com.ejercicio.gui.inscripcion.PanelInscripcion;
 import com.ejercicio.gui.persona.PanelPersona;
 import com.ejercicio.gui.profesor.PanelProfesor;
 import com.ejercicio.gui.programa.PanelPrograma;
@@ -21,14 +23,12 @@ public class MainFrame extends JFrame {
         tabbedPane = new JTabbedPane();
         add(tabbedPane, BorderLayout.CENTER);
 
-        // Panel de inicio con nuevo diseño
         JPanel panelInicio = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Espaciado entre botones
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-        // Crear botones con color verde
         JButton btnPersona = crearBoton("Personas");
         JButton btnEstudiante = crearBoton("Estudiantes");
         JButton btnProfesor = crearBoton("Profesores");
@@ -48,15 +48,13 @@ public class MainFrame extends JFrame {
         gbc.gridy = 6; panelInicio.add(btnInscripcion, gbc);
         gbc.gridy = 7; panelInicio.add(btnCursoProfesor, gbc);
 
-
-        // Agregar eventos para abrir pestañas
         btnPersona.addActionListener(e -> agregarNuevaPestaña(new PanelPersona(this), "Persona " + (++tabCount)));
         btnEstudiante.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Estudiante " + (++tabCount)));
         btnProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelProfesor(this), "Profesor " + (++tabCount)));
         btnFacultad.addActionListener(e -> agregarNuevaPestaña(new PanelFacultad(this), "Facultad " + (++tabCount)));
         btnPrograma.addActionListener(e -> agregarNuevaPestaña(new PanelPrograma(this), "Programa " + (++tabCount)));
-        btnCurso.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Curso " + (++tabCount)));
-        btnInscripcion.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Inscripción " + (++tabCount)));
+        btnCurso.addActionListener(e -> agregarNuevaPestaña(new PanelCurso(this), "Curso " + (++tabCount)));
+        btnInscripcion.addActionListener(e -> agregarNuevaPestaña(new PanelInscripcion(this), "Inscripción " + (++tabCount)));
         btnCursoProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "CursoProfesor " + (++tabCount)));
 
         tabbedPane.add("Inicio", panelInicio);

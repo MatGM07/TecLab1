@@ -46,12 +46,9 @@ public class ListarPrograma extends JPanel {
     }
 
     private void cargarDatos() {
-
         modeloTabla.setRowCount(0);
 
-
         List<Programa> programas = programaService.obtenerTodosLosProgramas();
-
 
         for (Programa p : programas) {
             modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getDuracion(), p.getRegistro(), p.getFacultad().getID()});
