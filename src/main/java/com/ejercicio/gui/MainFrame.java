@@ -39,7 +39,6 @@ public class MainFrame extends JFrame {
         JButton btnInscripcion = crearBoton("Inscripción");
         JButton btnCursoProfesor = crearBoton("Relación Curso-Profesor");
 
-        // Agregar botones al panel
         gbc.gridy = 0; panelInicio.add(btnPersona, gbc);
         gbc.gridy = 1; panelInicio.add(btnEstudiante, gbc);
         gbc.gridy = 2; panelInicio.add(btnProfesor, gbc);

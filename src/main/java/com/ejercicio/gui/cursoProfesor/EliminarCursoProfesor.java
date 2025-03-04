@@ -20,7 +20,7 @@ public class EliminarCursoProfesor extends JPanel {
         this.panelCursoProfesor = panelCursoProfesor;
 
         setLayout(new GridLayout(6, 1, 5, 5));
-        setBorder(new EmptyBorder(20, 20, 20, 20)); // Padding
+        setBorder(new EmptyBorder(20, 20, 20, 20));
 
         add(new JLabel("¿Está seguro de que desea eliminar esta inscripción?"));
 

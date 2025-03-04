@@ -20,7 +20,7 @@ public class EditarPersona extends JPanel {
         this.panelPersona = panelPersona;
 
         setLayout(new GridLayout(5, 2, 5, 5));
-        setBorder(new EmptyBorder(20, 20, 20, 20)); // Padding
+        setBorder(new EmptyBorder(20, 20, 20, 20));
 
         add(new JLabel("ID:"));
         JTextField txtID = new JTextField(String.valueOf(persona.getID()));

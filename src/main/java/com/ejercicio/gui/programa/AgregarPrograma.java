@@ -35,7 +35,7 @@ public class AgregarPrograma extends JPanel{
 
         add(new JLabel("Fecha Registro:"));
         dateChooser = new JDateChooser();
-        dateChooser.setDateFormatString("yyyy-MM-dd"); // Formato de fecha
+        dateChooser.setDateFormatString("yyyy-MM-dd");
         add(dateChooser);
 
         add(new JLabel("ID Facultad:"));
