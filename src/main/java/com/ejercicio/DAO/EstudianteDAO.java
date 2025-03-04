@@ -10,5 +10,4 @@ public interface EstudianteDAO {
     List<Estudiante> obtenerTodos();
     void actualizar(Estudiante estudiante);
     void eliminar(int id);
-    Integer obtenerPersonaID(int id);
 }

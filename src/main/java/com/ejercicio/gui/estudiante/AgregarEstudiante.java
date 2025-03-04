@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class AgregarEstudiante extends JPanel {
-    private JTextField txtNombre, txtPrograma_id, txtPersona_id, txtPromedio;
+    private JTextField txtNombre, txtCodigo, txtApellidos, txtEmail, txtPrograma_id, txtPromedio;
     private JCheckBox chkActivo;
     private JButton btnGuardar, btnCancelar, btnVolver;
     private EstudianteService estudianteService;
@@ -21,9 +21,8 @@ public class AgregarEstudiante extends JPanel {
     private PanelEstudiante panelEstudiante;
     private ProgramaService programaService;
 
-    public AgregarEstudiante(EstudianteService estudianteService, PersonaService personaService, ProgramaService programaService, PanelEstudiante panelEstudiante) {
+    public AgregarEstudiante(EstudianteService estudianteService, ProgramaService programaService, PanelEstudiante panelEstudiante) {
         this.estudianteService = estudianteService;
-        this.personaService = personaService;
         this.programaService = programaService;
         this.panelEstudiante = panelEstudiante;
 
@@ -31,25 +30,32 @@ public class AgregarEstudiante extends JPanel {
 
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(new JLabel("Codigo:"));
+        add(new JLabel("Nombre:"));
         txtNombre = new JTextField();
         add(txtNombre);
+
+        add(new JLabel("Apellidos:"));
+        txtApellidos = new JTextField();
+        add(txtApellidos);
+
+        add(new JLabel("Email:"));
+        txtEmail = new JTextField();
+        add(txtEmail);
+
+        add(new JLabel("Codigo:"));
+        txtCodigo = new JTextField();
+        add(txtCodigo);
 
         add(new JLabel("ID de Programa:"));
         txtPrograma_id = new JTextField();
         add(txtPrograma_id);
 
-        add(new JLabel("ID de Persona:"));
-        txtPersona_id = new JTextField();
-        add(txtPersona_id);
-
         add(new JLabel("Promedio:"));
         txtPromedio = new JTextField();
         add(txtPromedio);
 
-
         add(new JLabel("Activo:"));
-        chkActivo = new JCheckBox(); // CheckBox sin texto
+        chkActivo = new JCheckBox();
         add(chkActivo);
 
         btnGuardar = new JButton("Guardar");
@@ -63,22 +69,17 @@ public class AgregarEstudiante extends JPanel {
 
     private void guardarEstudiante() {
         try {
-            Persona persona = personaService.obtenerPorId(Integer.parseInt(txtPersona_id.getText()));
 
-            Estudiante estudiante = (Estudiante) persona;
-
-            Double codigo = Double.valueOf(txtNombre.getText());
-            estudiante.setCodigo(codigo);
-
+            String nombres = String.valueOf(txtNombre.getText());
+            String apellidos = String.valueOf(txtApellidos.getText());
+            String email = String.valueOf(txtEmail.getText());
+            Double codigo = Double.valueOf(txtCodigo.getText());
             Integer programa_id = Integer.valueOf(txtPrograma_id.getText());
             Programa programa = programaService.obtenerPorId(programa_id);
-            estudiante.setPrograma(programa);
-
             boolean activo = chkActivo.isSelected();
-            estudiante.setActivo(activo);
-
             Double promedio = Double.valueOf(txtPromedio.getText());
-            estudiante.setPromedio(promedio);
+
+            Estudiante estudiante = new Estudiante(null,nombres,apellidos,email,codigo,programa,activo,promedio);
 
             estudianteService.registrarEstudiante(estudiante);
             JOptionPane.showMessageDialog(this, "Estudiante registrada correctamente");
@@ -89,10 +90,12 @@ public class AgregarEstudiante extends JPanel {
     }
 
     private void limpiarCampos() {
-        txtNombre.setText("");
+        txtCodigo.setText("");
         txtPrograma_id.setText("");
         txtPromedio.setText("");
-        txtPersona_id.setText("");
+        txtNombre.setText("");
+        txtApellidos.setText("");
+        txtEmail.setText("");
         chkActivo.setSelected(false);
     }
 }

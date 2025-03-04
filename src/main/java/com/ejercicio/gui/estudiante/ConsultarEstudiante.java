@@ -12,7 +12,7 @@ public class ConsultarEstudiante extends JPanel {
     private Estudiante estudiante;
     private PanelEstudiante panelEstudiante;
 
-    public ConsultarEstudiante(Estudiante estudiante, Persona persona, PanelEstudiante panelEstudiante) {
+    public ConsultarEstudiante(Estudiante estudiante, PanelEstudiante panelEstudiante) {
         this.estudiante = estudiante;
         this.panelEstudiante = panelEstudiante;
 
@@ -22,11 +22,13 @@ public class ConsultarEstudiante extends JPanel {
         add(new JLabel("Información de la Estudiante"));
 
         add(new JLabel("ID: " + estudiante.getID()));
+        add(new JLabel("Nombres: " + estudiante.getNombre()));
+        add(new JLabel("Apellidos: " + estudiante.getApellidos()));
+        add(new JLabel("Correo: " + estudiante.getEmail()));
         add(new JLabel("Codigo: " + estudiante.getCodigo()));
         add(new JLabel("Activo: " + estudiante.getActivo()));
         add(new JLabel("Promedio: " + estudiante.getPromedio()));
         add(new JLabel("ID Programa: " + estudiante.getPrograma().getID()));
-        add(new JLabel("ID Persona: " + persona.getID()));
 
         JButton btnVolver = new JButton("Volver");
         btnVolver.addActionListener(e -> panelEstudiante.mostrarVistaPrincipal());

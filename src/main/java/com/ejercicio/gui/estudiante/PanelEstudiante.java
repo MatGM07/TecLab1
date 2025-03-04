@@ -36,9 +36,7 @@ public class PanelEstudiante extends PanelBase {
                     int id = Integer.parseInt(idStr.trim());
                     Estudiante estudiante = estudianteService.obtenerPorId(id);
                     if (estudiante != null) {
-                        Integer persona_id = estudianteService.obtenerNumeroId(id);
-                        Persona persona = personaService.obtenerPorId(persona_id);
-                        abrirEditarEstudiante(estudiante,persona);
+                        abrirEditarEstudiante(estudiante);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una estudiante con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -74,11 +72,9 @@ public class PanelEstudiante extends PanelBase {
                 try {
                     int id = Integer.parseInt(idStr.trim());
                     Estudiante estudiante = estudianteService.obtenerPorId(id);
-                    Integer personaId = estudianteService.obtenerNumeroId(id);
-                    Persona persona = personaService.obtenerPorId(personaId);
 
                     if (estudiante != null) {
-                        abrirConsultarEstudiante(estudiante,persona);
+                        abrirConsultarEstudiante(estudiante);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una estudiante con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -92,7 +88,7 @@ public class PanelEstudiante extends PanelBase {
     }
 
     private void abrirAgregarEstudiante() {
-        AgregarEstudiante agregarEstudiante = new AgregarEstudiante(estudianteService, personaService, programaService,this);
+        AgregarEstudiante agregarEstudiante = new AgregarEstudiante(estudianteService, programaService,this);
         removeAll();
         setLayout(new BorderLayout());
         add(agregarEstudiante, BorderLayout.CENTER);
@@ -127,8 +123,8 @@ public class PanelEstudiante extends PanelBase {
         repaint();
     }
 
-    private void abrirEditarEstudiante(Estudiante estudiante, Persona persona) {
-        EditarEstudiante editarEstudiante = new EditarEstudiante(estudiante, persona, estudianteService, personaService, programaService,this);
+    private void abrirEditarEstudiante(Estudiante estudiante) {
+        EditarEstudiante editarEstudiante = new EditarEstudiante(estudiante, estudianteService, programaService,this);
         removeAll();
         setLayout(new BorderLayout());
         add(editarEstudiante, BorderLayout.CENTER);
@@ -145,8 +141,8 @@ public class PanelEstudiante extends PanelBase {
         repaint();
     }
 
-    private void abrirConsultarEstudiante(Estudiante estudiante, Persona persona) {
-        ConsultarEstudiante consultarEstudiante = new ConsultarEstudiante(estudiante, persona, this);
+    private void abrirConsultarEstudiante(Estudiante estudiante) {
+        ConsultarEstudiante consultarEstudiante = new ConsultarEstudiante(estudiante, this);
         removeAll();
         setLayout(new BorderLayout());
         add(consultarEstudiante, BorderLayout.CENTER);

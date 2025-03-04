@@ -15,7 +15,6 @@ import java.util.List;
 public class ListarEstudiante extends JPanel {
     private EstudianteService estudianteService;
     private PanelEstudiante panelEstudiante;
-    private PersonaService personaService;
     private JTable tablaEstudiantes;
     private DefaultTableModel modeloTabla;
     private JButton btnVolver;
@@ -28,7 +27,7 @@ public class ListarEstudiante extends JPanel {
 
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        modeloTabla = new DefaultTableModel(new String[]{"ID", "Codigo", "Activo", "Promedio", "ID Programa"}, 0);
+        modeloTabla = new DefaultTableModel(new String[]{"ID", "Nombre", "Apellidos", "Email", "Codigo", "Activo", "Promedio", "ID Programa"}, 0);
         tablaEstudiantes = new JTable(modeloTabla);
         JScrollPane scrollPane = new JScrollPane(tablaEstudiantes);
 
@@ -53,7 +52,7 @@ public class ListarEstudiante extends JPanel {
         List<Estudiante> estudiantes = estudianteService.obtenerTodosLosEstudiantes();
 
         for (Estudiante p : estudiantes) {
-            modeloTabla.addRow(new Object[]{p.getID(), p.getCodigo(), p.getActivo(), p.getPromedio(), p.getPrograma().getID()});
+            modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getApellidos(), p.getEmail(), p.getCodigo(), p.getActivo(), p.getPromedio(), p.getPrograma().getID()});
         }
     }
 }

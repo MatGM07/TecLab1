@@ -19,13 +19,14 @@ public class EliminarEstudiante extends JPanel {
         this.panelEstudiante = panelEstudiante;
 
         setLayout(new GridLayout(5, 1, 5, 5));
-        setBorder(new EmptyBorder(20, 20, 20, 20)); // Padding
+        setBorder(new EmptyBorder(20, 20, 20, 20)); 
 
         add(new JLabel("¿Está seguro de que desea eliminar esta estudiante?"));
 
         add(new JLabel("ID: " + estudiante.getID()));
+        add(new JLabel("Nombre: " + estudiante.getNombre()));
+        add(new JLabel("Apellido: " + estudiante.getApellidos()));
         add(new JLabel("Codigo: " + estudiante.getCodigo()));
-        add(new JLabel("Promedio: " + estudiante.getPromedio()));
 
         JPanel panelBotones = new JPanel();
         JButton btnEliminar = new JButton("Eliminar");

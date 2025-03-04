@@ -20,7 +20,6 @@ public class EstudianteService {
     }
 
     public void registrarEstudiante(Estudiante estudiante) {
-        personaService.registrarPersona(estudiante);
         estudianteDAO.insertar(estudiante);
     }
 
@@ -32,18 +31,8 @@ public class EstudianteService {
                 programaCompleto = programaService.obtenerPorId(estudiante.getPrograma().getID());
                 estudiante.setPrograma(programaCompleto);
             }
-            Integer persona_id = estudianteDAO.obtenerPersonaID(estudiante.getID());
-            Persona persona = personaService.obtenerPorId(persona_id);
-
-            estudiante.setNombre(persona.getNombre());
-            estudiante.setApellidos(persona.getApellidos());
-            estudiante.setEmail(persona.getEmail());
         }
         return estudiantes;
-    }
-
-    public Integer obtenerNumeroId(int id){
-        return estudianteDAO.obtenerPersonaID(id);
     }
 
     public Estudiante obtenerPorId(int id) {
@@ -53,13 +42,6 @@ public class EstudianteService {
             Programa programaCompleto = programaService.obtenerPorId(estudiante.getPrograma().getID());
             estudiante.setPrograma(programaCompleto);
         }
-
-        Integer persona_id = estudianteDAO.obtenerPersonaID(id);
-        Persona persona = personaService.obtenerPorId(persona_id);
-
-        estudiante.setNombre(persona.getNombre());
-        estudiante.setApellidos(persona.getApellidos());
-        estudiante.setEmail(persona.getEmail());
         return estudiante;
     }
 
