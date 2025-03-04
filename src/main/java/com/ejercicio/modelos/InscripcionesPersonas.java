@@ -1,14 +1,10 @@
 package com.ejercicio.modelos;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class InscripcionesPersonas {
     private List<Persona> listado = new ArrayList<>();
@@ -67,14 +63,16 @@ public class InscripcionesPersonas {
         }
     }
 
-    public void guardarInformacion(Persona persona){
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("Personas.txt", true));
-            writer.write("\n");
-            writer.write(persona.toString());
-            writer.write("\n");
-            writer.close();
-            System.out.println("Datos guardados exitosamente.");
+    public void guardarInformacion() {
+        File archivo = new File("Personas.txt");
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(archivo, false))) {
+            for (Persona persona : listado) {
+                writer.println("---------------------------");
+                writer.println(persona.toString());
+                writer.println("---------------------------");
+            }
+            System.out.println("Todas las personas fueron guardadas exitosamente.");
         } catch (IOException e) {
             System.out.println("Ocurrió un error al guardar el archivo: " + e.getMessage());
         }
@@ -112,5 +110,10 @@ public class InscripcionesPersonas {
         }
     }
 
+    public String imprimirPosicion(Integer posicion){
+        String contenidoPosicion = listado.get(posicion).toString();
+        System.out.println(contenidoPosicion);
+        return  contenidoPosicion;
+    }
 
 }

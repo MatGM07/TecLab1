@@ -1,4 +1,5 @@
 package com.ejercicio.gui.inscripcion;
+import com.ejercicio.modelos.CursosInscritos;
 import com.ejercicio.modelos.Inscripción;
 
 import javax.swing.*;
@@ -65,6 +66,12 @@ public class EditarInscripcion extends JPanel {
             inscripcion.setSemestre(semestre);
 
             inscripcionService.actualizarInscripcion(inscripcion);
+            CursosInscritos cursosInscritos = new CursosInscritos();
+            cursosInscritos.cargarDatos();
+            cursosInscritos.actualizar(inscripcion);
+            cursosInscritos.guardarInformacion();
+
+
             JOptionPane.showMessageDialog(this, "Inscripción actualizada correctamente");
             panelInscripcion.mostrarVistaPrincipal();
         } catch (Exception ex) {

@@ -1,6 +1,7 @@
 package com.ejercicio.gui.persona;
 
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.modelos.InscripcionesPersonas;
 import com.ejercicio.modelos.Persona;
 
 import javax.swing.*;
@@ -45,12 +46,12 @@ public class ListarPersonas extends JPanel {
     }
 
     private void cargarDatos() {
-
         modeloTabla.setRowCount(0);
 
-
         List<Persona> personas = personaService.obtenerTodasLasPersonas();
-
+        InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
+        inscripcionesPersonas.cargarDatos();
+        System.out.println(inscripcionesPersonas.getListado().toString());
 
         for (Persona p : personas) {
             modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getApellidos(), p.getEmail()});

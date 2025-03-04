@@ -2,15 +2,11 @@ package com.ejercicio.modelos;
 
 import com.ejercicio.DAOServicios.Servicios;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.HashMap;
@@ -149,11 +145,16 @@ public class CursosInscritos implements Servicios {
     }
 
 
-    public void guardarInformacion(Inscripción inscripcion) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Inscripciones.txt", true))) {
-            writer.write("---------------------------\n");
-            writer.write(inscripcion.toString() + "\n---------------------------\n");
-            System.out.println("Datos guardados exitosamente.");
+    public void guardarInformacion() {
+        File archivo = new File("Inscripciones.txt");
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(archivo, false))) {
+            for (Inscripción inscripcion : listado) {
+                writer.println("---------------------------");
+                writer.println(inscripcion.toString());
+                writer.println("---------------------------");
+            }
+            System.out.println("Todas las inscripciones fueron guardadas exitosamente.");
         } catch (IOException e) {
             System.out.println("Ocurrió un error al guardar el archivo: " + e.getMessage());
         }

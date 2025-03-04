@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.modelos.InscripcionesPersonas;
 import com.ejercicio.modelos.Persona;
 
 public class EditarPersona extends JPanel {
@@ -54,6 +55,11 @@ public class EditarPersona extends JPanel {
             persona.setEmail(txtEmail.getText());
 
             personaService.actualizarPersona(persona);
+            InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
+            inscripcionesPersonas.cargarDatos();
+            inscripcionesPersonas.actualizar(persona);
+            inscripcionesPersonas.guardarInformacion();
+
             JOptionPane.showMessageDialog(this, "Persona actualizada correctamente");
             panelPersona.mostrarVistaPrincipal();
         } catch (Exception ex) {

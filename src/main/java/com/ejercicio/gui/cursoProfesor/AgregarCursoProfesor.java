@@ -5,6 +5,7 @@ import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.DAOServicios.CursoProfesorService;
 import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.modelos.Curso;
+import com.ejercicio.modelos.CursosProfesores;
 import com.ejercicio.modelos.Profesor;
 import com.ejercicio.modelos.CursoProfesor;
 
@@ -80,6 +81,10 @@ public class AgregarCursoProfesor extends JPanel {
 
             CursoProfesor cursoProfesor = new CursoProfesor(profesor, año, semestre, curso);
             cursoProfesorService.registrarCursoProfesor(cursoProfesor);
+            CursosProfesores cursosProfesores = new CursosProfesores();
+            cursosProfesores.cargarDatos();
+            cursosProfesores.inscribir(cursoProfesor);
+            cursosProfesores.guardarInformacion();
 
             JOptionPane.showMessageDialog(this, "CursoProfesor registrado correctamente");
             limpiarCampos();

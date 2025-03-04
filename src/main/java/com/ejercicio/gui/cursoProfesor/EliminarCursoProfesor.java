@@ -3,6 +3,7 @@ package com.ejercicio.gui.cursoProfesor;
 import com.ejercicio.DAOServicios.CursoProfesorService;
 import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.modelos.CursoProfesor;
+import com.ejercicio.modelos.CursosProfesores;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -47,6 +48,11 @@ public class EliminarCursoProfesor extends JPanel {
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
                 cursoProfesorService.eliminarCursoProfesor(cursoProfesor.getProfesor().getID(),cursoProfesor.getCurso().getID());
+                CursosProfesores cursosProfesores = new CursosProfesores();
+                cursosProfesores.cargarDatos();
+                cursosProfesores.eliminar(cursoProfesor);
+                cursosProfesores.guardarInformacion();
+
                 JOptionPane.showMessageDialog(this, "CursoProfesor eliminada correctamente");
                 panelCursoProfesor.mostrarVistaPrincipal();
             } catch (Exception ex) {

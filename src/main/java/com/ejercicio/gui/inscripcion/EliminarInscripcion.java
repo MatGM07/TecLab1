@@ -1,5 +1,6 @@
 package com.ejercicio.gui.inscripcion;
 
+import com.ejercicio.modelos.CursosInscritos;
 import com.ejercicio.modelos.Inscripción;
 import com.ejercicio.DAOServicios.InscripcionService;
 import javax.swing.*;
@@ -45,6 +46,11 @@ public class EliminarInscripcion extends JPanel {
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
                 inscripcionService.eliminarInscripcion(inscripcion.getEstudiante().getID(),inscripcion.getCurso().getID());
+                CursosInscritos cursosInscritos = new CursosInscritos();
+                cursosInscritos.cargarDatos();
+                cursosInscritos.eliminar(inscripcion);
+                cursosInscritos.guardarInformacion();
+
                 JOptionPane.showMessageDialog(this, "Inscripción eliminada correctamente");
                 panelInscripcion.mostrarVistaPrincipal();
             } catch (Exception ex) {

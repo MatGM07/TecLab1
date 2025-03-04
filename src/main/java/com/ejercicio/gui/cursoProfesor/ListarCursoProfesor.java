@@ -3,6 +3,7 @@ package com.ejercicio.gui.cursoProfesor;
 import com.ejercicio.DAOServicios.CursoProfesorService;
 import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.modelos.CursoProfesor;
+import com.ejercicio.modelos.CursosProfesores;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -45,6 +46,9 @@ public class ListarCursoProfesor extends JPanel{
         modeloTabla.setRowCount(0);
 
         List<CursoProfesor> cursoProfesores = cursoProfesorService.obtenerTodosLosCursoProfesores();
+        CursosProfesores cursosProfesores = new CursosProfesores();
+        cursosProfesores.cargarDatos();
+        cursosProfesores.imprimirListado();
 
         for (CursoProfesor i : cursoProfesores) {
             modeloTabla.addRow(new Object[]{i.getProfesor().getID(), i.getCurso().getID(), i.getAño(), i.getSemestre()});

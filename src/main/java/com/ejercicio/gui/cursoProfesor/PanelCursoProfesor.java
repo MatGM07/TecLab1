@@ -9,6 +9,7 @@ import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
 import com.ejercicio.gui.cursoProfesor.*;
 import com.ejercicio.modelos.CursoProfesor;
+import com.ejercicio.modelos.CursosProfesores;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,6 +58,10 @@ public class PanelCursoProfesor extends PanelBase {
             int[] ids = obtenerIdsProfesorYCurso("consultar");
             if (ids != null) {
                 CursoProfesor cursoProfesor = cursoProfesorService.obtenerPorId(ids[0], ids[1]);
+                CursosProfesores cursosProfesores = new CursosProfesores();
+                cursosProfesores.cargarDatos();
+                cursosProfesores.imprimirPosicion(cursosProfesores.encontrar(cursoProfesor).get());
+
                 if (cursoProfesor != null) {
                     abrirConsultarCursoProfesor(cursoProfesor);
                 } else {

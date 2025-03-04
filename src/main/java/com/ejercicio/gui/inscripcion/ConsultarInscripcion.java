@@ -15,7 +15,7 @@ public class ConsultarInscripcion extends JPanel {
         this.panelInscripcion = panelInscripcion;
 
         setLayout(new GridLayout(6, 1, 5, 5));
-        setBorder(new EmptyBorder(20, 20, 20, 20)); // Padding
+        setBorder(new EmptyBorder(20, 20, 20, 20));
 
         add(new JLabel("Información de la Relación"));
 

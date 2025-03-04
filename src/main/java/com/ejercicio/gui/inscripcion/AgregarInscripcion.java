@@ -4,10 +4,7 @@ import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.DAOServicios.EstudianteService;
 import com.ejercicio.DAOServicios.InscripcionService;
 import com.ejercicio.gui.programa.PanelPrograma;
-import com.ejercicio.modelos.Curso;
-import com.ejercicio.modelos.Estudiante;
-import com.ejercicio.modelos.Inscripción;
-import com.ejercicio.modelos.Programa;
+import com.ejercicio.modelos.*;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -82,6 +79,10 @@ public class AgregarInscripcion extends JPanel {
 
             Inscripción inscripcion = new Inscripción(curso, año, semestre, estudiante);
             inscripcionService.registrarInscripcion(inscripcion);
+            CursosInscritos cursosInscritos = new CursosInscritos();
+            cursosInscritos.cargarDatos();
+            cursosInscritos.inscribirCurso(inscripcion);
+            cursosInscritos.guardarInformacion();
 
             JOptionPane.showMessageDialog(this, "Inscripción registrada correctamente");
             limpiarCampos();

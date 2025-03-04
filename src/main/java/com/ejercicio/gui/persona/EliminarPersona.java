@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.modelos.InscripcionesPersonas;
 import com.ejercicio.modelos.Persona;
 
 public class EliminarPersona extends JPanel {
@@ -43,6 +44,11 @@ public class EliminarPersona extends JPanel {
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
                 personaService.eliminarPersona(persona.getID());
+                InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
+                inscripcionesPersonas.cargarDatos();
+                inscripcionesPersonas.eliminar(persona);
+                inscripcionesPersonas.guardarInformacion();
+
                 JOptionPane.showMessageDialog(this, "Persona eliminada correctamente");
                 panelPersona.mostrarVistaPrincipal();
             } catch (Exception ex) {

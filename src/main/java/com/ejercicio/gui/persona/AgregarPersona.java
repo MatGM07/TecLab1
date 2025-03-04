@@ -1,6 +1,7 @@
 package com.ejercicio.gui.persona;
 
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.modelos.InscripcionesPersonas;
 import com.ejercicio.modelos.Persona;
 
 import javax.swing.*;
@@ -50,6 +51,12 @@ public class AgregarPersona extends JPanel {
 
             Persona persona = new Persona(null, nombre, apellidos, email);
             personaService.registrarPersona(persona);
+
+            InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
+            inscripcionesPersonas.cargarDatos();
+            inscripcionesPersonas.inscribir(persona);
+            inscripcionesPersonas.guardarInformacion();
+
             JOptionPane.showMessageDialog(this, "Persona registrada correctamente");
             limpiarCampos();
         } catch (Exception ex) {

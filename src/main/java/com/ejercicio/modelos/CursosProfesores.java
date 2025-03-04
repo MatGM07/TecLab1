@@ -4,10 +4,7 @@ import com.ejercicio.DAOServicios.Servicios;
 
 import java.io.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class CursosProfesores implements Servicios {
@@ -29,6 +26,17 @@ public class CursosProfesores implements Servicios {
 
     public void inscribir(CursoProfesor cursoProfesor){
         listado.add(cursoProfesor);
+    }
+
+    public Optional<Integer> encontrar(CursoProfesor cursoProfesor) {
+        for (Integer i = 0; i < listado.size(); i++) {
+            if (Objects.equals(listado.get(i).getCurso().getID(), cursoProfesor.getCurso().getID()) &&
+                    Objects.equals(listado.get(i).getProfesor().getID(), cursoProfesor.getProfesor().getID())) {
+                return Optional.of(i);
+            }
+        }
+        System.out.println("CursoProfesor no encontrada");
+        return Optional.empty();
     }
 
     public void cargarDatos() {
@@ -99,6 +107,26 @@ public class CursosProfesores implements Servicios {
         }
     }
 
+    public void actualizar(CursoProfesor cursoProfesor) {
+        Optional<Integer> posicionObjetivo = encontrar(cursoProfesor);
+        if (posicionObjetivo.isPresent()) {
+            CursoProfesor cursoProfesorActualizada = listado.get(posicionObjetivo.get());
+            cursoProfesorActualizada.setAño(cursoProfesor.getAño());
+            cursoProfesorActualizada.setSemestre(cursoProfesor.getSemestre());
+        } else {
+            System.out.println("CursoProfesor a actualizar no encontrada");
+        }
+    }
+
+    public void eliminar(CursoProfesor cursoProfesor) {
+        Optional<Integer> posicionObjetivo = encontrar(cursoProfesor);
+        if (posicionObjetivo.isPresent()) {
+            listado.remove(posicionObjetivo.get().intValue());
+        } else {
+            System.out.println("CursoProfesor no eliminada");
+        }
+    }
+
     private void asignarRelaciones(
             CursoProfesor cursoProfesorActual, Profesor profesorActual, Curso cursoActual,
             Programa programaActual, Facultad facultadActual, Persona decanoActual
@@ -111,14 +139,16 @@ public class CursosProfesores implements Servicios {
         listado.add(cursoProfesorActual);
     }
 
-    public void guardarInformacion(CursoProfesor cursoProfesor){
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("CursosProfesores.txt", true));
-            writer.write("---------------------------\n");
-            writer.write(cursoProfesor.toString());
-            writer.write("\n---------------------------\n");
-            writer.close();
-            System.out.println("Datos guardados exitosamente.");
+    public void guardarInformacion() {
+        File archivo = new File("CursosProfesores.txt");
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(archivo, false))) {
+            for (CursoProfesor cursoProfesor : listado) {
+                writer.println("---------------------------");
+                writer.println(cursoProfesor.toString());
+                writer.println("---------------------------");
+            }
+            System.out.println("Todas las inscripciones fueron guardadas exitosamente.");
         } catch (IOException e) {
             System.out.println("Ocurrió un error al guardar el archivo: " + e.getMessage());
         }

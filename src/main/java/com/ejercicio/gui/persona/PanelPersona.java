@@ -6,6 +6,7 @@ import java.sql.Connection;
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.PersonaService;
 import com.ejercicio.gui.*;
+import com.ejercicio.modelos.InscripcionesPersonas;
 import com.ejercicio.modelos.Persona;
 
 public class PanelPersona extends PanelBase {
@@ -62,6 +63,9 @@ public class PanelPersona extends PanelBase {
                 try {
                     int id = Integer.parseInt(idStr.trim());
                     Persona persona = personaService.obtenerPorId(id);
+                    InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
+                    inscripcionesPersonas.cargarDatos();
+                    inscripcionesPersonas.imprimirPosicion(inscripcionesPersonas.encontrar(persona).get());
 
                     if (persona != null) {
                         abrirConsultarPersona(persona);

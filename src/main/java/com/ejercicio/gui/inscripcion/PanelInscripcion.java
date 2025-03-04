@@ -8,6 +8,7 @@ import com.ejercicio.DAOServicios.InscripcionService;
 import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
 import com.ejercicio.gui.inscripcion.*;
+import com.ejercicio.modelos.CursosInscritos;
 import com.ejercicio.modelos.Inscripción;
 
 import javax.swing.*;
@@ -57,6 +58,9 @@ public class PanelInscripcion extends PanelBase {
             int[] ids = obtenerIdsEstudianteYCurso("consultar");
             if (ids != null) {
                 Inscripción inscripcion = inscripcionService.obtenerPorId(ids[0], ids[1]);
+                CursosInscritos cursosInscritos = new CursosInscritos();
+                cursosInscritos.cargarDatos();
+                cursosInscritos.imprimirPosicion(cursosInscritos.encontrar(inscripcion).get());
                 if (inscripcion != null) {
                     abrirConsultarInscripcion(inscripcion);
                 } else {

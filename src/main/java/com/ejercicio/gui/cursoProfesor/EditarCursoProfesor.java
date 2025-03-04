@@ -3,6 +3,7 @@ package com.ejercicio.gui.cursoProfesor;
 import com.ejercicio.DAOServicios.CursoProfesorService;
 import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.modelos.CursoProfesor;
+import com.ejercicio.modelos.CursosProfesores;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -67,6 +68,10 @@ public class EditarCursoProfesor extends JPanel {
             cursoProfesor.setSemestre(semestre);
 
             cursoProfesorService.actualizarCursoProfesor(cursoProfesor);
+            CursosProfesores cursosProfesores = new CursosProfesores();
+            cursosProfesores.cargarDatos();
+            cursosProfesores.actualizar(cursoProfesor);
+
             JOptionPane.showMessageDialog(this, "CursoProfesor actualizada correctamente");
             panelCursoProfesor.mostrarVistaPrincipal();
         } catch (Exception ex) {

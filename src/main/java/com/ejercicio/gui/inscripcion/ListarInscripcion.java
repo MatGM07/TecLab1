@@ -2,6 +2,7 @@ package com.ejercicio.gui.inscripcion;
 
 import com.ejercicio.DAOServicios.InscripcionService;
 import com.ejercicio.gui.inscripcion.PanelInscripcion;
+import com.ejercicio.modelos.CursosInscritos;
 import com.ejercicio.modelos.Inscripción;
 
 import javax.swing.*;
@@ -45,6 +46,9 @@ public class ListarInscripcion extends JPanel {
         modeloTabla.setRowCount(0);
 
         List<Inscripción> inscripciones = inscripcionService.obtenerTodasLasInscripciones();
+        CursosInscritos cursosInscritos = new CursosInscritos();
+        cursosInscritos.cargarDatos();
+        cursosInscritos.imprimirListado();
 
         for (Inscripción i : inscripciones) {
             modeloTabla.addRow(new Object[]{i.getEstudiante().getID(), i.getCurso().getID(), i.getAño(), i.getSemestre()});
