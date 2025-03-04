@@ -19,7 +19,7 @@ public class ConsultarEstudiante extends JPanel {
         setLayout(new GridLayout(6, 1, 5, 5));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(new JLabel("Información de la Estudiante"));
+        add(new JLabel("Información del Estudiante"));
 
         add(new JLabel("ID: " + estudiante.getID()));
         add(new JLabel("Nombres: " + estudiante.getNombre()));

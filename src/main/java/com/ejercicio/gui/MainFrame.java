@@ -2,6 +2,7 @@ package com.ejercicio.gui;
 import com.ejercicio.gui.estudiante.PanelEstudiante;
 import com.ejercicio.gui.facultad.PanelFacultad;
 import com.ejercicio.gui.persona.PanelPersona;
+import com.ejercicio.gui.profesor.PanelProfesor;
 import com.ejercicio.gui.programa.PanelPrograma;
 
 import javax.swing.*;
@@ -51,7 +52,7 @@ public class MainFrame extends JFrame {
         // Agregar eventos para abrir pestañas
         btnPersona.addActionListener(e -> agregarNuevaPestaña(new PanelPersona(this), "Persona " + (++tabCount)));
         btnEstudiante.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Estudiante " + (++tabCount)));
-        btnProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Profesor " + (++tabCount)));
+        btnProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelProfesor(this), "Profesor " + (++tabCount)));
         btnFacultad.addActionListener(e -> agregarNuevaPestaña(new PanelFacultad(this), "Facultad " + (++tabCount)));
         btnPrograma.addActionListener(e -> agregarNuevaPestaña(new PanelPrograma(this), "Programa " + (++tabCount)));
         btnCurso.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Curso " + (++tabCount)));

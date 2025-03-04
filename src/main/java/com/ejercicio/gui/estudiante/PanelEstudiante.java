@@ -16,7 +16,6 @@ import java.sql.Connection;
 
 public class PanelEstudiante extends PanelBase {
     private EstudianteService estudianteService;
-    private PersonaService personaService;
     private ProgramaService programaService;
 
     public PanelEstudiante(MainFrame mainFrame) {
@@ -24,7 +23,6 @@ public class PanelEstudiante extends PanelBase {
 
         Connection connection = ConexionDB.obtenerConexion();
         this.estudianteService = new EstudianteService(connection);
-        this.personaService = new PersonaService(connection);
         this.programaService = new ProgramaService(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarEstudiante());

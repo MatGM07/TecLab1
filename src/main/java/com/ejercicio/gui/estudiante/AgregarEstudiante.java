@@ -17,7 +17,6 @@ public class AgregarEstudiante extends JPanel {
     private JCheckBox chkActivo;
     private JButton btnGuardar, btnCancelar, btnVolver;
     private EstudianteService estudianteService;
-    private PersonaService personaService;
     private PanelEstudiante panelEstudiante;
     private ProgramaService programaService;
 

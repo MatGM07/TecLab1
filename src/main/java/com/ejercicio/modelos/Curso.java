@@ -13,6 +13,13 @@ public class Curso{
         this.nombre = nombre;
     }
 
+    public Curso(Integer ID, Boolean activo, Integer programa_id, String nombre) {
+        this.ID = ID;
+        this.activo = activo;
+        this.programa = new Programa(programa_id, null, null, null, -1);
+        this.nombre = nombre;
+    }
+
     public Curso(){
     }
 

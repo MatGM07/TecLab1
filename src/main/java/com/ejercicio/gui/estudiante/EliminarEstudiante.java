@@ -19,9 +19,9 @@ public class EliminarEstudiante extends JPanel {
         this.panelEstudiante = panelEstudiante;
 
         setLayout(new GridLayout(5, 1, 5, 5));
-        setBorder(new EmptyBorder(20, 20, 20, 20)); 
+        setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(new JLabel("¿Está seguro de que desea eliminar esta estudiante?"));
+        add(new JLabel("¿Está seguro de que desea eliminar este estudiante?"));
 
         add(new JLabel("ID: " + estudiante.getID()));
         add(new JLabel("Nombre: " + estudiante.getNombre()));
@@ -41,15 +41,15 @@ public class EliminarEstudiante extends JPanel {
     }
 
     private void eliminarEstudiante() {
-        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar esta estudiante?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este estudiante?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
                 estudianteService.eliminarEstudiante(estudiante.getID());
-                JOptionPane.showMessageDialog(this, "Estudiante eliminada correctamente");
+                JOptionPane.showMessageDialog(this, "Estudiante eliminado correctamente");
                 panelEstudiante.mostrarVistaPrincipal();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error al eliminar la estudiante: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al eliminar al estudiante: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
