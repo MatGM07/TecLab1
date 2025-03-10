@@ -3,6 +3,8 @@ package com.ejercicio.gui.estudiante;
 import com.ejercicio.DAOServicios.EstudianteService;
 import com.ejercicio.DAOServicios.PersonaService;
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.EstudianteController;
+import com.ejercicio.controlador.ProgramaController;
 import com.ejercicio.gui.estudiante.PanelEstudiante;
 import com.ejercicio.modelos.Estudiante;
 import com.ejercicio.modelos.Persona;
@@ -11,44 +13,42 @@ import com.ejercicio.modelos.Programa;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 public class EditarEstudiante extends JPanel {
     private JTextField txtNombre, txtCodigo, txtApellidos, txtEmail, txtProgramaId, txtPromedio;
     private JCheckBox chkActivo;
     private JButton btnGuardar, btnCancelar;
-    private EstudianteService estudianteService;
-    private ProgramaService programaService;
+    private EstudianteController estudianteController;
     private PanelEstudiante panelEstudiante;
-    private Estudiante estudiante;
 
-    public EditarEstudiante(Estudiante estudiante, EstudianteService estudianteService, ProgramaService programaService, PanelEstudiante panelEstudiante) {
-        this.estudiante = estudiante;
-        this.estudianteService = estudianteService;
-        this.programaService = programaService;
+    public EditarEstudiante(Integer id, EstudianteController estudianteController, PanelEstudiante panelEstudiante) {
+        List<String> datosEstudiantes = estudianteController.obtenerPorId(id);
+        this.estudianteController = estudianteController;
         this.panelEstudiante = panelEstudiante;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(createFieldPanel("ID:", new JTextField(String.valueOf(estudiante.getID()), 20), false));
-        txtNombre = new JTextField(String.valueOf(estudiante.getNombre()), 20);
+        add(createFieldPanel("ID:", new JTextField(String.valueOf(id), 20), false));
+        txtNombre = new JTextField(datosEstudiantes.get(0), 20);
         add(createFieldPanel("Nombres:", txtNombre, true));
-        txtApellidos = new JTextField(String.valueOf(estudiante.getApellidos()), 20);
+        txtApellidos = new JTextField(datosEstudiantes.get(1), 20);
         add(createFieldPanel("Apellidos:", txtApellidos, true));
-        txtEmail = new JTextField(String.valueOf(estudiante.getEmail()), 20);
+        txtEmail = new JTextField(datosEstudiantes.get(2), 20);
         add(createFieldPanel("Email:", txtEmail, true));
-        txtCodigo = new JTextField(String.valueOf(estudiante.getCodigo()), 20);
+        txtCodigo = new JTextField(datosEstudiantes.get(3), 20);
         add(createFieldPanel("Código:", txtCodigo, true));
-        chkActivo = new JCheckBox("Activo", estudiante.getActivo());
+        chkActivo = new JCheckBox("Activo", Boolean.parseBoolean(datosEstudiantes.get(4)));
         add(createCheckBoxPanel("Activo:", chkActivo));
-        txtProgramaId = new JTextField(String.valueOf(estudiante.getPrograma().getID()), 20);
+        txtProgramaId = new JTextField(datosEstudiantes.get(5), 20);
         add(createFieldPanel("ID Programa:", txtProgramaId, true));
-        txtPromedio = new JTextField(String.valueOf(estudiante.getPromedio()), 20);
+        txtPromedio = new JTextField(datosEstudiantes.get(6), 20);
         add(createFieldPanel("Promedio:", txtPromedio, true));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnGuardar = new JButton("Guardar Cambios");
-        btnGuardar.addActionListener(e -> guardarCambios());
+        btnGuardar.addActionListener(e -> guardarCambios(id));
         buttonPanel.add(btnGuardar);
 
         btnCancelar = new JButton("Cancelar");
@@ -75,18 +75,18 @@ public class EditarEstudiante extends JPanel {
         return panel;
     }
 
-    private void guardarCambios() {
+    private void guardarCambios(Integer id) {
         try {
-            estudiante.setNombre(txtNombre.getText());
-            estudiante.setApellidos(txtApellidos.getText());
-            estudiante.setEmail(txtEmail.getText());
-            estudiante.setCodigo(Double.parseDouble(txtCodigo.getText()));
-            estudiante.setActivo(chkActivo.isSelected());
-            Programa programa = programaService.obtenerPorId(Integer.parseInt(txtProgramaId.getText()));
-            estudiante.setPrograma(programa);
-            estudiante.setPromedio(Double.parseDouble(txtPromedio.getText()));
+            String nombre = txtNombre.getText();
+            String apellidos = txtApellidos.getText();
+            String email = txtEmail.getText();
+            Double codigo = Double.valueOf(txtCodigo.getText());
+            Boolean activo = chkActivo.isSelected();
+            Integer programa_id = Integer.valueOf(txtProgramaId.getText());
+            Double promedio = Double.valueOf(txtPromedio.getText());
 
-            estudianteService.actualizarEstudiante(estudiante);
+            estudianteController.actualizar(id,nombre,apellidos,email,codigo,programa_id,activo,promedio);
+
             JOptionPane.showMessageDialog(this, "Estudiante actualizado correctamente");
             panelEstudiante.mostrarVistaPrincipal();
         } catch (Exception ex) {

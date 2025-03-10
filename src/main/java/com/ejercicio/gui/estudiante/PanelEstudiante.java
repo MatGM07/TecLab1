@@ -4,6 +4,8 @@ import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.EstudianteService;
 import com.ejercicio.DAOServicios.PersonaService;
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.EstudianteController;
+import com.ejercicio.controlador.ProgramaController;
 import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
 import com.ejercicio.gui.estudiante.*;
@@ -15,15 +17,15 @@ import java.awt.*;
 import java.sql.Connection;
 
 public class PanelEstudiante extends PanelBase {
-    private EstudianteService estudianteService;
-    private ProgramaService programaService;
+    private EstudianteController estudianteController;
+    private ProgramaController programaController;
 
     public PanelEstudiante(MainFrame mainFrame) {
         super(mainFrame);
 
         Connection connection = ConexionDB.obtenerConexion();
-        this.estudianteService = new EstudianteService(connection);
-        this.programaService = new ProgramaService(connection);
+        this.estudianteController = new EstudianteController(connection);
+        this.programaController = new ProgramaController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarEstudiante());
 
@@ -32,9 +34,9 @@ public class PanelEstudiante extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Estudiante estudiante = estudianteService.obtenerPorId(id);
-                    if (estudiante != null) {
-                        abrirEditarEstudiante(estudiante);
+                    Boolean existe = estudianteController.existe(id);
+                    if (existe) {
+                        abrirEditarEstudiante(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una estudiante con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -50,10 +52,10 @@ public class PanelEstudiante extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Estudiante estudiante = estudianteService.obtenerPorId(id);
+                    Boolean existe = estudianteController.existe(id);
 
-                    if (estudiante != null) {
-                        abrirEliminarEstudiante(estudiante);
+                    if (existe) {
+                        abrirEliminarEstudiante(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una estudiante con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -69,10 +71,10 @@ public class PanelEstudiante extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Estudiante estudiante = estudianteService.obtenerPorId(id);
+                    Boolean existe = estudianteController.existe(id);
 
-                    if (estudiante != null) {
-                        abrirConsultarEstudiante(estudiante);
+                    if (existe) {
+                        abrirConsultarEstudiante(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una estudiante con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -86,7 +88,7 @@ public class PanelEstudiante extends PanelBase {
     }
 
     private void abrirAgregarEstudiante() {
-        AgregarEstudiante agregarEstudiante = new AgregarEstudiante(estudianteService, programaService,this);
+        AgregarEstudiante agregarEstudiante = new AgregarEstudiante(estudianteController,this);
         removeAll();
         setLayout(new BorderLayout());
         add(agregarEstudiante, BorderLayout.CENTER);
@@ -113,7 +115,7 @@ public class PanelEstudiante extends PanelBase {
     }
 
     private void abrirListarEstudiantees() {
-        ListarEstudiante listarEstudiantes = new ListarEstudiante(estudianteService, this);
+        ListarEstudiante listarEstudiantes = new ListarEstudiante(estudianteController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(listarEstudiantes, BorderLayout.CENTER);
@@ -121,8 +123,8 @@ public class PanelEstudiante extends PanelBase {
         repaint();
     }
 
-    private void abrirEditarEstudiante(Estudiante estudiante) {
-        EditarEstudiante editarEstudiante = new EditarEstudiante(estudiante, estudianteService, programaService,this);
+    private void abrirEditarEstudiante(Integer id) {
+        EditarEstudiante editarEstudiante = new EditarEstudiante(id, estudianteController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(editarEstudiante, BorderLayout.CENTER);
@@ -130,8 +132,8 @@ public class PanelEstudiante extends PanelBase {
         repaint();
     }
 
-    private void abrirEliminarEstudiante(Estudiante estudiante) {
-        EliminarEstudiante eliminarEstudiante = new EliminarEstudiante(estudiante, estudianteService, this);
+    private void abrirEliminarEstudiante(Integer id) {
+        EliminarEstudiante eliminarEstudiante = new EliminarEstudiante(id, estudianteController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(eliminarEstudiante, BorderLayout.CENTER);
@@ -139,8 +141,8 @@ public class PanelEstudiante extends PanelBase {
         repaint();
     }
 
-    private void abrirConsultarEstudiante(Estudiante estudiante) {
-        ConsultarEstudiante consultarEstudiante = new ConsultarEstudiante(estudiante, this);
+    private void abrirConsultarEstudiante(Integer id) {
+        ConsultarEstudiante consultarEstudiante = new ConsultarEstudiante(id, estudianteController,this);
         removeAll();
         setLayout(new BorderLayout());
         add(consultarEstudiante, BorderLayout.CENTER);

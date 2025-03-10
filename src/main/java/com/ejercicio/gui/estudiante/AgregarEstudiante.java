@@ -3,6 +3,7 @@ package com.ejercicio.gui.estudiante;
 import com.ejercicio.DAOServicios.EstudianteService;
 import com.ejercicio.DAOServicios.PersonaService;
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.EstudianteController;
 import com.ejercicio.gui.estudiante.PanelEstudiante;
 import com.ejercicio.modelos.Estudiante;
 import com.ejercicio.modelos.Persona;
@@ -16,13 +17,12 @@ public class AgregarEstudiante extends JPanel {
     private JTextField txtNombre, txtCodigo, txtApellidos, txtEmail, txtPrograma_id, txtPromedio;
     private JCheckBox chkActivo;
     private JButton btnGuardar, btnCancelar, btnVolver;
-    private EstudianteService estudianteService;
+    private EstudianteController estudianteController;
     private PanelEstudiante panelEstudiante;
-    private ProgramaService programaService;
 
-    public AgregarEstudiante(EstudianteService estudianteService, ProgramaService programaService, PanelEstudiante panelEstudiante) {
-        this.estudianteService = estudianteService;
-        this.programaService = programaService;
+    public AgregarEstudiante(EstudianteController estudianteController, PanelEstudiante panelEstudiante) {
+
+        this.estudianteController = estudianteController;
         this.panelEstudiante = panelEstudiante;
 
         setLayout(new GridLayout(8, 2, 5, 5));
@@ -74,13 +74,11 @@ public class AgregarEstudiante extends JPanel {
             String email = String.valueOf(txtEmail.getText());
             Double codigo = Double.valueOf(txtCodigo.getText());
             Integer programa_id = Integer.valueOf(txtPrograma_id.getText());
-            Programa programa = programaService.obtenerPorId(programa_id);
             boolean activo = chkActivo.isSelected();
             Double promedio = Double.valueOf(txtPromedio.getText());
 
-            Estudiante estudiante = new Estudiante(null,nombres,apellidos,email,codigo,programa,activo,promedio);
+            estudianteController.agregar(nombres,apellidos,email,codigo,programa_id,activo,promedio);
 
-            estudianteService.registrarEstudiante(estudiante);
             JOptionPane.showMessageDialog(this, "Estudiante registrada correctamente");
             limpiarCampos();
         } catch (Exception ex) {

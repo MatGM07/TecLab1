@@ -3,6 +3,7 @@ package com.ejercicio.gui.estudiante;
 
 import com.ejercicio.DAOServicios.EstudianteService;
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.controlador.EstudianteController;
 import com.ejercicio.gui.estudiante.PanelEstudiante;
 import com.ejercicio.modelos.Estudiante;
 
@@ -13,14 +14,14 @@ import java.awt.*;
 import java.util.List;
 
 public class ListarEstudiante extends JPanel {
-    private EstudianteService estudianteService;
+    private EstudianteController estudianteController;
     private PanelEstudiante panelEstudiante;
     private JTable tablaEstudiantes;
     private DefaultTableModel modeloTabla;
     private JButton btnVolver;
 
-    public ListarEstudiante(EstudianteService estudianteService, PanelEstudiante panelEstudiante) {
-        this.estudianteService = estudianteService;
+    public ListarEstudiante(EstudianteController estudianteController, PanelEstudiante panelEstudiante) {
+        this.estudianteController = estudianteController;
         this.panelEstudiante = panelEstudiante;
 
         setLayout(new BorderLayout());
@@ -46,13 +47,11 @@ public class ListarEstudiante extends JPanel {
     }
 
     private void cargarDatos() {
-
         modeloTabla.setRowCount(0);
+        List<List<String>> estudiantes = estudianteController.obtenerTodosLosEstudiantes();
 
-        List<Estudiante> estudiantes = estudianteService.obtenerTodosLosEstudiantes();
-
-        for (Estudiante p : estudiantes) {
-            modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getApellidos(), p.getEmail(), p.getCodigo(), p.getActivo(), p.getPromedio(), p.getPrograma().getID()});
+        for (List<String> e : estudiantes) {
+            modeloTabla.addRow(new Object[]{e.get(0), e.get(1), e.get(2), e.get(3), e.get(4), e.get(5), e.get(6), e.get(7)});
         }
     }
 }
