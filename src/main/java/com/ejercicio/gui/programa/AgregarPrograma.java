@@ -1,6 +1,7 @@
 package com.ejercicio.gui.programa;
 
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.ProgramaController;
 import com.ejercicio.gui.programa.PanelPrograma;
 import com.ejercicio.modelos.Programa;
 import com.toedter.calendar.JDateChooser;
@@ -11,14 +12,14 @@ import java.awt.*;
 import java.sql.Date;
 
 public class AgregarPrograma extends JPanel{
-    private JTextField txtNombre, txtDuracion, txtFecha, txtFacultad_ID;
+    private JTextField txtNombre, txtDuracion, txtFacultad_ID;
     private JButton btnGuardar, btnCancelar, btnVolver;
-    private ProgramaService programaService;
+    private ProgramaController programaController;
     private JDateChooser dateChooser;
     private PanelPrograma panelPrograma;
 
-    public AgregarPrograma(ProgramaService programaService, PanelPrograma panelPrograma) {
-        this.programaService = programaService;
+    public AgregarPrograma(ProgramaController programaController, PanelPrograma panelPrograma) {
+        this.programaController = programaController;
         this.panelPrograma = panelPrograma;
 
         setLayout(new GridLayout(8, 2, 5, 5));
@@ -64,8 +65,8 @@ public class AgregarPrograma extends JPanel{
             java.sql.Date registro = new java.sql.Date(fechaUtil.getTime());
             Integer facultad_id = Integer.valueOf(txtFacultad_ID.getText());
 
-            Programa programa = new Programa(null,nombre,duracion,registro,facultad_id);
-            programaService.registrarPrograma(programa);
+            programaController.agregar(nombre,duracion,registro,facultad_id);
+
             JOptionPane.showMessageDialog(this, "Programa registrado correctamente");
             limpiarCampos();
         } catch (Exception ex) {

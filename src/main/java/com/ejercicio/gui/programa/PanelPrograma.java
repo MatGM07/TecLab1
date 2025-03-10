@@ -3,6 +3,7 @@ package com.ejercicio.gui.programa;
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.FacultadService;
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.ProgramaController;
 import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
 import com.ejercicio.gui.programa.*;
@@ -13,14 +14,14 @@ import java.awt.*;
 import java.sql.Connection;
 
 public class PanelPrograma extends PanelBase {
-    private ProgramaService programaService;
+    private ProgramaController programaController;
     private FacultadService facultadService;
 
     public PanelPrograma(MainFrame mainFrame) {
         super(mainFrame);
 
         Connection connection = ConexionDB.obtenerConexion();
-        this.programaService = new ProgramaService(connection);
+        this.programaController = new ProgramaController(connection);
         this.facultadService = new FacultadService(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarPrograma());
@@ -30,9 +31,9 @@ public class PanelPrograma extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Programa programa = programaService.obtenerPorId(id);
-                    if (programa != null) {
-                        abrirEditarPrograma(programa);
+                    Boolean existe = programaController.existe(id);
+                    if (existe) {
+                        abrirEditarPrograma(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una programa con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -48,10 +49,10 @@ public class PanelPrograma extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Programa programa = programaService.obtenerPorId(id);
+                    Boolean existe = programaController.existe(id);
 
-                    if (programa != null) {
-                        abrirEliminarPrograma(programa);
+                    if (existe) {
+                        abrirEliminarPrograma(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una programa con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -67,10 +68,10 @@ public class PanelPrograma extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Programa programa = programaService.obtenerPorId(id);
+                    Boolean existe = programaController.existe(id);
 
-                    if (programa != null) {
-                        abrirConsultarPrograma(programa);
+                    if (existe) {
+                        abrirConsultarPrograma(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró un programa con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -84,7 +85,7 @@ public class PanelPrograma extends PanelBase {
     }
 
     private void abrirAgregarPrograma() {
-        AgregarPrograma agregarPrograma = new AgregarPrograma(programaService, this);
+        AgregarPrograma agregarPrograma = new AgregarPrograma(programaController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(agregarPrograma, BorderLayout.CENTER);
@@ -111,7 +112,7 @@ public class PanelPrograma extends PanelBase {
     }
 
     private void abrirListarProgramas() {
-        ListarPrograma listarProgramas = new ListarPrograma(programaService, this);
+        ListarPrograma listarProgramas = new ListarPrograma(programaController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(listarProgramas, BorderLayout.CENTER);
@@ -119,8 +120,8 @@ public class PanelPrograma extends PanelBase {
         repaint();
     }
 
-    private void abrirEditarPrograma(Programa programa) {
-        EditarPrograma editarPrograma = new EditarPrograma(programa, programaService, facultadService,this);
+    private void abrirEditarPrograma(Integer id) {
+        EditarPrograma editarPrograma = new EditarPrograma(id, programaController,this);
         removeAll();
         setLayout(new BorderLayout());
         add(editarPrograma, BorderLayout.CENTER);
@@ -128,8 +129,8 @@ public class PanelPrograma extends PanelBase {
         repaint();
     }
 
-    private void abrirEliminarPrograma(Programa programa) {
-        EliminarPrograma eliminarPrograma = new EliminarPrograma(programa, programaService, this);
+    private void abrirEliminarPrograma(Integer id) {
+        EliminarPrograma eliminarPrograma = new EliminarPrograma(id, programaController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(eliminarPrograma, BorderLayout.CENTER);
@@ -137,8 +138,8 @@ public class PanelPrograma extends PanelBase {
         repaint();
     }
 
-    private void abrirConsultarPrograma(Programa programa) {
-        ConsultarPrograma consultarPrograma = new ConsultarPrograma(programa, this);
+    private void abrirConsultarPrograma(Integer id) {
+        ConsultarPrograma consultarPrograma = new ConsultarPrograma(id, programaController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(consultarPrograma, BorderLayout.CENTER);

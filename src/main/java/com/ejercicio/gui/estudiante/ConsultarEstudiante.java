@@ -17,7 +17,7 @@ public class ConsultarEstudiante extends JPanel {
     public ConsultarEstudiante(Integer id, EstudianteController estudianteController, PanelEstudiante panelEstudiante) {
         this.panelEstudiante = panelEstudiante;
         this.estudianteController = estudianteController;
-        List<String> datosEstudiante = estudianteController.obtenerPorId(id);
+        List<String> datosEstudiante = estudianteController.obtenerDatosPorId(id);
 
         setLayout(new GridLayout(6, 1, 5, 5));
         setBorder(new EmptyBorder(20, 20, 20, 20));

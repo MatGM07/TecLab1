@@ -23,7 +23,7 @@ public class EditarEstudiante extends JPanel {
     private PanelEstudiante panelEstudiante;
 
     public EditarEstudiante(Integer id, EstudianteController estudianteController, PanelEstudiante panelEstudiante) {
-        List<String> datosEstudiantes = estudianteController.obtenerPorId(id);
+        List<String> datosEstudiantes = estudianteController.obtenerDatosPorId(id);
         this.estudianteController = estudianteController;
         this.panelEstudiante = panelEstudiante;
 

@@ -1,6 +1,7 @@
 package com.ejercicio.gui.programa;
 
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.ProgramaController;
 import com.ejercicio.gui.programa.PanelPrograma;
 import com.ejercicio.modelos.Programa;
 
@@ -11,14 +12,14 @@ import java.awt.*;
 import java.util.List;
 
 public class ListarPrograma extends JPanel {
-    private ProgramaService programaService;
+    private ProgramaController programaController;
     private PanelPrograma panelPrograma;
     private JTable tablaProgramas;
     private DefaultTableModel modeloTabla;
     private JButton btnVolver;
 
-    public ListarPrograma(ProgramaService programaService, PanelPrograma panelPrograma) {
-        this.programaService = programaService;
+    public ListarPrograma(ProgramaController programaController, PanelPrograma panelPrograma) {
+        this.programaController = programaController;
         this.panelPrograma = panelPrograma;
 
         setLayout(new BorderLayout());
@@ -48,10 +49,10 @@ public class ListarPrograma extends JPanel {
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
 
-        List<Programa> programas = programaService.obtenerTodosLosProgramas();
+        List<List<String>> programas = programaController.obtenerTodosLosProgramas();
 
-        for (Programa p : programas) {
-            modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getDuracion(), p.getRegistro(), p.getFacultad().getID()});
+        for (List<String> p : programas) {
+            modeloTabla.addRow(new Object[]{p.get(0), p.get(1), p.get(2), p.get(3), p.get(4)});
         }
     }
 }

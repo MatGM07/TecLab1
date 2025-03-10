@@ -2,6 +2,7 @@ package com.ejercicio.gui.programa;
 
 import com.ejercicio.DAOServicios.FacultadService;
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.ProgramaController;
 import com.ejercicio.gui.programa.PanelPrograma;
 import com.ejercicio.modelos.Facultad;
 import com.ejercicio.modelos.Programa;
@@ -11,43 +12,52 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class EditarPrograma extends JPanel {
     private JTextField txtNombre, txtDuracion, txtFacultad_id;
     private JButton btnGuardar, btnCancelar;
     private JDateChooser dateChooserRegistro;
-    private ProgramaService programaService;
-    private FacultadService facultadService;
+    private ProgramaController programaController;
     private PanelPrograma panelPrograma;
-    private Programa programa;
 
-    public EditarPrograma(Programa programa, ProgramaService programaService, FacultadService facultadService, PanelPrograma panelPrograma) {
-        this.programa = programa;
-        this.programaService = programaService;
-        this.facultadService = facultadService;
+
+    public EditarPrograma(Integer id, ProgramaController programaController, PanelPrograma panelPrograma) {
+        this.programaController = programaController;
         this.panelPrograma = panelPrograma;
+
+        List<String> datosPrograma = programaController.obtenerDatosPorId(id);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(createFieldPanel("ID:", new JTextField(String.valueOf(programa.getID()), 20), false));
-        txtNombre = new JTextField(programa.getNombre(), 20);
+        add(createFieldPanel("ID:", new JTextField(String.valueOf(id), 20), false));
+        txtNombre = new JTextField(datosPrograma.get(0), 20);
         add(createFieldPanel("Nombre:", txtNombre, true));
-        txtDuracion = new JTextField(String.valueOf(programa.getDuracion()), 20);
+        txtDuracion = new JTextField(String.valueOf(datosPrograma.get(1)), 20);
         add(createFieldPanel("Duración:", txtDuracion, true));
 
         dateChooserRegistro = new JDateChooser();
-        dateChooserRegistro.setDate(programa.getRegistro());
+        String registro = String.valueOf(datosPrograma.get(2));
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            java.util.Date fechaConvertida = formato.parse(registro);
+            dateChooserRegistro.setDate(fechaConvertida);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         dateChooserRegistro.setDateFormatString("yyyy-MM-dd");
         add(createFieldPanel("Fecha Registro:", dateChooserRegistro, true));
 
-        txtFacultad_id = new JTextField(String.valueOf(programa.getFacultad().getID()), 20);
+        txtFacultad_id = new JTextField(String.valueOf(datosPrograma.get(3)), 20);
         add(createFieldPanel("ID Facultad:", txtFacultad_id, true));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnGuardar = new JButton("Guardar Cambios");
-        btnGuardar.addActionListener(e -> guardarCambios());
+        btnGuardar.addActionListener(e -> guardarCambios(id));
         buttonPanel.add(btnGuardar);
 
         btnCancelar = new JButton("Cancelar");
@@ -67,21 +77,22 @@ public class EditarPrograma extends JPanel {
         return panel;
     }
 
-    private void guardarCambios() {
+    private void guardarCambios(Integer id) {
         try {
-            programa.setNombre(txtNombre.getText());
-            programa.setDuracion(Double.parseDouble(txtDuracion.getText()));
+            String nombre = txtNombre.getText();
+            Double duracion = Double.valueOf(txtDuracion.getText());
 
             java.util.Date fechaUtil = dateChooserRegistro.getDate();
             if (fechaUtil == null) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha válida.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            programa.setRegistro(new java.sql.Date(fechaUtil.getTime()));
-            Facultad facultad = facultadService.obtenerPorId(Integer.parseInt(txtFacultad_id.getText()));
-            programa.setFacultad(facultad);
+            Date registro = new java.sql.Date(fechaUtil.getTime());
 
-            programaService.actualizarPrograma(programa);
+            Integer facultad_id = Integer.valueOf(txtFacultad_id.getText());
+
+            programaController.actualizar(id,nombre,duracion,registro,facultad_id);
+
             JOptionPane.showMessageDialog(this, "Programa actualizado correctamente");
             panelPrograma.mostrarVistaPrincipal();
         } catch (Exception ex) {

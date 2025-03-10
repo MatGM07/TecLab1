@@ -19,7 +19,7 @@ public class EliminarEstudiante extends JPanel {
         this.estudianteController = estudianteController;
         this.panelEstudiante = panelEstudiante;
 
-        List<String> datosEstudiantes = estudianteController.obtenerPorId(id);
+        List<String> datosEstudiantes = estudianteController.obtenerDatosPorId(id);
 
         setLayout(new GridLayout(5, 1, 5, 5));
         setBorder(new EmptyBorder(20, 20, 20, 20));

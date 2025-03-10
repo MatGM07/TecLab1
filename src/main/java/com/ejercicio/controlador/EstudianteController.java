@@ -51,7 +51,7 @@ public class EstudianteController {
         return datosTodosEstudiantes;
     }
 
-    public List<String> obtenerPorId(Integer id){
+    public List<String> obtenerDatosPorId(Integer id){
         Estudiante estudiante = estudianteService.obtenerPorId(id);
         String nombres = estudiante.getNombre();
         String apellidos = estudiante.getApellidos();
