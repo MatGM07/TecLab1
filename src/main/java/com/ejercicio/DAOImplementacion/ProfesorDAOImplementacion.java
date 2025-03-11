@@ -47,10 +47,10 @@ public class ProfesorDAOImplementacion implements ProfesorDAO {
             if (rs.next()) {
                 return new Profesor(
                         rs.getInt("id"),
-                        rs.getString("tipo_contrato"),
                         rs.getString("nombre"),
                         rs.getString("apellidos"),
-                        rs.getString("correo")
+                        rs.getString("correo"),
+                        rs.getString("tipo_contrato")
                 );
             }
         } catch (SQLException e) {
@@ -68,10 +68,10 @@ public class ProfesorDAOImplementacion implements ProfesorDAO {
             while (rs.next()) {
                 profesores.add(new Profesor(
                         rs.getInt("id"),
-                        rs.getString("tipo_contrato"),
                         rs.getString("nombre"),
                         rs.getString("apellidos"),
-                        rs.getString("correo")
+                        rs.getString("correo"),
+                        rs.getString("tipo_contrato")
                 ));
             }
         } catch (SQLException e) {
