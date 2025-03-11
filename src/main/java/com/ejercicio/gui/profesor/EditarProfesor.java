@@ -2,6 +2,7 @@ package com.ejercicio.gui.profesor;
 
 import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.ProfesorController;
 import com.ejercicio.gui.profesor.PanelProfesor;
 import com.ejercicio.modelos.Profesor;
 import com.ejercicio.modelos.Programa;
@@ -9,35 +10,37 @@ import com.ejercicio.modelos.Programa;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 public class EditarProfesor extends JPanel {
     private JTextField txtNombre, txtApellidos, txtEmail, txtTipoContrato;
     private JButton btnGuardar, btnCancelar;
-    private ProfesorService profesorService;
+    private ProfesorController profesorController;
     private PanelProfesor panelProfesor;
     private Profesor profesor;
 
-    public EditarProfesor(Profesor profesor, ProfesorService profesorService,  PanelProfesor panelProfesor) {
-        this.profesor = profesor;
-        this.profesorService = profesorService;
+    public EditarProfesor(Integer id, ProfesorController profesorController, PanelProfesor panelProfesor) {
+        List<String> datosProfesor = profesorController.obtenerDatosPorId(id);
+
+        this.profesorController = profesorController;
         this.panelProfesor = panelProfesor;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(createFieldPanel("ID:", new JTextField(String.valueOf(profesor.getID()), 20), false));
-        txtNombre = new JTextField(String.valueOf(profesor.getNombre()), 20);
+        add(createFieldPanel("ID:", new JTextField(String.valueOf(id), 20), false));
+        txtNombre = new JTextField(String.valueOf(datosProfesor.get(0)), 20);
         add(createFieldPanel("Nombres:", txtNombre, true));
-        txtApellidos = new JTextField(String.valueOf(profesor.getApellidos()), 20);
+        txtApellidos = new JTextField(String.valueOf(datosProfesor.get(1)), 20);
         add(createFieldPanel("Apellidos:", txtApellidos, true));
-        txtEmail = new JTextField(String.valueOf(profesor.getEmail()), 20);
+        txtEmail = new JTextField(String.valueOf(datosProfesor.get(2)), 20);
         add(createFieldPanel("Email:", txtEmail, true));
-        txtTipoContrato = new JTextField(String.valueOf(profesor.getTipoContrato()), 20);
+        txtTipoContrato = new JTextField(String.valueOf(datosProfesor.get(3)), 20);
         add(createFieldPanel("Tipo de Contrato:", txtTipoContrato, true));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnGuardar = new JButton("Guardar Cambios");
-        btnGuardar.addActionListener(e -> guardarCambios());
+        btnGuardar.addActionListener(e -> guardarCambios(id));
         buttonPanel.add(btnGuardar);
 
         btnCancelar = new JButton("Cancelar");
@@ -58,14 +61,14 @@ public class EditarProfesor extends JPanel {
     }
 
 
-    private void guardarCambios() {
+    private void guardarCambios(Integer id) {
         try {
-            profesor.setNombre(txtNombre.getText());
-            profesor.setApellidos(txtApellidos.getText());
-            profesor.setEmail(txtEmail.getText());
-            profesor.setTipoContrato(txtTipoContrato.getText());
+            String nombre = txtNombre.getText();
+            String apellidos = txtApellidos.getText();
+            String email = txtEmail.getText();
+            String tipoContrato = txtTipoContrato.getText();
 
-            profesorService.actualizarProfesor(profesor);
+            profesorController.actualizar(id,nombre,apellidos,email,tipoContrato);
             JOptionPane.showMessageDialog(this, "Profesor actualizado correctamente");
             panelProfesor.mostrarVistaPrincipal();
         } catch (Exception ex) {

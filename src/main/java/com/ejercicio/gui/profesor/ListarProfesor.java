@@ -1,6 +1,7 @@
 package com.ejercicio.gui.profesor;
 
 import com.ejercicio.DAOServicios.ProfesorService;
+import com.ejercicio.controlador.ProfesorController;
 import com.ejercicio.gui.profesor.PanelProfesor;
 import com.ejercicio.modelos.Profesor;
 
@@ -11,14 +12,14 @@ import java.awt.*;
 import java.util.List;
 
 public class ListarProfesor extends JPanel {
-    private ProfesorService profesorService;
+    private ProfesorController profesorController;
     private PanelProfesor panelProfesor;
     private JTable tablaProfesors;
     private DefaultTableModel modeloTabla;
     private JButton btnVolver;
 
-    public ListarProfesor(ProfesorService profesorService, PanelProfesor panelProfesor) {
-        this.profesorService = profesorService;
+    public ListarProfesor(ProfesorController profesorController, PanelProfesor panelProfesor) {
+        this.profesorController = profesorController;
         this.panelProfesor = panelProfesor;
 
         setLayout(new BorderLayout());
@@ -44,13 +45,11 @@ public class ListarProfesor extends JPanel {
     }
 
     private void cargarDatos() {
-
         modeloTabla.setRowCount(0);
+        List<List<String>> profesores = profesorController.obtenerTodasLosProfesores();
 
-        List<Profesor> profesores = profesorService.obtenerTodosLosProfesores();
-
-        for (Profesor p : profesores) {
-            modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getApellidos(), p.getEmail(), p.getTipoContrato()});
+        for (List<String> p : profesores) {
+            modeloTabla.addRow(new Object[]{p.get(0), p.get(1), p.get(2), p.get(3), p.get(4)});
         }
     }
 }

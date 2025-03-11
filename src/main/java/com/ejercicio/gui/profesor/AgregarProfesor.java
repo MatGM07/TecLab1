@@ -3,6 +3,7 @@ package com.ejercicio.gui.profesor;
 import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.DAOServicios.PersonaService;
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.ProfesorController;
 import com.ejercicio.gui.profesor.PanelProfesor;
 import com.ejercicio.modelos.Profesor;
 import com.ejercicio.modelos.Programa;
@@ -14,11 +15,11 @@ import java.awt.*;
 public class AgregarProfesor extends JPanel {
     private JTextField txtNombre, txtApellidos, txtEmail, txtTipoContrato;
     private JButton btnGuardar, btnCancelar, btnVolver;
-    private ProfesorService profesorService;
+    private ProfesorController profesorController;
     private PanelProfesor panelProfesor;
 
-    public AgregarProfesor(ProfesorService profesorService, PanelProfesor panelProfesor) {
-        this.profesorService = profesorService;
+    public AgregarProfesor(ProfesorController profesorController, PanelProfesor panelProfesor) {
+        this.profesorController = profesorController;
         this.panelProfesor = panelProfesor;
 
         setLayout(new GridLayout(8, 2, 5, 5));
@@ -58,8 +59,9 @@ public class AgregarProfesor extends JPanel {
             String apellidos = String.valueOf(txtApellidos.getText());
             String email = String.valueOf(txtEmail.getText());
             String tipoContrato = String.valueOf(txtTipoContrato.getText());
-            Profesor profesor = new Profesor(null,nombres,apellidos,email,tipoContrato);
-            profesorService.registrarProfesor(profesor);
+
+            profesorController.agregar(nombres,apellidos,email,tipoContrato);
+
             JOptionPane.showMessageDialog(this, "Profesor registrado correctamente");
             limpiarCampos();
         } catch (Exception ex) {

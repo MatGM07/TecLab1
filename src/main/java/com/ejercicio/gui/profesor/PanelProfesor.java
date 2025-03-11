@@ -4,6 +4,7 @@ import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.DAOServicios.PersonaService;
 import com.ejercicio.DAOServicios.ProgramaService;
+import com.ejercicio.controlador.ProfesorController;
 import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
 import com.ejercicio.gui.profesor.*;
@@ -14,13 +15,13 @@ import java.awt.*;
 import java.sql.Connection;
 
 public class PanelProfesor extends PanelBase {
-    private ProfesorService profesorService;
+    private ProfesorController profesorController;
 
     public PanelProfesor(MainFrame mainFrame) {
         super(mainFrame);
 
         Connection connection = ConexionDB.obtenerConexion();
-        this.profesorService = new ProfesorService(connection);
+        this.profesorController = new ProfesorController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarProfesor());
 
@@ -29,9 +30,9 @@ public class PanelProfesor extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Profesor profesor = profesorService.obtenerPorId(id);
-                    if (profesor != null) {
-                        abrirEditarProfesor(profesor);
+                    Boolean existe = profesorController.existe(id);
+                    if (existe) {
+                        abrirEditarProfesor(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró un profesor con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -47,10 +48,9 @@ public class PanelProfesor extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Profesor profesor = profesorService.obtenerPorId(id);
-
-                    if (profesor != null) {
-                        abrirEliminarProfesor(profesor);
+                    Boolean existe = profesorController.existe(id);
+                    if (existe != null) {
+                        abrirEliminarProfesor(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una profesor con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -66,10 +66,10 @@ public class PanelProfesor extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Profesor profesor = profesorService.obtenerPorId(id);
+                    Boolean existe = profesorController.existe(id);
 
-                    if (profesor != null) {
-                        abrirConsultarProfesor(profesor);
+                    if (existe != null) {
+                        abrirConsultarProfesor(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una profesor con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -83,7 +83,7 @@ public class PanelProfesor extends PanelBase {
     }
 
     private void abrirAgregarProfesor() {
-        AgregarProfesor agregarProfesor = new AgregarProfesor(profesorService,this);
+        AgregarProfesor agregarProfesor = new AgregarProfesor(profesorController,this);
         removeAll();
         setLayout(new BorderLayout());
         add(agregarProfesor, BorderLayout.CENTER);
@@ -110,7 +110,7 @@ public class PanelProfesor extends PanelBase {
     }
 
     private void abrirListarProfesores() {
-        ListarProfesor listarProfesors = new ListarProfesor(profesorService, this);
+        ListarProfesor listarProfesors = new ListarProfesor(profesorController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(listarProfesors, BorderLayout.CENTER);
@@ -118,8 +118,8 @@ public class PanelProfesor extends PanelBase {
         repaint();
     }
 
-    private void abrirEditarProfesor(Profesor profesor) {
-        EditarProfesor editarProfesor = new EditarProfesor(profesor, profesorService, this);
+    private void abrirEditarProfesor(Integer id) {
+        EditarProfesor editarProfesor = new EditarProfesor(id, profesorController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(editarProfesor, BorderLayout.CENTER);
@@ -127,8 +127,8 @@ public class PanelProfesor extends PanelBase {
         repaint();
     }
 
-    private void abrirEliminarProfesor(Profesor profesor) {
-        EliminarProfesor eliminarProfesor = new EliminarProfesor(profesor, profesorService, this);
+    private void abrirEliminarProfesor(Integer id) {
+        EliminarProfesor eliminarProfesor = new EliminarProfesor(id, profesorController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(eliminarProfesor, BorderLayout.CENTER);
@@ -136,8 +136,8 @@ public class PanelProfesor extends PanelBase {
         repaint();
     }
 
-    private void abrirConsultarProfesor(Profesor profesor) {
-        ConsultarProfesor consultarProfesor = new ConsultarProfesor(profesor, this);
+    private void abrirConsultarProfesor(Integer id) {
+        ConsultarProfesor consultarProfesor = new ConsultarProfesor(id, profesorController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(consultarProfesor, BorderLayout.CENTER);
