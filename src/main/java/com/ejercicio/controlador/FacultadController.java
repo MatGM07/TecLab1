@@ -16,13 +16,14 @@ public class FacultadController {
 
     public FacultadController(Connection conexion){
         this.facultadService = new FacultadService(conexion);
+        this.personaController = new PersonaController(conexion);
     }
 
-    public Facultad obtenerPorId(int id){
+    public Facultad obtenerPorId(Integer id){
         return facultadService.obtenerPorId(id);
     }
 
-    public List<String> obtenerDatosPorId(int id){
+    public List<String> obtenerDatosPorId(Integer id){
         Facultad facultad = facultadService.obtenerPorId(id);
         String nombre = facultad.getNombre();
         String decano_id = String.valueOf(facultad.getDecano().getID());

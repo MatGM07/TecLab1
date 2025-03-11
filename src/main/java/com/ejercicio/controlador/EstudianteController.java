@@ -17,6 +17,10 @@ public class EstudianteController {
         this.programaController = new ProgramaController(conexion);
     }
 
+    public Estudiante obtenerPorId(Integer id){
+        return estudianteService.obtenerPorId(id);
+    }
+
     public void agregar(String nombres, String apellidos, String email, Double codigo, Integer programa_id, Boolean activo, Double promedio){
         Programa programa = programaController.obtenerPorId(programa_id);
 

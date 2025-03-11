@@ -1,6 +1,7 @@
 package com.ejercicio.gui.persona;
 
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.controlador.PersonaController;
 import com.ejercicio.modelos.InscripcionesPersonas;
 import com.ejercicio.modelos.Persona;
 
@@ -11,11 +12,11 @@ import java.awt.*;
 public class AgregarPersona extends JPanel {
     private JTextField txtNombre, txtApellidos, txtEmail;
     private JButton btnGuardar, btnCancelar, btnVolver;
-    private PersonaService personaService;
+    private PersonaController personaController;
     private PanelPersona panelPersona;
 
-    public AgregarPersona(PersonaService personaService, PanelPersona panelPersona) {
-        this.personaService = personaService;
+    public AgregarPersona(PersonaController personaController, PanelPersona panelPersona) {
+        this.personaController = personaController;
         this.panelPersona = panelPersona;
 
         setLayout(new GridLayout(8, 2, 5, 5));
@@ -49,13 +50,15 @@ public class AgregarPersona extends JPanel {
             String apellidos = txtApellidos.getText();
             String email = txtEmail.getText();
 
-            Persona persona = new Persona(null, nombre, apellidos, email);
-            personaService.registrarPersona(persona);
+            personaController.agregar(nombre,apellidos,email);
 
+            /*
             InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
             inscripcionesPersonas.cargarDatos();
             inscripcionesPersonas.inscribir(persona);
             inscripcionesPersonas.guardarInformacion();
+
+             */
 
             JOptionPane.showMessageDialog(this, "Persona registrada correctamente");
             limpiarCampos();

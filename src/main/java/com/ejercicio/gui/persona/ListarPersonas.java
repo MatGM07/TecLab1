@@ -1,6 +1,7 @@
 package com.ejercicio.gui.persona;
 
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.controlador.PersonaController;
 import com.ejercicio.modelos.InscripcionesPersonas;
 import com.ejercicio.modelos.Persona;
 
@@ -11,14 +12,14 @@ import java.awt.*;
 import java.util.List;
 
 public class ListarPersonas extends JPanel {
-    private PersonaService personaService;
+    private PersonaController personaController;
     private PanelPersona panelPersona;
     private JTable tablaPersonas;
     private DefaultTableModel modeloTabla;
     private JButton btnVolver;
 
-    public ListarPersonas(PersonaService personaService, PanelPersona panelPersona) {
-        this.personaService = personaService;
+    public ListarPersonas(PersonaController personaController, PanelPersona panelPersona) {
+        this.personaController = personaController;
         this.panelPersona = panelPersona;
 
         setLayout(new BorderLayout());
@@ -48,13 +49,13 @@ public class ListarPersonas extends JPanel {
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
 
-        List<Persona> personas = personaService.obtenerTodasLasPersonas();
+        List<List<String>> personas = personaController.obtenerTodasLasPersonas();
         InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
         inscripcionesPersonas.cargarDatos();
         System.out.println(inscripcionesPersonas.getListado().toString());
 
-        for (Persona p : personas) {
-            modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getApellidos(), p.getEmail()});
+        for (List<String> p : personas) {
+            modeloTabla.addRow(new Object[]{p.get(0), p.get(1), p.get(2), p.get(3)});
         }
     }
 }

@@ -3,44 +3,47 @@ package com.ejercicio.gui.persona;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
+
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.controlador.PersonaController;
 import com.ejercicio.modelos.InscripcionesPersonas;
 import com.ejercicio.modelos.Persona;
 
 public class EditarPersona extends JPanel {
     private JTextField txtNombre, txtApellidos, txtEmail;
     private JButton btnGuardar, btnCancelar;
-    private PersonaService personaService;
+    private PersonaController personaController;
     private PanelPersona panelPersona;
-    private Persona persona;
 
-    public EditarPersona(Persona persona, PersonaService personaService, PanelPersona panelPersona) {
-        this.persona = persona;
-        this.personaService = personaService;
+    public EditarPersona(Integer id, PersonaController personaController, PanelPersona panelPersona) {
+        this.personaController = personaController;
         this.panelPersona = panelPersona;
+
+        List<String> datosPersona = personaController.obtenerDatosPorId(id);
 
         setLayout(new GridLayout(5, 2, 5, 5));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
         add(new JLabel("ID:"));
-        JTextField txtID = new JTextField(String.valueOf(persona.getID()));
+        JTextField txtID = new JTextField(String.valueOf(id));
         txtID.setEditable(false);
         add(txtID);
 
         add(new JLabel("Nombre:"));
-        txtNombre = new JTextField(persona.getNombre());
+        txtNombre = new JTextField(datosPersona.get(0));
         add(txtNombre);
 
         add(new JLabel("Apellidos:"));
-        txtApellidos = new JTextField(persona.getApellidos());
+        txtApellidos = new JTextField(datosPersona.get(1));
         add(txtApellidos);
 
         add(new JLabel("Email:"));
-        txtEmail = new JTextField(persona.getEmail());
+        txtEmail = new JTextField(datosPersona.get(2));
         add(txtEmail);
 
         btnGuardar = new JButton("Guardar Cambios");
-        btnGuardar.addActionListener(e -> guardarCambios());
+        btnGuardar.addActionListener(e -> guardarCambios(id));
         add(btnGuardar);
 
         btnCancelar = new JButton("Cancelar");
@@ -48,17 +51,21 @@ public class EditarPersona extends JPanel {
         add(btnCancelar);
     }
 
-    private void guardarCambios() {
+    private void guardarCambios(Integer id) {
         try {
-            persona.setNombre(txtNombre.getText());
-            persona.setApellidos(txtApellidos.getText());
-            persona.setEmail(txtEmail.getText());
+            String nombre = txtNombre.getText();
+            String apellidos = txtApellidos.getText();
+            String email = txtEmail.getText();
 
-            personaService.actualizarPersona(persona);
+            personaController.actualizar(id,nombre,apellidos,email);
+
+            /*
             InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
             inscripcionesPersonas.cargarDatos();
             inscripcionesPersonas.actualizar(persona);
             inscripcionesPersonas.guardarInformacion();
+
+             */
 
             JOptionPane.showMessageDialog(this, "Persona actualizada correctamente");
             panelPersona.mostrarVistaPrincipal();

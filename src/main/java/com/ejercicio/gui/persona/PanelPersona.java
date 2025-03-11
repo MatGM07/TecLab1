@@ -5,18 +5,19 @@ import java.sql.Connection;
 
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.controlador.PersonaController;
 import com.ejercicio.gui.*;
 import com.ejercicio.modelos.InscripcionesPersonas;
 import com.ejercicio.modelos.Persona;
 
 public class PanelPersona extends PanelBase {
-    private PersonaService personaService;
+    private PersonaController personaController;
 
     public PanelPersona(MainFrame mainFrame) {
         super(mainFrame);
 
         Connection connection = ConexionDB.obtenerConexion();
-        this.personaService = new PersonaService(connection);
+        this.personaController = new PersonaController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarPersona());
 
@@ -25,9 +26,9 @@ public class PanelPersona extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Persona persona = personaService.obtenerPorId(id);
-                    if (persona != null) {
-                        abrirEditarPersona(persona);
+                    Boolean existe = personaController.existe(id);
+                    if (existe) {
+                        abrirEditarPersona(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una persona con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -43,10 +44,10 @@ public class PanelPersona extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Persona persona = personaService.obtenerPorId(id);
+                    Boolean existe = personaController.existe(id);
 
-                    if (persona != null) {
-                        abrirEliminarPersona(persona);
+                    if (existe) {
+                        abrirEliminarPersona(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una persona con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -62,13 +63,16 @@ public class PanelPersona extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Persona persona = personaService.obtenerPorId(id);
+                    Boolean existe = personaController.existe(id);
+
+                    /*
                     InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
                     inscripcionesPersonas.cargarDatos();
                     inscripcionesPersonas.imprimirPosicion(inscripcionesPersonas.encontrar(persona).get());
 
-                    if (persona != null) {
-                        abrirConsultarPersona(persona);
+                     */
+                    if (existe) {
+                        abrirConsultarPersona(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una persona con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -82,7 +86,7 @@ public class PanelPersona extends PanelBase {
     }
 
     private void abrirAgregarPersona() {
-        AgregarPersona agregarPersona = new AgregarPersona(personaService, this);
+        AgregarPersona agregarPersona = new AgregarPersona(personaController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(agregarPersona, BorderLayout.CENTER);
@@ -109,7 +113,7 @@ public class PanelPersona extends PanelBase {
     }
 
     private void abrirListarPersonas() {
-        ListarPersonas listarPersonas = new ListarPersonas(personaService, this);
+        ListarPersonas listarPersonas = new ListarPersonas(personaController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(listarPersonas, BorderLayout.CENTER);
@@ -117,8 +121,8 @@ public class PanelPersona extends PanelBase {
         repaint();
     }
 
-    private void abrirEditarPersona(Persona persona) {
-        EditarPersona editarPersona = new EditarPersona(persona, personaService, this);
+    private void abrirEditarPersona(Integer id) {
+        EditarPersona editarPersona = new EditarPersona(id, personaController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(editarPersona, BorderLayout.CENTER);
@@ -126,8 +130,8 @@ public class PanelPersona extends PanelBase {
         repaint();
     }
 
-    private void abrirEliminarPersona(Persona persona) {
-        EliminarPersona eliminarPersona = new EliminarPersona(persona, personaService, this);
+    private void abrirEliminarPersona(Integer id) {
+        EliminarPersona eliminarPersona = new EliminarPersona(id, personaController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(eliminarPersona, BorderLayout.CENTER);
@@ -135,8 +139,8 @@ public class PanelPersona extends PanelBase {
         repaint();
     }
 
-    private void abrirConsultarPersona(Persona persona) {
-        ConsultarPersona consultarPersona = new ConsultarPersona(persona, this);
+    private void abrirConsultarPersona(Integer id) {
+        ConsultarPersona consultarPersona = new ConsultarPersona(id, personaController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(consultarPersona, BorderLayout.CENTER);
