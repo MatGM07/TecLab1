@@ -1,6 +1,7 @@
 package com.ejercicio.gui.inscripcion;
 
 import com.ejercicio.DAOServicios.InscripcionService;
+import com.ejercicio.controlador.InscripcionController;
 import com.ejercicio.gui.inscripcion.PanelInscripcion;
 import com.ejercicio.modelos.CursosInscritos;
 import com.ejercicio.modelos.Inscripción;
@@ -12,14 +13,14 @@ import java.awt.*;
 import java.util.List;
 
 public class ListarInscripcion extends JPanel {
-    private InscripcionService inscripcionService;
+    private InscripcionController inscripcionController;
     private PanelInscripcion panelInscripcion;
     private JTable tablaInscripciones;
     private DefaultTableModel modeloTabla;
     private JButton btnVolver;
 
-    public ListarInscripcion(InscripcionService inscripcionService, PanelInscripcion panelInscripcion) {
-        this.inscripcionService = inscripcionService;
+    public ListarInscripcion(InscripcionController inscripcionController, PanelInscripcion panelInscripcion) {
+        this.inscripcionController = inscripcionController;
         this.panelInscripcion = panelInscripcion;
 
         setLayout(new BorderLayout());
@@ -45,13 +46,10 @@ public class ListarInscripcion extends JPanel {
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
 
-        List<Inscripción> inscripciones = inscripcionService.obtenerTodasLasInscripciones();
-        CursosInscritos cursosInscritos = new CursosInscritos();
-        cursosInscritos.cargarDatos();
-        cursosInscritos.imprimirListado();
+        List<List<String>> inscripciones = inscripcionController.obtenerTodasLasInscripciones();
 
-        for (Inscripción i : inscripciones) {
-            modeloTabla.addRow(new Object[]{i.getEstudiante().getID(), i.getCurso().getID(), i.getAño(), i.getSemestre()});
+        for (List<String> i : inscripciones) {
+            modeloTabla.addRow(new Object[]{i.get(0), i.get(1), i.get(2), i.get(3)});
         }
     }
 }

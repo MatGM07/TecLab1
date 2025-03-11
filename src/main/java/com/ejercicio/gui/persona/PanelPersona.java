@@ -65,12 +65,7 @@ public class PanelPersona extends PanelBase {
                     int id = Integer.parseInt(idStr.trim());
                     Boolean existe = personaController.existe(id);
 
-                    /*
-                    InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
-                    inscripcionesPersonas.cargarDatos();
-                    inscripcionesPersonas.imprimirPosicion(inscripcionesPersonas.encontrar(persona).get());
 
-                     */
                     if (existe) {
                         abrirConsultarPersona(id);
                     } else {

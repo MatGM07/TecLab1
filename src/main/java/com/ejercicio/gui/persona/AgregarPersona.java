@@ -52,13 +52,7 @@ public class AgregarPersona extends JPanel {
 
             personaController.agregar(nombre,apellidos,email);
 
-            /*
-            InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
-            inscripcionesPersonas.cargarDatos();
-            inscripcionesPersonas.inscribir(persona);
-            inscripcionesPersonas.guardarInformacion();
 
-             */
 
             JOptionPane.showMessageDialog(this, "Persona registrada correctamente");
             limpiarCampos();

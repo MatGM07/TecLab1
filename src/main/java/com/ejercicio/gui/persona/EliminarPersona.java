@@ -47,13 +47,6 @@ public class EliminarPersona extends JPanel {
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
                 personaController.eliminar(id);
-                /*
-                InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
-                inscripcionesPersonas.cargarDatos();
-                inscripcionesPersonas.eliminar(persona);
-                inscripcionesPersonas.guardarInformacion();
-
-                 */
 
                 JOptionPane.showMessageDialog(this, "Persona eliminada correctamente");
                 panelPersona.mostrarVistaPrincipal();

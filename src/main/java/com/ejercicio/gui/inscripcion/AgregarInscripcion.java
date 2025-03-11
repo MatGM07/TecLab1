@@ -3,6 +3,7 @@ package com.ejercicio.gui.inscripcion;
 import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.DAOServicios.EstudianteService;
 import com.ejercicio.DAOServicios.InscripcionService;
+import com.ejercicio.controlador.InscripcionController;
 import com.ejercicio.gui.programa.PanelPrograma;
 import com.ejercicio.modelos.*;
 import com.toedter.calendar.JDateChooser;
@@ -12,17 +13,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class AgregarInscripcion extends JPanel {
-    private JTextField txtEstudianteID, txtCursoID, txtAño, txtSemestre;
+    private JTextField txtEstudianteID, txtCursoID, txtAño;
+    private JComboBox<String> cmbSemestre;
     private JButton btnGuardar, btnVolver;
-    private InscripcionService inscripcionService;
+    private InscripcionController inscripcionController;
     private PanelInscripcion panelInscripcion;
-    private CursoService cursoService;
-    private EstudianteService estudianteService;
 
-    public AgregarInscripcion(InscripcionService inscripcionService, CursoService cursoService, EstudianteService estudianteService, PanelInscripcion panelInscripcion) {
-        this.inscripcionService = inscripcionService;
-        this.cursoService = cursoService;
-        this.estudianteService = estudianteService;
+    public AgregarInscripcion(InscripcionController inscripcionController, PanelInscripcion panelInscripcion) {
+        this.inscripcionController = inscripcionController;
         this.panelInscripcion = panelInscripcion;
 
         setLayout(new GridLayout(5, 2, 5, 5));
@@ -41,8 +39,8 @@ public class AgregarInscripcion extends JPanel {
         add(txtAño);
 
         add(new JLabel("Semestre:"));
-        txtSemestre = new JTextField();
-        add(txtSemestre);
+        cmbSemestre = new JComboBox<>(new String[]{"1", "2"}); // ComboBox con solo 1 y 2
+        add(cmbSemestre);
 
         btnGuardar = new JButton("Guardar");
         btnGuardar.addActionListener(e -> guardarInscripcion());
@@ -58,31 +56,22 @@ public class AgregarInscripcion extends JPanel {
             int estudianteId = Integer.parseInt(txtEstudianteID.getText());
             int cursoId = Integer.parseInt(txtCursoID.getText());
             int año = Integer.parseInt(txtAño.getText());
-            int semestre = Integer.parseInt(txtCursoID.getText());
+            int semestre = Integer.parseInt((String) cmbSemestre.getSelectedItem());
 
-            Curso curso = cursoService.obtenerPorId(cursoId);
-            Estudiante estudiante = estudianteService.obtenerPorId(estudianteId);
+            Boolean Existen = inscripcionController.existen(estudianteId, cursoId);
 
-            if (curso == null) {
-                JOptionPane.showMessageDialog(this, "El curso con ID " + cursoId + " no existe.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (estudiante == null) {
-                JOptionPane.showMessageDialog(this, "El estudiante con ID " + estudianteId + " no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!Existen) {
+                JOptionPane.showMessageDialog(this, "El curso o el estudiante no existen", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            if (inscripcionService.obtenerPorId(estudianteId, cursoId) != null) {
+            if (inscripcionController.obtenerPorId(estudianteId, cursoId) != null) {
                 JOptionPane.showMessageDialog(this, "El estudiante ya está inscrito en este curso.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            Inscripción inscripcion = new Inscripción(curso, año, semestre, estudiante);
-            inscripcionService.registrarInscripcion(inscripcion);
-            CursosInscritos cursosInscritos = new CursosInscritos();
-            cursosInscritos.cargarDatos();
-            cursosInscritos.inscribirCurso(inscripcion);
-            cursosInscritos.guardarInformacion();
+            inscripcionController.agregar(estudianteId,cursoId,año,semestre);
+
 
             JOptionPane.showMessageDialog(this, "Inscripción registrada correctamente");
             limpiarCampos();
@@ -95,6 +84,6 @@ public class AgregarInscripcion extends JPanel {
         txtEstudianteID.setText("");
         txtCursoID.setText("");
         txtAño.setText("");
-        txtSemestre.setText("");
+        cmbSemestre.setSelectedIndex(0);
     }
 }

@@ -1,43 +1,46 @@
 package com.ejercicio.gui.inscripcion;
+import com.ejercicio.controlador.InscripcionController;
 import com.ejercicio.modelos.CursosInscritos;
 import com.ejercicio.modelos.Inscripción;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
+
 import com.ejercicio.DAOServicios.InscripcionService;
 
 public class EditarInscripcion extends JPanel {
-    private JTextField txtAño, txtSemestre;
+    private JTextField txtAño;
+    private JComboBox<String> cmbSemestre;
     private JButton btnGuardar, btnCancelar;
-    private InscripcionService inscripcionService;
+    private InscripcionController inscripcionController;
     private PanelInscripcion panelInscripcion;
-    private Inscripción inscripcion;
 
-    public EditarInscripcion(Inscripción inscripcion, InscripcionService inscripcionService, PanelInscripcion panelInscripcion) {
-        this.inscripcion = inscripcion;
-        this.inscripcionService = inscripcionService;
+    public EditarInscripcion(Integer estudiante_id, Integer curso_id, InscripcionController inscripcionController, PanelInscripcion panelInscripcion) {
+        this.inscripcionController = inscripcionController;
         this.panelInscripcion = panelInscripcion;
+
+        List<String> datosInscripcion = inscripcionController.obtenerDatosPorId(estudiante_id,curso_id);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(createFieldPanel("Estudiante ID:", new JTextField(String.valueOf(inscripcion.getEstudiante().getID()), 20), false));
-        add(createFieldPanel("Estudiante Nombre:", new JTextField(inscripcion.getEstudiante().getNombre(), 20), false));
-        add(createFieldPanel("Curso ID:", new JTextField(String.valueOf(inscripcion.getCurso().getID()), 20), false));
-        add(createFieldPanel("Curso Nombre:", new JTextField(inscripcion.getCurso().getNombre(), 20), false));
+        add(createFieldPanel("Estudiante ID:", new JTextField(String.valueOf(estudiante_id), 20), false));
+        add(createFieldPanel("Curso ID:", new JTextField(String.valueOf(curso_id), 20), false));
 
-        txtAño = new JTextField(String.valueOf(inscripcion.getAño()), 20);
+        txtAño = new JTextField(String.valueOf(datosInscripcion.get(0)), 20);
         add(createFieldPanel("Año:", txtAño, true));
 
-        txtSemestre = new JTextField(String.valueOf(inscripcion.getSemestre()), 20);
-        add(createFieldPanel("Semestre:", txtSemestre, true));
+        cmbSemestre = new JComboBox<>(new String[]{"1", "2"});
+        cmbSemestre.setSelectedItem(datosInscripcion.get(1));
+        add(createFieldPanel("Semestre:", cmbSemestre, true));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         btnGuardar = new JButton("Guardar Cambios");
-        btnGuardar.addActionListener(e -> guardarCambios());
+        btnGuardar.addActionListener(e -> guardarCambios(estudiante_id,curso_id));
         buttonPanel.add(btnGuardar);
 
         btnCancelar = new JButton("Cancelar");
@@ -57,19 +60,13 @@ public class EditarInscripcion extends JPanel {
         return panel;
     }
 
-    private void guardarCambios() {
+    private void guardarCambios(Integer estudiante_id, Integer curso_id) {
         try {
             int año = Integer.parseInt(txtAño.getText());
-            int semestre = Integer.parseInt(txtSemestre.getText());
+            int semestre = Integer.parseInt((String) cmbSemestre.getSelectedItem());
 
-            inscripcion.setAño(año);
-            inscripcion.setSemestre(semestre);
+            inscripcionController.actualizar(estudiante_id,curso_id,año,semestre);
 
-            inscripcionService.actualizarInscripcion(inscripcion);
-            CursosInscritos cursosInscritos = new CursosInscritos();
-            cursosInscritos.cargarDatos();
-            cursosInscritos.actualizar(inscripcion);
-            cursosInscritos.guardarInformacion();
 
 
             JOptionPane.showMessageDialog(this, "Inscripción actualizada correctamente");

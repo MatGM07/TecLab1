@@ -5,6 +5,7 @@ import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.DAOServicios.EstudianteService;
 import com.ejercicio.DAOServicios.FacultadService;
 import com.ejercicio.DAOServicios.InscripcionService;
+import com.ejercicio.controlador.InscripcionController;
 import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
 import com.ejercicio.gui.inscripcion.*;
@@ -16,26 +17,24 @@ import java.awt.*;
 import java.sql.Connection;
 
 public class PanelInscripcion extends PanelBase {
-    private InscripcionService inscripcionService;
+    private InscripcionController inscripcionController;
     private CursoService cursoService;
-    private EstudianteService estudianteService;
+
 
     public PanelInscripcion(MainFrame mainFrame) {
         super(mainFrame);
 
         Connection connection = ConexionDB.obtenerConexion();
-        this.inscripcionService = new InscripcionService(connection);
-        this.cursoService = new CursoService(connection);
-        this.estudianteService = new EstudianteService(connection);
+        this.inscripcionController = new InscripcionController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarInscripcion());
 
         btnEditar.addActionListener(e -> {
             int[] ids = obtenerIdsEstudianteYCurso("editar");
             if (ids != null) {
-                Inscripción inscripcion = inscripcionService.obtenerPorId(ids[0], ids[1]);
-                if (inscripcion != null) {
-                    abrirEditarInscripcion(inscripcion);
+                Boolean existe = inscripcionController.existe(ids[0], ids[1]);
+                if (existe) {
+                    abrirEditarInscripcion(ids[0], ids[1]);
                 } else {
                     JOptionPane.showMessageDialog(this, "No se encontró la inscripción con los IDs ingresados", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -45,9 +44,9 @@ public class PanelInscripcion extends PanelBase {
         btnEliminar.addActionListener(e -> {
             int[] ids = obtenerIdsEstudianteYCurso("eliminar");
             if (ids != null) {
-                Inscripción inscripcion = inscripcionService.obtenerPorId(ids[0], ids[1]);
-                if (inscripcion != null) {
-                    abrirEliminarInscripcion(inscripcion);
+                Boolean existe = inscripcionController.existe(ids[0], ids[1]);
+                if (existe) {
+                    abrirEliminarInscripcion(ids[0], ids[1]);
                 } else {
                     JOptionPane.showMessageDialog(this, "No se encontró la inscripción con los IDs ingresados", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -57,12 +56,9 @@ public class PanelInscripcion extends PanelBase {
         btnConsultar.addActionListener(e -> {
             int[] ids = obtenerIdsEstudianteYCurso("consultar");
             if (ids != null) {
-                Inscripción inscripcion = inscripcionService.obtenerPorId(ids[0], ids[1]);
-                CursosInscritos cursosInscritos = new CursosInscritos();
-                cursosInscritos.cargarDatos();
-                cursosInscritos.imprimirPosicion(cursosInscritos.encontrar(inscripcion).get());
-                if (inscripcion != null) {
-                    abrirConsultarInscripcion(inscripcion);
+                Boolean existe = inscripcionController.existe(ids[0], ids[1]);
+                if (existe) {
+                    abrirConsultarInscripcion(ids[0], ids[1]);
                 } else {
                     JOptionPane.showMessageDialog(this, "No se encontró la inscripción con los IDs ingresados", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -94,7 +90,7 @@ public class PanelInscripcion extends PanelBase {
     }
 
     private void abrirAgregarInscripcion() {
-        AgregarInscripcion agregarInscripcion = new AgregarInscripcion(inscripcionService, cursoService, estudianteService,this);
+        AgregarInscripcion agregarInscripcion = new AgregarInscripcion(inscripcionController,this);
         removeAll();
         setLayout(new BorderLayout());
         add(agregarInscripcion, BorderLayout.CENTER);
@@ -121,7 +117,7 @@ public class PanelInscripcion extends PanelBase {
     }
 
     private void abrirListarInscripcions() {
-        ListarInscripcion listarInscripcions = new ListarInscripcion(inscripcionService, this);
+        ListarInscripcion listarInscripcions = new ListarInscripcion(inscripcionController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(listarInscripcions, BorderLayout.CENTER);
@@ -129,8 +125,8 @@ public class PanelInscripcion extends PanelBase {
         repaint();
     }
 
-    private void abrirEditarInscripcion(Inscripción inscripcion) {
-        EditarInscripcion editarInscripcion = new EditarInscripcion(inscripcion, inscripcionService,this);
+    private void abrirEditarInscripcion(Integer id_estudiante, Integer id_curso) {
+        EditarInscripcion editarInscripcion = new EditarInscripcion(id_estudiante,id_curso, inscripcionController,this);
         removeAll();
         setLayout(new BorderLayout());
         add(editarInscripcion, BorderLayout.CENTER);
@@ -138,8 +134,8 @@ public class PanelInscripcion extends PanelBase {
         repaint();
     }
 
-    private void abrirEliminarInscripcion(Inscripción inscripcion) {
-        EliminarInscripcion eliminarInscripcion = new EliminarInscripcion(inscripcion, inscripcionService, this);
+    private void abrirEliminarInscripcion(Integer id_estudiante, Integer id_curso) {
+        EliminarInscripcion eliminarInscripcion = new EliminarInscripcion(id_estudiante, id_curso, inscripcionController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(eliminarInscripcion, BorderLayout.CENTER);
@@ -147,8 +143,8 @@ public class PanelInscripcion extends PanelBase {
         repaint();
     }
 
-    private void abrirConsultarInscripcion(Inscripción inscripcion) {
-        ConsultarInscripcion consultarInscripcion = new ConsultarInscripcion(inscripcion, this);
+    private void abrirConsultarInscripcion(Integer id_estudiante, Integer id_curso) {
+        ConsultarInscripcion consultarInscripcion = new ConsultarInscripcion(id_estudiante, id_curso,  inscripcionController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(consultarInscripcion, BorderLayout.CENTER);

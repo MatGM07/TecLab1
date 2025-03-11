@@ -59,13 +59,7 @@ public class EditarPersona extends JPanel {
 
             personaController.actualizar(id,nombre,apellidos,email);
 
-            /*
-            InscripcionesPersonas inscripcionesPersonas = new InscripcionesPersonas();
-            inscripcionesPersonas.cargarDatos();
-            inscripcionesPersonas.actualizar(persona);
-            inscripcionesPersonas.guardarInformacion();
 
-             */
 
             JOptionPane.showMessageDialog(this, "Persona actualizada correctamente");
             panelPersona.mostrarVistaPrincipal();
