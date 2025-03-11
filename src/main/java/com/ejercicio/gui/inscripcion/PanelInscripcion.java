@@ -18,7 +18,6 @@ import java.sql.Connection;
 
 public class PanelInscripcion extends PanelBase {
     private InscripcionController inscripcionController;
-    private CursoService cursoService;
 
 
     public PanelInscripcion(MainFrame mainFrame) {

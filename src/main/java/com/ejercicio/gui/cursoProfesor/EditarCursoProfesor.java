@@ -1,6 +1,8 @@
 package com.ejercicio.gui.cursoProfesor;
 
 import com.ejercicio.DAOServicios.CursoProfesorService;
+import com.ejercicio.controlador.CursoProfesorController;
+import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.modelos.CursoProfesor;
 import com.ejercicio.modelos.CursosProfesores;
@@ -8,38 +10,39 @@ import com.ejercicio.modelos.CursosProfesores;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 public class EditarCursoProfesor extends JPanel {
-    private JTextField txtAño, txtSemestre;
+    private JTextField txtAño;
+    private JComboBox<String> cmbSemestre;
     private JButton btnGuardar, btnCancelar;
-    private CursoProfesorService cursoProfesorService;
+    private CursoProfesorController cursoProfesorController;
     private PanelCursoProfesor panelCursoProfesor;
-    private CursoProfesor cursoProfesor;
 
-    public EditarCursoProfesor(CursoProfesor cursoProfesor, CursoProfesorService cursoProfesorService, PanelCursoProfesor panelCursoProfesor) {
-        this.cursoProfesor = cursoProfesor;
-        this.cursoProfesorService = cursoProfesorService;
+    public EditarCursoProfesor(Integer profesor_id, Integer curso_id, CursoProfesorController cursoProfesorController, PanelCursoProfesor panelCursoProfesor) {
+        this.cursoProfesorController = cursoProfesorController;
         this.panelCursoProfesor = panelCursoProfesor;
+
+        List<String> datosCursoProfesor = cursoProfesorController.obtenerDatosPorId(profesor_id,curso_id);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(createFieldPanel("Profesor ID:", new JTextField(String.valueOf(cursoProfesor.getProfesor().getID()), 20), false));
-        add(createFieldPanel("Profesor Nombre:", new JTextField(cursoProfesor.getProfesor().getNombre(), 20), false));
-        add(createFieldPanel("Curso ID:", new JTextField(String.valueOf(cursoProfesor.getCurso().getID()), 20), false));
-        add(createFieldPanel("Curso Nombre:", new JTextField(cursoProfesor.getCurso().getNombre(), 20), false));
+        add(createFieldPanel("Profesor ID:", new JTextField(String.valueOf(profesor_id), 20), false));
+        add(createFieldPanel("Curso ID:", new JTextField(String.valueOf(curso_id), 20), false));
 
-        txtAño = new JTextField(String.valueOf(cursoProfesor.getAño()), 20);
+        txtAño = new JTextField(String.valueOf(datosCursoProfesor.get(0)), 20);
         add(createFieldPanel("Año:", txtAño, true));
 
-        txtSemestre = new JTextField(String.valueOf(cursoProfesor.getSemestre()), 20);
-        add(createFieldPanel("Semestre:", txtSemestre, true));
+        cmbSemestre = new JComboBox<>(new String[]{"1", "2"});
+        cmbSemestre.setSelectedItem(datosCursoProfesor.get(1));
+        add(createFieldPanel("Semestre:", cmbSemestre, true));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         btnGuardar = new JButton("Guardar Cambios");
-        btnGuardar.addActionListener(e -> guardarCambios());
+        btnGuardar.addActionListener(e -> guardarCambios(profesor_id,curso_id));
         buttonPanel.add(btnGuardar);
 
         btnCancelar = new JButton("Cancelar");
@@ -59,24 +62,17 @@ public class EditarCursoProfesor extends JPanel {
         return panel;
     }
 
-    private void guardarCambios() {
+    private void guardarCambios(Integer profesor_id, Integer curso_id) {
         try {
             int año = Integer.parseInt(txtAño.getText());
-            int semestre = Integer.parseInt(txtSemestre.getText());
+            int semestre = Integer.parseInt((String) cmbSemestre.getSelectedItem());
 
-            cursoProfesor.setAño(año);
-            cursoProfesor.setSemestre(semestre);
+            cursoProfesorController.actualizar(profesor_id,curso_id,año,semestre);
 
-            cursoProfesorService.actualizarCursoProfesor(cursoProfesor);
-            CursosProfesores cursosProfesores = new CursosProfesores();
-            cursosProfesores.cargarDatos();
-            cursosProfesores.actualizar(cursoProfesor);
-
-            JOptionPane.showMessageDialog(this, "CursoProfesor actualizada correctamente");
+            JOptionPane.showMessageDialog(this, "Inscripción actualizada correctamente");
             panelCursoProfesor.mostrarVistaPrincipal();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al actualizar la relación: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al actualizar la inscripción: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
-

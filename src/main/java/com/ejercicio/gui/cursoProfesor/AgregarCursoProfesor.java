@@ -3,6 +3,8 @@ package com.ejercicio.gui.cursoProfesor;
 import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.DAOServicios.CursoProfesorService;
+import com.ejercicio.controlador.CursoProfesorController;
+import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.modelos.Curso;
 import com.ejercicio.modelos.CursosProfesores;
@@ -14,17 +16,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class AgregarCursoProfesor extends JPanel {
-    private JTextField txtProfesorID, txtCursoID, txtAño, txtSemestre;
+    private JTextField txtProfesorID, txtCursoID, txtAño;
+    private JComboBox<String> cmbSemestre;
     private JButton btnGuardar, btnVolver;
-    private CursoProfesorService cursoProfesorService;
+    private CursoProfesorController cursoProfesorController;
     private PanelCursoProfesor panelCursoProfesor;
-    private CursoService cursoService;
-    private ProfesorService profesorService;
 
-    public AgregarCursoProfesor(CursoProfesorService cursoProfesorService, CursoService cursoService, ProfesorService profesorService, PanelCursoProfesor panelCursoProfesor) {
-        this.cursoProfesorService = cursoProfesorService;
-        this.cursoService = cursoService;
-        this.profesorService = profesorService;
+    public AgregarCursoProfesor(CursoProfesorController cursoProfesorController, PanelCursoProfesor panelCursoProfesor) {
+        this.cursoProfesorController = cursoProfesorController;
         this.panelCursoProfesor = panelCursoProfesor;
 
         setLayout(new GridLayout(5, 2, 5, 5));
@@ -43,8 +42,8 @@ public class AgregarCursoProfesor extends JPanel {
         add(txtAño);
 
         add(new JLabel("Semestre:"));
-        txtSemestre = new JTextField();
-        add(txtSemestre);
+        cmbSemestre = new JComboBox<>(new String[]{"1", "2"});
+        add(cmbSemestre);
 
         btnGuardar = new JButton("Guardar");
         btnGuardar.addActionListener(e -> guardarCursoProfesor());
@@ -60,36 +59,26 @@ public class AgregarCursoProfesor extends JPanel {
             int profesorId = Integer.parseInt(txtProfesorID.getText());
             int cursoId = Integer.parseInt(txtCursoID.getText());
             int año = Integer.parseInt(txtAño.getText());
-            int semestre = Integer.parseInt(txtCursoID.getText());
+            int semestre = Integer.parseInt((String) cmbSemestre.getSelectedItem());
 
-            Curso curso = cursoService.obtenerPorId(cursoId);
-            Profesor profesor = profesorService.obtenerPorId(profesorId);
+            Boolean Existen = cursoProfesorController.existen(profesorId, cursoId);
 
-            if (curso == null) {
-                JOptionPane.showMessageDialog(this, "El curso con ID " + cursoId + " no existe.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (profesor == null) {
-                JOptionPane.showMessageDialog(this, "El profesor con ID " + profesorId + " no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!Existen) {
+                JOptionPane.showMessageDialog(this, "El curso o el profesor no existen", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            if (cursoProfesorService.obtenerPorId(profesorId, cursoId) != null) {
+            if (cursoProfesorController.obtenerPorId(profesorId, cursoId) != null) {
                 JOptionPane.showMessageDialog(this, "El profesor ya está inscrito en este curso.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            CursoProfesor cursoProfesor = new CursoProfesor(profesor, año, semestre, curso);
-            cursoProfesorService.registrarCursoProfesor(cursoProfesor);
-            CursosProfesores cursosProfesores = new CursosProfesores();
-            cursosProfesores.cargarDatos();
-            cursosProfesores.inscribir(cursoProfesor);
-            cursosProfesores.guardarInformacion();
+            cursoProfesorController.agregar(profesorId,cursoId,año,semestre);
 
-            JOptionPane.showMessageDialog(this, "CursoProfesor registrado correctamente");
+            JOptionPane.showMessageDialog(this, "Inscripción registrada correctamente");
             limpiarCampos();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al registrar la relación: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al registrar inscripción: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -97,7 +86,7 @@ public class AgregarCursoProfesor extends JPanel {
         txtProfesorID.setText("");
         txtCursoID.setText("");
         txtAño.setText("");
-        txtSemestre.setText("");
+        cmbSemestre.setSelectedIndex(0);
     }
 }
 

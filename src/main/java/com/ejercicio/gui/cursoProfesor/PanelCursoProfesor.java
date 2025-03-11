@@ -5,8 +5,10 @@ import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.DAOServicios.FacultadService;
 import com.ejercicio.DAOServicios.CursoProfesorService;
+import com.ejercicio.controlador.CursoProfesorController;
 import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
+import com.ejercicio.gui.cursoProfesor.*;
 import com.ejercicio.gui.cursoProfesor.*;
 import com.ejercicio.modelos.CursoProfesor;
 import com.ejercicio.modelos.CursosProfesores;
@@ -16,28 +18,25 @@ import java.awt.*;
 import java.sql.Connection;
 
 public class PanelCursoProfesor extends PanelBase {
-    private CursoProfesorService cursoProfesorService;
-    private CursoService cursoService;
-    private ProfesorService estudianteService;
+    private CursoProfesorController cursoProfesorController;
+
 
     public PanelCursoProfesor(MainFrame mainFrame) {
         super(mainFrame);
 
         Connection connection = ConexionDB.obtenerConexion();
-        this.cursoProfesorService = new CursoProfesorService(connection);
-        this.cursoService = new CursoService(connection);
-        this.estudianteService = new ProfesorService(connection);
+        this.cursoProfesorController = new CursoProfesorController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarCursoProfesor());
 
         btnEditar.addActionListener(e -> {
             int[] ids = obtenerIdsProfesorYCurso("editar");
             if (ids != null) {
-                CursoProfesor cursoProfesor = cursoProfesorService.obtenerPorId(ids[0], ids[1]);
-                if (cursoProfesor != null) {
-                    abrirEditarCursoProfesor(cursoProfesor);
+                Boolean existe = cursoProfesorController.existe(ids[0], ids[1]);
+                if (existe) {
+                    abrirEditarCursoProfesor(ids[0], ids[1]);
                 } else {
-                    JOptionPane.showMessageDialog(this, "No se encontró la Relación con los IDs ingresados", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "No se encontró la inscripción con los IDs ingresados", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -45,11 +44,11 @@ public class PanelCursoProfesor extends PanelBase {
         btnEliminar.addActionListener(e -> {
             int[] ids = obtenerIdsProfesorYCurso("eliminar");
             if (ids != null) {
-                CursoProfesor cursoProfesor = cursoProfesorService.obtenerPorId(ids[0], ids[1]);
-                if (cursoProfesor != null) {
-                    abrirEliminarCursoProfesor(cursoProfesor);
+                Boolean existe = cursoProfesorController.existe(ids[0], ids[1]);
+                if (existe) {
+                    abrirEliminarCursoProfesor(ids[0], ids[1]);
                 } else {
-                    JOptionPane.showMessageDialog(this, "No se encontró la Relación con los IDs ingresados", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "No se encontró la inscripción con los IDs ingresados", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -57,15 +56,11 @@ public class PanelCursoProfesor extends PanelBase {
         btnConsultar.addActionListener(e -> {
             int[] ids = obtenerIdsProfesorYCurso("consultar");
             if (ids != null) {
-                CursoProfesor cursoProfesor = cursoProfesorService.obtenerPorId(ids[0], ids[1]);
-                CursosProfesores cursosProfesores = new CursosProfesores();
-                cursosProfesores.cargarDatos();
-                cursosProfesores.imprimirPosicion(cursosProfesores.encontrar(cursoProfesor).get());
-
-                if (cursoProfesor != null) {
-                    abrirConsultarCursoProfesor(cursoProfesor);
+                Boolean existe = cursoProfesorController.existe(ids[0], ids[1]);
+                if (existe) {
+                    abrirConsultarCursoProfesor(ids[0], ids[1]);
                 } else {
-                    JOptionPane.showMessageDialog(this, "No se encontró la Relación con los IDs ingresados", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "No se encontró la inscripción con los IDs ingresados", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -84,9 +79,9 @@ public class PanelCursoProfesor extends PanelBase {
         int option = JOptionPane.showConfirmDialog(this, message, "Ingrese los IDs para " + accion, JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
             try {
-                int estudianteId = Integer.parseInt(txtProfesorId.getText().trim());
+                int profesorId = Integer.parseInt(txtProfesorId.getText().trim());
                 int cursoId = Integer.parseInt(txtCursoId.getText().trim());
-                return new int[]{estudianteId, cursoId};
+                return new int[]{profesorId, cursoId};
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Ingrese IDs válidos", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -95,7 +90,7 @@ public class PanelCursoProfesor extends PanelBase {
     }
 
     private void abrirAgregarCursoProfesor() {
-        AgregarCursoProfesor agregarCursoProfesor = new AgregarCursoProfesor(cursoProfesorService, cursoService, estudianteService,this);
+        AgregarCursoProfesor agregarCursoProfesor = new AgregarCursoProfesor(cursoProfesorController,this);
         removeAll();
         setLayout(new BorderLayout());
         add(agregarCursoProfesor, BorderLayout.CENTER);
@@ -122,7 +117,7 @@ public class PanelCursoProfesor extends PanelBase {
     }
 
     private void abrirListarCursoProfesors() {
-        ListarCursoProfesor listarCursoProfesors = new ListarCursoProfesor(cursoProfesorService, this);
+        ListarCursoProfesor listarCursoProfesors = new ListarCursoProfesor(cursoProfesorController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(listarCursoProfesors, BorderLayout.CENTER);
@@ -130,8 +125,8 @@ public class PanelCursoProfesor extends PanelBase {
         repaint();
     }
 
-    private void abrirEditarCursoProfesor(CursoProfesor cursoProfesor) {
-        EditarCursoProfesor editarCursoProfesor = new EditarCursoProfesor(cursoProfesor, cursoProfesorService,this);
+    private void abrirEditarCursoProfesor(Integer id_profesor, Integer id_curso) {
+        EditarCursoProfesor editarCursoProfesor = new EditarCursoProfesor(id_profesor,id_curso, cursoProfesorController,this);
         removeAll();
         setLayout(new BorderLayout());
         add(editarCursoProfesor, BorderLayout.CENTER);
@@ -139,8 +134,8 @@ public class PanelCursoProfesor extends PanelBase {
         repaint();
     }
 
-    private void abrirEliminarCursoProfesor(CursoProfesor cursoProfesor) {
-        EliminarCursoProfesor eliminarCursoProfesor = new EliminarCursoProfesor(cursoProfesor, cursoProfesorService, this);
+    private void abrirEliminarCursoProfesor(Integer id_profesor, Integer id_curso) {
+        EliminarCursoProfesor eliminarCursoProfesor = new EliminarCursoProfesor(id_profesor, id_curso, cursoProfesorController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(eliminarCursoProfesor, BorderLayout.CENTER);
@@ -148,8 +143,8 @@ public class PanelCursoProfesor extends PanelBase {
         repaint();
     }
 
-    private void abrirConsultarCursoProfesor(CursoProfesor cursoProfesor) {
-        ConsultarCursoProfesor consultarCursoProfesor = new ConsultarCursoProfesor(cursoProfesor, this);
+    private void abrirConsultarCursoProfesor(Integer id_profesor, Integer id_curso) {
+        ConsultarCursoProfesor consultarCursoProfesor = new ConsultarCursoProfesor(id_profesor, id_curso,  cursoProfesorController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(consultarCursoProfesor, BorderLayout.CENTER);

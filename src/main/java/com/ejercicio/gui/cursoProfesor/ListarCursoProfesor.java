@@ -1,6 +1,8 @@
 package com.ejercicio.gui.cursoProfesor;
 
 import com.ejercicio.DAOServicios.CursoProfesorService;
+import com.ejercicio.controlador.CursoProfesorController;
+import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.modelos.CursoProfesor;
 import com.ejercicio.modelos.CursosProfesores;
@@ -12,14 +14,14 @@ import java.awt.*;
 import java.util.List;
 
 public class ListarCursoProfesor extends JPanel{
-    private CursoProfesorService cursoProfesorService;
+    private CursoProfesorController cursoProfesorController;
     private PanelCursoProfesor panelCursoProfesor;
     private JTable tablaCursoProfesores;
     private DefaultTableModel modeloTabla;
     private JButton btnVolver;
 
-    public ListarCursoProfesor(CursoProfesorService cursoProfesorService, PanelCursoProfesor panelCursoProfesor) {
-        this.cursoProfesorService = cursoProfesorService;
+    public ListarCursoProfesor(CursoProfesorController cursoProfesorController, PanelCursoProfesor panelCursoProfesor) {
+        this.cursoProfesorController = cursoProfesorController;
         this.panelCursoProfesor = panelCursoProfesor;
 
         setLayout(new BorderLayout());
@@ -45,13 +47,10 @@ public class ListarCursoProfesor extends JPanel{
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
 
-        List<CursoProfesor> cursoProfesores = cursoProfesorService.obtenerTodosLosCursoProfesores();
-        CursosProfesores cursosProfesores = new CursosProfesores();
-        cursosProfesores.cargarDatos();
-        cursosProfesores.imprimirListado();
+        List<List<String>> cursoProfesores = cursoProfesorController.obtenerTodasLasCursoProfesores();
 
-        for (CursoProfesor i : cursoProfesores) {
-            modeloTabla.addRow(new Object[]{i.getProfesor().getID(), i.getCurso().getID(), i.getAño(), i.getSemestre()});
+        for (List<String> i : cursoProfesores) {
+            modeloTabla.addRow(new Object[]{i.get(0), i.get(1), i.get(2), i.get(3)});
         }
     }
 }

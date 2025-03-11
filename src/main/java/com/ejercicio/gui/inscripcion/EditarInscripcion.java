@@ -1,14 +1,12 @@
 package com.ejercicio.gui.inscripcion;
 import com.ejercicio.controlador.InscripcionController;
-import com.ejercicio.modelos.CursosInscritos;
-import com.ejercicio.modelos.Inscripción;
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
 
-import com.ejercicio.DAOServicios.InscripcionService;
 
 public class EditarInscripcion extends JPanel {
     private JTextField txtAño;

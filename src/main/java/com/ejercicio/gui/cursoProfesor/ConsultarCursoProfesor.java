@@ -1,31 +1,34 @@
 package com.ejercicio.gui.cursoProfesor;
 
+import com.ejercicio.controlador.CursoProfesorController;
+import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.gui.cursoProfesor.PanelCursoProfesor;
 import com.ejercicio.modelos.CursoProfesor;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 public class ConsultarCursoProfesor extends JPanel {
-    private CursoProfesor cursoProfesor;
+    private CursoProfesorController cursoProfesorController;
     private PanelCursoProfesor panelCursoProfesor;
 
-    public ConsultarCursoProfesor(CursoProfesor cursoProfesor, PanelCursoProfesor panelCursoProfesor) {
-        this.cursoProfesor = cursoProfesor;
+    public ConsultarCursoProfesor(Integer profesor_id, Integer curso_id,  CursoProfesorController cursoProfesorController, PanelCursoProfesor panelCursoProfesor) {
+        this.cursoProfesorController = cursoProfesorController;
         this.panelCursoProfesor = panelCursoProfesor;
+
+        List<String> datosCursoProfesor = cursoProfesorController.obtenerDatosPorId(profesor_id,curso_id);
 
         setLayout(new GridLayout(6, 1, 5, 5));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(new JLabel("Información de la relación CursoProfesor"));
+        add(new JLabel("Información de la Relación"));
 
-        add(new JLabel("Profesor ID: " + cursoProfesor.getProfesor().getID()));
-        add(new JLabel("Profesor Nombre: " + cursoProfesor.getProfesor().getNombre()));
-        add(new JLabel("Curso ID: " + cursoProfesor.getCurso().getID()));
-        add(new JLabel("Curso Nombre: " + cursoProfesor.getCurso().getNombre()));
-        add(new JLabel("Año: " + cursoProfesor.getAño()));
-        add(new JLabel("Semestre: " + cursoProfesor.getSemestre()));
+        add(new JLabel("Profesor ID: " + profesor_id));
+        add(new JLabel("Curso ID: " + curso_id));
+        add(new JLabel("Año: " + datosCursoProfesor.get(0)));
+        add(new JLabel("Semestre: " + datosCursoProfesor.get(1)));
 
         JButton btnVolver = new JButton("Volver");
         btnVolver.addActionListener(e -> panelCursoProfesor.mostrarVistaPrincipal());
