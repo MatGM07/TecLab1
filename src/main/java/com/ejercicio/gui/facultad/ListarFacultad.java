@@ -1,6 +1,7 @@
 package com.ejercicio.gui.facultad;
 
 import com.ejercicio.DAOServicios.FacultadService;
+import com.ejercicio.controlador.FacultadController;
 import com.ejercicio.gui.facultad.PanelFacultad;
 import com.ejercicio.modelos.Facultad;
 
@@ -11,14 +12,14 @@ import java.awt.*;
 import java.util.List;
 
 public class ListarFacultad extends JPanel {
-    private FacultadService facultadService;
+    private FacultadController facultadController;
     private PanelFacultad panelFacultad;
     private JTable tablaFacultads;
     private DefaultTableModel modeloTabla;
     private JButton btnVolver;
 
-    public ListarFacultad(FacultadService facultadService, PanelFacultad panelFacultad) {
-        this.facultadService = facultadService;
+    public ListarFacultad(FacultadController facultadController, PanelFacultad panelFacultad) {
+        this.facultadController = facultadController;
         this.panelFacultad = panelFacultad;
 
         setLayout(new BorderLayout());
@@ -49,10 +50,10 @@ public class ListarFacultad extends JPanel {
 
         modeloTabla.setRowCount(0);
 
-        List<Facultad> facultads = facultadService.obtenerTodasLasFacultades();
+        List<List<String>> facultades = facultadController.obtenerTodasLasFacultades();
 
-        for (Facultad p : facultads) {
-            modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getDecano().getID()});
+        for (List<String> p : facultades) {
+            modeloTabla.addRow(new Object[]{p.get(0), p.get(1), p.get(2)});
         }
     }
 }

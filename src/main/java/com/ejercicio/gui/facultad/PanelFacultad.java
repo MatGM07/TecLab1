@@ -3,6 +3,7 @@ package com.ejercicio.gui.facultad;
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.FacultadService;
 import com.ejercicio.DAOServicios.PersonaService;
+import com.ejercicio.controlador.FacultadController;
 import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
 import com.ejercicio.gui.facultad.*;
@@ -13,15 +14,13 @@ import java.sql.Connection;
 
 
 public class PanelFacultad extends PanelBase {
-    private FacultadService facultadService;
-    private PersonaService personaService;
+    private FacultadController facultadController;
 
     public PanelFacultad(MainFrame mainFrame) {
         super(mainFrame);
 
         Connection connection = ConexionDB.obtenerConexion();
-        this.facultadService = new FacultadService(connection);
-        this.personaService = new PersonaService(connection);
+        this.facultadController = new FacultadController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarFacultad());
 
@@ -30,9 +29,9 @@ public class PanelFacultad extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Facultad facultad = facultadService.obtenerPorId(id);
-                    if (facultad != null) {
-                        abrirEditarFacultad(facultad);
+                    Boolean existe = facultadController.existe(id);
+                    if (existe) {
+                        abrirEditarFacultad(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una facultad con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -48,10 +47,10 @@ public class PanelFacultad extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Facultad facultad = facultadService.obtenerPorId(id);
+                    Boolean existe = facultadController.existe(id);
 
-                    if (facultad != null) {
-                        abrirEliminarFacultad(facultad);
+                    if (existe) {
+                        abrirEliminarFacultad(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una facultad con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -67,10 +66,10 @@ public class PanelFacultad extends PanelBase {
             if (idStr != null && !idStr.trim().isEmpty()) {
                 try {
                     int id = Integer.parseInt(idStr.trim());
-                    Facultad facultad = facultadService.obtenerPorId(id);
+                    Boolean existe = facultadController.existe(id);
 
-                    if (facultad != null) {
-                        abrirConsultarFacultad(facultad);
+                    if (existe) {
+                        abrirConsultarFacultad(id);
                     } else {
                         JOptionPane.showMessageDialog(this, "No se encontró una facultad con el ID ingresado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -84,7 +83,7 @@ public class PanelFacultad extends PanelBase {
     }
 
     private void abrirAgregarFacultad() {
-        AgregarFacultad agregarFacultad = new AgregarFacultad(facultadService, this);
+        AgregarFacultad agregarFacultad = new AgregarFacultad(facultadController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(agregarFacultad, BorderLayout.CENTER);
@@ -111,7 +110,7 @@ public class PanelFacultad extends PanelBase {
     }
 
     private void abrirListarFacultades() {
-        ListarFacultad listarFacultads = new ListarFacultad(facultadService, this);
+        ListarFacultad listarFacultads = new ListarFacultad(facultadController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(listarFacultads, BorderLayout.CENTER);
@@ -119,8 +118,8 @@ public class PanelFacultad extends PanelBase {
         repaint();
     }
 
-    private void abrirEditarFacultad(Facultad facultad) {
-        EditarFacultad editarFacultad = new EditarFacultad(facultad, facultadService, personaService,this);
+    private void abrirEditarFacultad(Integer id) {
+        EditarFacultad editarFacultad = new EditarFacultad(id, facultadController,this);
         removeAll();
         setLayout(new BorderLayout());
         add(editarFacultad, BorderLayout.CENTER);
@@ -128,8 +127,8 @@ public class PanelFacultad extends PanelBase {
         repaint();
     }
 
-    private void abrirEliminarFacultad(Facultad facultad) {
-        EliminarFacultad eliminarFacultad = new EliminarFacultad(facultad, facultadService, this);
+    private void abrirEliminarFacultad(Integer id) {
+        EliminarFacultad eliminarFacultad = new EliminarFacultad(id, facultadController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(eliminarFacultad, BorderLayout.CENTER);
@@ -137,8 +136,8 @@ public class PanelFacultad extends PanelBase {
         repaint();
     }
 
-    private void abrirConsultarFacultad(Facultad facultad) {
-        ConsultarFacultad consultarFacultad = new ConsultarFacultad(facultad, this);
+    private void abrirConsultarFacultad(Integer id) {
+        ConsultarFacultad consultarFacultad = new ConsultarFacultad(id, facultadController, this);
         removeAll();
         setLayout(new BorderLayout());
         add(consultarFacultad, BorderLayout.CENTER);

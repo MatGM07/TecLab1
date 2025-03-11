@@ -1,6 +1,7 @@
 package com.ejercicio.gui.facultad;
 
 import com.ejercicio.DAOServicios.FacultadService;
+import com.ejercicio.controlador.FacultadController;
 import com.ejercicio.gui.facultad.PanelFacultad;
 import com.ejercicio.modelos.Facultad;
 
@@ -11,11 +12,11 @@ import java.awt.*;
 public class AgregarFacultad extends JPanel {
     private JTextField txtNombre, txtDecano_id;
     private JButton btnGuardar, btnCancelar, btnVolver;
-    private FacultadService facultadService;
+    private FacultadController facultadController;
     private PanelFacultad panelFacultad;
 
-    public AgregarFacultad(FacultadService facultadService, PanelFacultad panelFacultad) {
-        this.facultadService = facultadService;
+    public AgregarFacultad(FacultadController facultadController, PanelFacultad panelFacultad) {
+        this.facultadController = facultadController;
         this.panelFacultad = panelFacultad;
 
         setLayout(new GridLayout(8, 2, 5, 5));
@@ -44,9 +45,7 @@ public class AgregarFacultad extends JPanel {
         try {
             String nombre = txtNombre.getText();
             Integer decano_id = Integer.valueOf(txtDecano_id.getText());
-
-            Facultad facultad = new Facultad(null, nombre, decano_id);
-            facultadService.registrarFacultad(facultad);
+            facultadController.agregar(nombre,decano_id);
             JOptionPane.showMessageDialog(this, "Facultad registrada correctamente");
             limpiarCampos();
         } catch (Exception ex) {
