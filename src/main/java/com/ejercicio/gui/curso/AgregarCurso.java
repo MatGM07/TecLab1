@@ -1,6 +1,7 @@
 package com.ejercicio.gui.curso;
 
 import com.ejercicio.DAOServicios.CursoService;
+import com.ejercicio.controlador.CursoController;
 import com.ejercicio.gui.curso.PanelCurso;
 import com.ejercicio.modelos.Curso;
 
@@ -12,11 +13,11 @@ public class AgregarCurso extends JPanel {
     private JTextField txtNombre, txtPrograma_id;
     private JCheckBox chkActivo;
     private JButton btnGuardar, btnCancelar, btnVolver;
-    private CursoService cursoService;
+    private CursoController cursoController;
     private PanelCurso panelCurso;
 
-    public AgregarCurso(CursoService cursoService, PanelCurso panelCurso) {
-        this.cursoService = cursoService;
+    public AgregarCurso(CursoController cursoController, PanelCurso panelCurso) {
+        this.cursoController = cursoController;
         this.panelCurso = panelCurso;
 
         setLayout(new GridLayout(8, 2, 5, 5));
@@ -50,8 +51,8 @@ public class AgregarCurso extends JPanel {
             boolean activo = chkActivo.isSelected();
             Integer programa_id = Integer.valueOf(txtPrograma_id.getText());
 
-            Curso curso = new Curso(null,activo,programa_id,nombre);
-            cursoService.registrarCurso(curso);
+            cursoController.agregar(nombre,activo,programa_id);
+
             JOptionPane.showMessageDialog(this, "Curso registrado correctamente");
             limpiarCampos();
         } catch (Exception ex) {

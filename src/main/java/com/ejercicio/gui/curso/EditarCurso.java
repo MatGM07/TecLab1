@@ -2,6 +2,7 @@ package com.ejercicio.gui.curso;
 
 import com.ejercicio.DAOServicios.ProgramaService;
 import com.ejercicio.DAOServicios.CursoService;
+import com.ejercicio.controlador.CursoController;
 import com.ejercicio.gui.curso.PanelCurso;
 import com.ejercicio.modelos.Programa;
 import com.ejercicio.modelos.Curso;
@@ -10,37 +11,37 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 public class EditarCurso extends JPanel {
     private JTextField txtNombre, txtPrograma_id;
     private JButton btnGuardar, btnCancelar;
     private JCheckBox chkActivo;
-    private CursoService cursoService;
+    private CursoController cursoController;
     private ProgramaService programaService;
     private PanelCurso panelCurso;
-    private Curso curso;
 
-    public EditarCurso(Curso curso, CursoService cursoService, ProgramaService programaService, PanelCurso panelCurso) {
-        this.curso = curso;
-        this.cursoService = cursoService;
-        this.programaService = programaService;
+    public EditarCurso(Integer id, CursoController cursoController, PanelCurso panelCurso) {
+        this.cursoController = cursoController;
         this.panelCurso = panelCurso;
+
+        List<String> datosCurso = cursoController.obtenerDatosPorId(id);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(createFieldPanel("ID:", new JTextField(String.valueOf(curso.getID()), 20), false));
-        txtNombre = new JTextField(curso.getNombre(), 20);
+        add(createFieldPanel("ID:", new JTextField(String.valueOf(id), 20), false));
+        txtNombre = new JTextField(datosCurso.get(0), 20);
         add(createFieldPanel("Nombre:", txtNombre, true));
-        chkActivo = new JCheckBox("Activo", curso.getActivo());
+        chkActivo = new JCheckBox("Activo", Boolean.parseBoolean(datosCurso.get(1)));
         add(createCheckBoxPanel("Activo:", chkActivo));
-        txtPrograma_id = new JTextField(String.valueOf(curso.getPrograma().getID()), 20);
+        txtPrograma_id = new JTextField(String.valueOf(datosCurso.get(2)), 20);
         add(createFieldPanel("ID Programa:", txtPrograma_id, true));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnGuardar = new JButton("Guardar Cambios");
-        btnGuardar.addActionListener(e -> guardarCambios());
+        btnGuardar.addActionListener(e -> guardarCambios(id));
         buttonPanel.add(btnGuardar);
 
         btnCancelar = new JButton("Cancelar");
@@ -67,14 +68,12 @@ public class EditarCurso extends JPanel {
         return panel;
     }
 
-    private void guardarCambios() {
+    private void guardarCambios(Integer id) {
         try {
-            curso.setNombre(txtNombre.getText());
-            curso.setActivo(chkActivo.isSelected());
-            Programa programa = programaService.obtenerPorId(Integer.parseInt(txtPrograma_id.getText()));
-            curso.setPrograma(programa);
-
-            cursoService.actualizarCurso(curso);
+            String nombre = txtNombre.getText();
+            Boolean activo = chkActivo.isSelected();
+            Integer programa_id = Integer.valueOf(txtPrograma_id.getText());
+            cursoController.actualizar(id,nombre,activo,programa_id);
             JOptionPane.showMessageDialog(this, "Curso actualizado correctamente");
             panelCurso.mostrarVistaPrincipal();
         } catch (Exception ex) {

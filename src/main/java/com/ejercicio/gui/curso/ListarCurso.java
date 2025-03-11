@@ -1,6 +1,7 @@
 package com.ejercicio.gui.curso;
 
 import com.ejercicio.DAOServicios.CursoService;
+import com.ejercicio.controlador.CursoController;
 import com.ejercicio.gui.curso.PanelCurso;
 import com.ejercicio.modelos.Curso;
 
@@ -12,14 +13,14 @@ import java.awt.*;
 import java.util.List;
 
 public class ListarCurso extends JPanel {
-    private CursoService cursoService;
+    private CursoController cursoController;
     private PanelCurso panelCurso;
     private JTable tablaCursos;
     private DefaultTableModel modeloTabla;
     private JButton btnVolver;
 
-    public ListarCurso(CursoService cursoService, PanelCurso panelCurso) {
-        this.cursoService = cursoService;
+    public ListarCurso(CursoController cursoController, PanelCurso panelCurso) {
+        this.cursoController = cursoController;
         this.panelCurso = panelCurso;
 
         setLayout(new BorderLayout());
@@ -45,10 +46,10 @@ public class ListarCurso extends JPanel {
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
 
-        List<Curso> cursos = cursoService.obtenerTodosLosCursos();
+        List<List<String>> cursos = cursoController.obtenerTodosLosCursos();
 
-        for (Curso p : cursos) {
-            modeloTabla.addRow(new Object[]{p.getID(), p.getNombre(), p.getActivo(), p.getPrograma().getID()});
+        for (List<String> p : cursos) {
+            modeloTabla.addRow(new Object[]{p.get(0), p.get(1), p.get(2), p.get(3)});
         }
     }
 }

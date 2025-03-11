@@ -18,14 +18,12 @@ import java.sql.Connection;
 
 public class PanelEstudiante extends PanelBase {
     private EstudianteController estudianteController;
-    private ProgramaController programaController;
 
     public PanelEstudiante(MainFrame mainFrame) {
         super(mainFrame);
 
         Connection connection = ConexionDB.obtenerConexion();
         this.estudianteController = new EstudianteController(connection);
-        this.programaController = new ProgramaController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarEstudiante());
 
