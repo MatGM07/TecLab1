@@ -59,21 +59,29 @@ public class EditarEstudiante extends JPanel {
     }
 
     private JPanel createFieldPanel(String label, JComponent field, boolean editable) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2)); // Menos espacio vertical
         panel.add(new JLabel(label));
         if (field instanceof JTextField) {
             ((JTextField) field).setEditable(editable);
+            ((JTextField) field).setMaximumSize(new Dimension(200, 25)); // Control de tamaño
         }
         panel.add(field);
         return panel;
     }
 
     private JPanel createCheckBoxPanel(String label, JCheckBox checkBox) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel(label));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2)); // Compacto
+        panel.setBorder(new EmptyBorder(2, 0, 2, 0));
+
+        JLabel jLabel = new JLabel(label);
+        jLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        checkBox.setFont(new Font("Arial", Font.PLAIN, 12));
+
+        panel.add(jLabel);
         panel.add(checkBox);
         return panel;
     }
+
 
     private void guardarCambios(Integer id) {
         try {

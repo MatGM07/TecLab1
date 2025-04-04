@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
+
         JButton btnPersona = crearBoton("Personas");
         JButton btnEstudiante = new BotonDegradado("Estudiante *Nuevo*");
         JButton btnProfesor = new BotonDegradado("Profesores *Nuevo*");
@@ -40,6 +41,7 @@ public class MainFrame extends JFrame {
         JButton btnCurso = new BotonDegradado("Cursos *Nuevo*");
         JButton btnInscripcion = crearBoton("Inscripción");
         JButton btnCursoProfesor = crearBoton("Relación Curso-Profesor");
+        JButton btnEstudianteDetalle = new BotonDegradado("Estudiante Detalle *Nuevo*");
 
         gbc.gridy = 0; panelInicio.add(btnPersona, gbc);
         gbc.gridy = 1; panelInicio.add(btnEstudiante, gbc);
@@ -49,6 +51,7 @@ public class MainFrame extends JFrame {
         gbc.gridy = 5; panelInicio.add(btnCurso, gbc);
         gbc.gridy = 6; panelInicio.add(btnInscripcion, gbc);
         gbc.gridy = 7; panelInicio.add(btnCursoProfesor, gbc);
+        gbc.gridy = 8; panelInicio.add(btnEstudianteDetalle, gbc);
 
         btnPersona.addActionListener(e -> agregarNuevaPestaña(new PanelPersona(this), "Persona " + (++tabCount)));
         btnEstudiante.addActionListener(e -> abrirVentana("Gestion Estudiante",new PanelEstudiante(this)));
@@ -58,6 +61,7 @@ public class MainFrame extends JFrame {
         btnCurso.addActionListener(e -> abrirVentana("Gestion Cursos",new PanelCurso(this)));
         btnInscripcion.addActionListener(e -> agregarNuevaPestaña(new PanelInscripcion(this), "Inscripción " + (++tabCount)));
         btnCursoProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelCursoProfesor(this), "CursoProfesor " + (++tabCount)));
+        btnEstudianteDetalle.addActionListener(e -> new EstudianteDetalle().setVisible(true));
 
 
         tabbedPane.add("Inicio", panelInicio);
