@@ -1,5 +1,6 @@
 package com.ejercicio.gui.estudiante;
 
+import com.ejercicio.ConexionController;
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.EstudianteService;
 import com.ejercicio.DAOServicios.PersonaService;
@@ -22,7 +23,7 @@ public class PanelEstudiante extends PanelBase {
     public PanelEstudiante(MainFrame mainFrame) {
         super(mainFrame);
 
-        Connection connection = ConexionDB.obtenerConexion();
+        Connection connection = ConexionController.obtenerConexion();
         this.estudianteController = new EstudianteController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarEstudiante());

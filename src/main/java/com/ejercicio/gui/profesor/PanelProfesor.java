@@ -1,5 +1,6 @@
 package com.ejercicio.gui.profesor;
 
+import com.ejercicio.ConexionController;
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.DAOServicios.PersonaService;
@@ -17,10 +18,11 @@ import java.sql.Connection;
 public class PanelProfesor extends PanelBase {
     private ProfesorController profesorController;
 
+
     public PanelProfesor(MainFrame mainFrame) {
         super(mainFrame);
 
-        Connection connection = ConexionDB.obtenerConexion();
+        Connection connection = ConexionController.obtenerConexion();
         this.profesorController = new ProfesorController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarProfesor());

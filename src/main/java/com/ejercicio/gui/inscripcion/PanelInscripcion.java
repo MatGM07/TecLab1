@@ -1,5 +1,6 @@
 package com.ejercicio.gui.inscripcion;
 
+import com.ejercicio.ConexionController;
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.DAOServicios.EstudianteService;
@@ -23,7 +24,7 @@ public class PanelInscripcion extends PanelBase {
     public PanelInscripcion(MainFrame mainFrame) {
         super(mainFrame);
 
-        Connection connection = ConexionDB.obtenerConexion();
+        Connection connection = ConexionController.obtenerConexion();
         this.inscripcionController = new InscripcionController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarInscripcion());

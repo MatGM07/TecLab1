@@ -1,5 +1,6 @@
 package com.ejercicio.gui.cursoProfesor;
 
+import com.ejercicio.ConexionController;
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.DAOServicios.ProfesorService;
@@ -24,7 +25,7 @@ public class PanelCursoProfesor extends PanelBase {
     public PanelCursoProfesor(MainFrame mainFrame) {
         super(mainFrame);
 
-        Connection connection = ConexionDB.obtenerConexion();
+        Connection connection = ConexionController.obtenerConexion();
         this.cursoProfesorController = new CursoProfesorController(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarCursoProfesor());

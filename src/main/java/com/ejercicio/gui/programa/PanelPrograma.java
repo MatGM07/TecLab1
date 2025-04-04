@@ -1,5 +1,6 @@
 package com.ejercicio.gui.programa;
 
+import com.ejercicio.ConexionController;
 import com.ejercicio.ConexionDB;
 import com.ejercicio.DAOServicios.FacultadService;
 import com.ejercicio.DAOServicios.ProgramaService;
@@ -15,14 +16,12 @@ import java.sql.Connection;
 
 public class PanelPrograma extends PanelBase {
     private ProgramaController programaController;
-    private FacultadService facultadService;
 
     public PanelPrograma(MainFrame mainFrame) {
         super(mainFrame);
 
-        Connection connection = ConexionDB.obtenerConexion();
+        Connection connection = ConexionController.obtenerConexion();
         this.programaController = new ProgramaController(connection);
-        this.facultadService = new FacultadService(connection);
 
         btnAgregar.addActionListener(e -> abrirAgregarPrograma());
 
