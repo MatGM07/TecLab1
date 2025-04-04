@@ -40,9 +40,6 @@ public class AgregarCurso extends JPanel {
         btnGuardar.addActionListener(e -> guardarCurso());
         add(btnGuardar);
 
-        btnVolver = new JButton("Volver");
-        btnVolver.addActionListener(e -> panelCurso.mostrarVistaPrincipal());
-        add(btnVolver);
     }
 
     private void guardarCurso() {

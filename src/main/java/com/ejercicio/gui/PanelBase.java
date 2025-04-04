@@ -22,7 +22,14 @@ public abstract class PanelBase extends JPanel {
         btnCerrar = new JButton("Cerrar pestaña");
 
 
-        btnCerrar.addActionListener(e -> mainFrame.getTabbedPane().remove(this));
+        btnCerrar.addActionListener(e -> {
+            Container parent = SwingUtilities.getWindowAncestor(this);
+            if (parent instanceof JFrame frame) {
+                frame.dispose();
+            } else {
+                mainFrame.getTabbedPane().remove(this);
+            }
+        });
 
         panelBotones.add(btnAgregar);
         panelBotones.add(btnEditar);

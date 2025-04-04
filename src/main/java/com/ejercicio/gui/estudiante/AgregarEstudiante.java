@@ -61,9 +61,6 @@ public class AgregarEstudiante extends JPanel {
         btnGuardar.addActionListener(e -> guardarEstudiante());
         add(btnGuardar);
 
-        btnVolver = new JButton("Volver");
-        btnVolver.addActionListener(e -> panelEstudiante.mostrarVistaPrincipal());
-        add(btnVolver);
     }
 
     private void guardarEstudiante() {

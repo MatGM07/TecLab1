@@ -6,6 +6,7 @@ import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.DAOServicios.PersonaService;
 import com.ejercicio.DAOServicios.ProgramaService;
 import com.ejercicio.controlador.ProfesorController;
+import com.ejercicio.gui.BotonDegradado;
 import com.ejercicio.gui.MainFrame;
 import com.ejercicio.gui.PanelBase;
 import com.ejercicio.gui.profesor.*;
@@ -85,12 +86,15 @@ public class PanelProfesor extends PanelBase {
     }
 
     private void abrirAgregarProfesor() {
-        AgregarProfesor agregarProfesor = new AgregarProfesor(profesorController,this);
-        removeAll();
-        setLayout(new BorderLayout());
-        add(agregarProfesor, BorderLayout.CENTER);
-        revalidate();
-        repaint();
+        JFrame frame = new JFrame("Agregar Profesor");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLocationRelativeTo(this);
+
+        AgregarProfesor agregarProfesor = new AgregarProfesor(profesorController, this);
+        frame.add(agregarProfesor);
+
+        frame.setVisible(true);
     }
 
     public void mostrarVistaPrincipal() {

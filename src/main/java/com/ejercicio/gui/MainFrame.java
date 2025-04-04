@@ -10,6 +10,8 @@ import com.ejercicio.gui.programa.PanelPrograma;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     private JTabbedPane tabbedPane;
@@ -31,11 +33,11 @@ public class MainFrame extends JFrame {
         gbc.gridx = 0;
 
         JButton btnPersona = crearBoton("Personas");
-        JButton btnEstudiante = crearBoton("Estudiantes");
-        JButton btnProfesor = crearBoton("Profesores");
+        JButton btnEstudiante = new BotonDegradado("Estudiante *Nuevo*");
+        JButton btnProfesor = new BotonDegradado("Profesores *Nuevo*");
         JButton btnFacultad = crearBoton("Facultades");
         JButton btnPrograma = crearBoton("Programa");
-        JButton btnCurso = crearBoton("Curso");
+        JButton btnCurso = new BotonDegradado("Cursos *Nuevo*");
         JButton btnInscripcion = crearBoton("Inscripción");
         JButton btnCursoProfesor = crearBoton("Relación Curso-Profesor");
 
@@ -49,13 +51,14 @@ public class MainFrame extends JFrame {
         gbc.gridy = 7; panelInicio.add(btnCursoProfesor, gbc);
 
         btnPersona.addActionListener(e -> agregarNuevaPestaña(new PanelPersona(this), "Persona " + (++tabCount)));
-        btnEstudiante.addActionListener(e -> agregarNuevaPestaña(new PanelEstudiante(this), "Estudiante " + (++tabCount)));
-        btnProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelProfesor(this), "Profesor " + (++tabCount)));
+        btnEstudiante.addActionListener(e -> abrirVentana("Gestion Estudiante",new PanelEstudiante(this)));
+        btnProfesor.addActionListener(e -> abrirVentana("Gestion Profesores",new PanelProfesor(this)));
         btnFacultad.addActionListener(e -> agregarNuevaPestaña(new PanelFacultad(this), "Facultad " + (++tabCount)));
         btnPrograma.addActionListener(e -> agregarNuevaPestaña(new PanelPrograma(this), "Programa " + (++tabCount)));
-        btnCurso.addActionListener(e -> agregarNuevaPestaña(new PanelCurso(this), "Curso " + (++tabCount)));
+        btnCurso.addActionListener(e -> abrirVentana("Gestion Cursos",new PanelCurso(this)));
         btnInscripcion.addActionListener(e -> agregarNuevaPestaña(new PanelInscripcion(this), "Inscripción " + (++tabCount)));
         btnCursoProfesor.addActionListener(e -> agregarNuevaPestaña(new PanelCursoProfesor(this), "CursoProfesor " + (++tabCount)));
+
 
         tabbedPane.add("Inicio", panelInicio);
         setVisible(true);
@@ -84,4 +87,15 @@ public class MainFrame extends JFrame {
         tabbedPane.setTabComponentAt(index, tabHeader);
         tabbedPane.setSelectedIndex(index);
     }
+
+    private void abrirVentana(String title, PanelBase panel){
+        JFrame frame = new JFrame(title);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(600, 400);
+        frame.setLocationRelativeTo(this);
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+
+
 }

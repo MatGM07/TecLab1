@@ -47,9 +47,6 @@ public class AgregarProfesor extends JPanel {
         btnGuardar.addActionListener(e -> guardarProfesor());
         add(btnGuardar);
 
-        btnVolver = new JButton("Volver");
-        btnVolver.addActionListener(e -> panelProfesor.mostrarVistaPrincipal());
-        add(btnVolver);
     }
 
     private void guardarProfesor() {
