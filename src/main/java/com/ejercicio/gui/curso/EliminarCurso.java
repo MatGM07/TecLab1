@@ -4,6 +4,7 @@ import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.controlador.CursoController;
 import com.ejercicio.gui.curso.PanelCurso;
 import com.ejercicio.modelos.Curso;
+import com.ejercicio.observador.CursoObservable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -46,6 +47,7 @@ public class EliminarCurso extends JPanel{
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
                 cursoController.eliminar(id);
+                CursoObservable.notificarCambio();
                 JOptionPane.showMessageDialog(this, "Curso eliminada correctamente");
                 panelCurso.mostrarVistaPrincipal();
             } catch (Exception ex) {

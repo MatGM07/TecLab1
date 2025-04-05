@@ -7,6 +7,7 @@ import com.ejercicio.controlador.ProfesorController;
 import com.ejercicio.gui.profesor.PanelProfesor;
 import com.ejercicio.modelos.Profesor;
 import com.ejercicio.modelos.Programa;
+import com.ejercicio.observador.ProfesorObservable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -58,6 +59,7 @@ public class AgregarProfesor extends JPanel {
             String tipoContrato = String.valueOf(txtTipoContrato.getText());
 
             profesorController.agregar(nombres,apellidos,email,tipoContrato);
+            ProfesorObservable.notificarCambio();
 
             JOptionPane.showMessageDialog(this, "Profesor registrado correctamente");
             limpiarCampos();

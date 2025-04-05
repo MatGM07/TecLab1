@@ -6,6 +6,7 @@ import com.ejercicio.DAOServicios.InscripcionService;
 import com.ejercicio.controlador.InscripcionController;
 import com.ejercicio.gui.programa.PanelPrograma;
 import com.ejercicio.modelos.*;
+import com.ejercicio.observador.InscripcionObservable;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -71,7 +72,7 @@ public class AgregarInscripcion extends JPanel {
             }
 
             inscripcionController.agregar(estudianteId,cursoId,año,semestre);
-
+            InscripcionObservable.notificarCambio();
 
             JOptionPane.showMessageDialog(this, "Inscripción registrada correctamente");
             limpiarCampos();

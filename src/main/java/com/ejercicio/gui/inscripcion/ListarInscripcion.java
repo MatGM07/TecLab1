@@ -5,6 +5,8 @@ import com.ejercicio.controlador.InscripcionController;
 import com.ejercicio.gui.inscripcion.PanelInscripcion;
 import com.ejercicio.modelos.CursosInscritos;
 import com.ejercicio.modelos.Inscripción;
+import com.ejercicio.observador.InscripcionObservable;
+import com.ejercicio.observador.InscripcionObserver;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-public class ListarInscripcion extends JPanel {
+public class ListarInscripcion extends JPanel implements InscripcionObserver {
     private InscripcionController inscripcionController;
     private PanelInscripcion panelInscripcion;
     private JTable tablaInscripciones;
@@ -22,6 +24,8 @@ public class ListarInscripcion extends JPanel {
     public ListarInscripcion(InscripcionController inscripcionController, PanelInscripcion panelInscripcion) {
         this.inscripcionController = inscripcionController;
         this.panelInscripcion = panelInscripcion;
+
+        InscripcionObservable.agregarObservador(this);
 
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -34,12 +38,20 @@ public class ListarInscripcion extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
 
         JPanel panelBotones = new JPanel();
-        btnVolver = new JButton("Volver");
-        btnVolver.addActionListener(e -> panelInscripcion.mostrarVistaPrincipal());
-        panelBotones.add(btnVolver);
+        if (panelInscripcion != null){
+            btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e -> panelInscripcion.mostrarVistaPrincipal());
+            panelBotones.add(btnVolver);
+        }
+
 
         add(panelBotones, BorderLayout.SOUTH);
 
+        cargarDatos();
+    }
+
+    @Override
+    public void actualizarLista() {
         cargarDatos();
     }
 

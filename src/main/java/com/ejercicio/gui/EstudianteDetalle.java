@@ -1,8 +1,15 @@
 package com.ejercicio.gui;
 
 import com.ejercicio.ConexionController;
+import com.ejercicio.controlador.CursoController;
 import com.ejercicio.controlador.EstudianteController;
+import com.ejercicio.controlador.InscripcionController;
+import com.ejercicio.controlador.ProfesorController;
+import com.ejercicio.gui.curso.ListarCurso;
 import com.ejercicio.gui.estudiante.EditarEstudiante;
+import com.ejercicio.gui.inscripcion.AgregarInscripcion;
+import com.ejercicio.gui.inscripcion.ListarInscripcion;
+import com.ejercicio.gui.profesor.ListarProfesor;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,22 +21,26 @@ public class EstudianteDetalle extends JFrame {
     private JButton btnBuscar;
     private JTabbedPane tabbedPane;
     private EstudianteController estudianteController;
+    private ProfesorController profesorController;
+    private InscripcionController inscripcionController;
+    private CursoController cursoController;
     private JPanel panelEdicionEstudiante; // Panel para mostrar el formulario de edición
 
     public EstudianteDetalle() {
         Connection connection = ConexionController.obtenerConexion();
         this.estudianteController = new EstudianteController(connection);
+        this.profesorController = new ProfesorController(connection);
+        this.cursoController = new CursoController(connection);
+        this.inscripcionController = new InscripcionController(connection);
 
         setTitle("Estudiante - Detalle");
         setSize(600, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Contenedor principal con BorderLayout
         JPanel mainPanel = new JPanel(new BorderLayout());
         add(mainPanel);
 
-        // Panel de búsqueda
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         searchPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         txtCodigo = new JTextField(10);
@@ -38,20 +49,25 @@ public class EstudianteDetalle extends JFrame {
         searchPanel.add(new JLabel("Código:"));
         searchPanel.add(txtCodigo);
         searchPanel.add(btnBuscar);
-        mainPanel.add(searchPanel, BorderLayout.NORTH); // Agregar arriba
+        mainPanel.add(searchPanel, BorderLayout.NORTH);
 
-        // Panel de edición (inicialmente vacío)
+
         panelEdicionEstudiante = new JPanel(new BorderLayout());
         panelEdicionEstudiante.setBorder(new EmptyBorder(5, 10, 5, 10));
-        mainPanel.add(panelEdicionEstudiante, BorderLayout.CENTER); // Ubicado al centro
 
-        // Pestañas
         tabbedPane = new JTabbedPane();
-        tabbedPane.add("Historial Cursos", new JPanel());
-        tabbedPane.add("Inscribir Curso", new JPanel());
-        tabbedPane.add("Cursos", new JPanel());
-        tabbedPane.add("Docentes", new JPanel());
-        mainPanel.add(tabbedPane, BorderLayout.SOUTH); // Agregar pestañas abajo
+        tabbedPane.add("Historial Cursos", new ListarInscripcion(inscripcionController, null));
+        tabbedPane.add("Inscribir Curso", new AgregarInscripcion(inscripcionController, null));
+        tabbedPane.add("Cursos", new ListarCurso(cursoController, null));
+        tabbedPane.add("Docentes", new ListarProfesor(profesorController, null));
+
+
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.add(panelEdicionEstudiante, BorderLayout.NORTH);
+        centerPanel.add(tabbedPane, BorderLayout.CENTER);
+
+
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
     }
 
     private void buscarEstudiante() {

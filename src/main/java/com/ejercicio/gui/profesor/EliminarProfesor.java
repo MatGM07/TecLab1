@@ -4,6 +4,7 @@ import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.controlador.ProfesorController;
 import com.ejercicio.gui.profesor.PanelProfesor;
 import com.ejercicio.modelos.Profesor;
+import com.ejercicio.observador.ProfesorObservable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -47,6 +48,7 @@ public class EliminarProfesor extends JPanel {
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
                 profesorController.eliminar(id);
+                ProfesorObservable.notificarCambio();
                 JOptionPane.showMessageDialog(this, "Profesor eliminado correctamente");
                 panelProfesor.mostrarVistaPrincipal();
             } catch (Exception ex) {

@@ -4,6 +4,8 @@ import com.ejercicio.DAOServicios.ProfesorService;
 import com.ejercicio.controlador.ProfesorController;
 import com.ejercicio.gui.profesor.PanelProfesor;
 import com.ejercicio.modelos.Profesor;
+import com.ejercicio.observador.ProfesorObservable;
+import com.ejercicio.observador.ProfesorObserver;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-public class ListarProfesor extends JPanel {
+public class ListarProfesor extends JPanel implements ProfesorObserver {
     private ProfesorController profesorController;
     private PanelProfesor panelProfesor;
     private JTable tablaProfesors;
@@ -21,6 +23,8 @@ public class ListarProfesor extends JPanel {
     public ListarProfesor(ProfesorController profesorController, PanelProfesor panelProfesor) {
         this.profesorController = profesorController;
         this.panelProfesor = panelProfesor;
+
+        ProfesorObservable.agregarObservador(this);
 
         setLayout(new BorderLayout());
 
@@ -34,13 +38,20 @@ public class ListarProfesor extends JPanel {
 
 
         JPanel panelBotones = new JPanel();
-        btnVolver = new JButton("Volver");
-        btnVolver.addActionListener(e -> panelProfesor.mostrarVistaPrincipal());
-        panelBotones.add(btnVolver);
+        if (panelProfesor != null) {
+            btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e -> panelProfesor.mostrarVistaPrincipal());
+            panelBotones.add(btnVolver);
+        }
 
         add(panelBotones, BorderLayout.SOUTH);
 
 
+        cargarDatos();
+    }
+
+    @Override
+    public void actualizarLista() {
         cargarDatos();
     }
 

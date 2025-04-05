@@ -4,6 +4,8 @@ import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.controlador.CursoController;
 import com.ejercicio.gui.curso.PanelCurso;
 import com.ejercicio.modelos.Curso;
+import com.ejercicio.observador.CursoObservable;
+import com.ejercicio.observador.ProfesorObservable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -49,6 +51,7 @@ public class AgregarCurso extends JPanel {
             Integer programa_id = Integer.valueOf(txtPrograma_id.getText());
 
             cursoController.agregar(nombre,activo,programa_id);
+            CursoObservable.notificarCambio();
 
             JOptionPane.showMessageDialog(this, "Curso registrado correctamente");
             limpiarCampos();

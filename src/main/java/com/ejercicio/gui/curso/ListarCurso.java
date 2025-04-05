@@ -4,6 +4,8 @@ import com.ejercicio.DAOServicios.CursoService;
 import com.ejercicio.controlador.CursoController;
 import com.ejercicio.gui.curso.PanelCurso;
 import com.ejercicio.modelos.Curso;
+import com.ejercicio.observador.CursoObservable;
+import com.ejercicio.observador.CursoObserver;
 
 
 import javax.swing.*;
@@ -12,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-public class ListarCurso extends JPanel {
+public class ListarCurso extends JPanel implements CursoObserver {
     private CursoController cursoController;
     private PanelCurso panelCurso;
     private JTable tablaCursos;
@@ -22,6 +24,8 @@ public class ListarCurso extends JPanel {
     public ListarCurso(CursoController cursoController, PanelCurso panelCurso) {
         this.cursoController = cursoController;
         this.panelCurso = panelCurso;
+
+        CursoObservable.agregarObservador(this);
 
         setLayout(new BorderLayout());
 
@@ -34,12 +38,19 @@ public class ListarCurso extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
 
         JPanel panelBotones = new JPanel();
-        btnVolver = new JButton("Volver");
-        btnVolver.addActionListener(e -> panelCurso.mostrarVistaPrincipal());
-        panelBotones.add(btnVolver);
+        if (panelCurso != null){
+            btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e -> panelCurso.mostrarVistaPrincipal());
+            panelBotones.add(btnVolver);
+        }
 
         add(panelBotones, BorderLayout.SOUTH);
 
+        cargarDatos();
+    }
+
+    @Override
+    public void actualizarLista() {
         cargarDatos();
     }
 

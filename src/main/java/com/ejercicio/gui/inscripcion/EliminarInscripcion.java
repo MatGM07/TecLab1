@@ -4,6 +4,8 @@ import com.ejercicio.controlador.InscripcionController;
 import com.ejercicio.modelos.CursosInscritos;
 import com.ejercicio.modelos.Inscripción;
 import com.ejercicio.DAOServicios.InscripcionService;
+import com.ejercicio.observador.InscripcionObservable;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -46,6 +48,7 @@ public class EliminarInscripcion extends JPanel {
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
                 inscripcionController.eliminar(estudiante_id,curso_id);
+                InscripcionObservable.notificarCambio();
 
                 JOptionPane.showMessageDialog(this, "Inscripción eliminada correctamente");
                 panelInscripcion.mostrarVistaPrincipal();
