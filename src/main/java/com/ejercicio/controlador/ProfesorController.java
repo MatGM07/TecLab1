@@ -1,6 +1,7 @@
 package com.ejercicio.controlador;
 
 import com.ejercicio.DAOServicios.ProfesorService;
+import com.ejercicio.factories.ProfesorFactory;
 import com.ejercicio.modelos.Persona;
 import com.ejercicio.modelos.Profesor;
 
@@ -37,7 +38,7 @@ public class ProfesorController {
     }
 
     public void agregar(String nombre, String apellidos, String email, String tipoContrato){
-        Profesor profesor = new Profesor(null,nombre,apellidos,email,tipoContrato);
+        Profesor profesor = ProfesorFactory.crearProfesor(null, nombre, apellidos, email, tipoContrato);
         profesorService.registrarProfesor(profesor);
     }
 
@@ -66,7 +67,7 @@ public class ProfesorController {
     }
 
     public void actualizar(Integer id, String nombre, String apellidos, String email, String tipoContrato){
-        Profesor profesor = new Profesor(id,nombre,apellidos,email,tipoContrato);
+        Profesor profesor = ProfesorFactory.crearProfesor(id, nombre, apellidos, email, tipoContrato);
         profesorService.actualizarProfesor(profesor);
     }
 

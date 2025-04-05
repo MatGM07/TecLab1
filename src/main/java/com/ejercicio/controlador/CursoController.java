@@ -1,6 +1,7 @@
 package com.ejercicio.controlador;
 
 import com.ejercicio.DAOServicios.CursoService;
+import com.ejercicio.factories.CursoFactory;
 import com.ejercicio.modelos.Curso;
 import com.ejercicio.modelos.Facultad;
 import com.ejercicio.modelos.Programa;
@@ -40,7 +41,7 @@ public class CursoController {
 
     public void agregar(String nombre, Boolean activo, Integer programa_id){
         Programa programa = programaController.obtenerPorId(programa_id);
-        Curso curso = new Curso(null,activo,programa,nombre);
+        Curso curso = CursoFactory.crearCurso(null,nombre,activo,programa);
         cursoService.registrarCurso(curso);
     }
 
@@ -70,7 +71,7 @@ public class CursoController {
     public void actualizar(Integer id, String nombre, boolean activo, Integer programa_id){
         Programa programa = programaController.obtenerPorId(programa_id);
 
-        Curso curso = new Curso(id,activo,programa,nombre);
+        Curso curso = CursoFactory.crearCurso(id,nombre,activo,programa);
 
         cursoService.actualizarCurso(curso);
     }

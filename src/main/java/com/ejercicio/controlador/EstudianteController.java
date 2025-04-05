@@ -1,6 +1,7 @@
 package com.ejercicio.controlador;
 
 import com.ejercicio.DAOServicios.EstudianteService;
+import com.ejercicio.factories.EstudianteFactory;
 import com.ejercicio.modelos.Estudiante;
 import com.ejercicio.modelos.Programa;
 
@@ -24,15 +25,14 @@ public class EstudianteController {
     public void agregar(String nombres, String apellidos, String email, Double codigo, Integer programa_id, Boolean activo, Double promedio){
         Programa programa = programaController.obtenerPorId(programa_id);
 
-        Estudiante estudiante = new Estudiante(null, nombres, apellidos, email, codigo, programa, activo, promedio);
-
+        Estudiante estudiante = EstudianteFactory.crearEstudiante(null,nombres, apellidos, email, codigo, programa, activo, promedio);
         estudianteService.registrarEstudiante(estudiante);
     }
 
     public void actualizar(Integer id, String nombres, String apellidos, String email, Double codigo, Integer programa_id, Boolean activo, Double promedio){
         Programa programa = programaController.obtenerPorId(programa_id);
 
-        Estudiante estudiante = new Estudiante(id, nombres, apellidos, email, codigo, programa, activo, promedio);
+        Estudiante estudiante = EstudianteFactory.crearEstudiante(id,nombres, apellidos, email, codigo, programa, activo, promedio);
 
         estudianteService.actualizarEstudiante(estudiante);
     }

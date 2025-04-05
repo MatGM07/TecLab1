@@ -1,6 +1,7 @@
 package com.ejercicio.controlador;
 
 import com.ejercicio.DAOServicios.InscripcionService;
+import com.ejercicio.factories.InscripcionFactory;
 import com.ejercicio.modelos.Curso;
 import com.ejercicio.modelos.Estudiante;
 import com.ejercicio.modelos.Inscripción;
@@ -49,8 +50,8 @@ public class InscripcionController {
     public void agregar(Integer id_estudiante, Integer id_curso,  Integer año, Integer semestre){
         Estudiante estudiante = estudianteController.obtenerPorId(id_estudiante);
         Curso curso = cursoController.obtenerPorId(id_curso);
-        Inscripción inscripción = new Inscripción(curso,año,semestre,estudiante);
-        inscripcionService.registrarInscripcion(inscripción);
+        Inscripción inscripcion = InscripcionFactory.crearInscripcion(estudiante, curso, año, semestre);
+        inscripcionService.registrarInscripcion(inscripcion);
     }
 
     public Boolean existe(Integer id_estudiante, Integer id_curso){
@@ -80,7 +81,7 @@ public class InscripcionController {
         Estudiante estudiante = estudianteController.obtenerPorId(id_estudiante);
         Curso curso = cursoController.obtenerPorId(id_curso);
 
-        Inscripción inscripcion = new Inscripción(curso, año, semestre, estudiante);
+        Inscripción inscripcion = InscripcionFactory.crearInscripcion(estudiante, curso, año, semestre);
         inscripcionService.actualizarInscripcion(inscripcion);
     }
 
