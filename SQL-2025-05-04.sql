@@ -30,7 +30,7 @@ CREATE TABLE `curso` (
   PRIMARY KEY (`id`),
   KEY `programa_id` (`programa_id`),
   CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `curso` (
 
 LOCK TABLES `curso` WRITE;
 /*!40000 ALTER TABLE `curso` DISABLE KEYS */;
-INSERT INTO `curso` VALUES (2,'Sistemas Distribuidos',3,1),(3,'Quimica',4,1);
+INSERT INTO `curso` VALUES (2,'Sistemas Distribuido',3,0),(3,'Quimica',4,1),(5,'Fisica',4,1);
 /*!40000 ALTER TABLE `curso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `cursoprofesor` (
 
 LOCK TABLES `cursoprofesor` WRITE;
 /*!40000 ALTER TABLE `cursoprofesor` DISABLE KEYS */;
-INSERT INTO `cursoprofesor` VALUES (1,2,2025,2);
+INSERT INTO `cursoprofesor` VALUES (3,2,2025,1);
 /*!40000 ALTER TABLE `cursoprofesor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +93,7 @@ CREATE TABLE `estudiante` (
   UNIQUE KEY `correo` (`correo`),
   KEY `fk_programa` (`programa_id`),
   CONSTRAINT `fk_programa` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +120,7 @@ CREATE TABLE `facultad` (
   PRIMARY KEY (`id`),
   KEY `decano_id` (`decano_id`),
   CONSTRAINT `facultad_ibfk_1` FOREIGN KEY (`decano_id`) REFERENCES `persona` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,7 @@ CREATE TABLE `inscripcion` (
 
 LOCK TABLES `inscripcion` WRITE;
 /*!40000 ALTER TABLE `inscripcion` DISABLE KEYS */;
-INSERT INTO `inscripcion` VALUES (6,3,2026,3);
+INSERT INTO `inscripcion` VALUES (6,2,2025,2),(6,3,2026,1);
 /*!40000 ALTER TABLE `inscripcion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +175,7 @@ CREATE TABLE `persona` (
   `apellidos` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +184,7 @@ CREATE TABLE `persona` (
 
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES (4,'Marco','Suat','Correo'),(5,'Marco','Gutierrez','Correo'),(6,'Mateo','Gutierrez','Email'),(7,'Alejandro','Moreno','Email'),(8,'Santiago','Cortes','correo2'),(9,'Juan','Perez','RERWE'),(11,'Homero','Chino','jajaja'),(12,'Hernan','Cortes','fkrfokdc'),(13,'Elvis','Presley','elvis@gmail.com'),(14,'Lorena','Londoño','nesdoño@gmail.com');
+INSERT INTO `persona` VALUES (4,'Marcos','Suat','Correo'),(5,'Marco','Gutierrez','Correo'),(6,'Mateo','Gutierrez','Email'),(8,'Santiago','Cortes','correo2'),(9,'Juan','Perez','RERWE'),(11,'Homero','Chino','jajaja'),(12,'Hernan','Cortes','fkrfokdc'),(13,'Elvis','Presley','elvis@gmail.com'),(14,'Lorena','Londoño','nesdoño@gmail.com'),(15,'Roger','Calderon','correo4344'),(16,'Camilo','Acosta','mandamas5');
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +203,7 @@ CREATE TABLE `profesor` (
   `correo` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `correo` (`correo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +212,7 @@ CREATE TABLE `profesor` (
 
 LOCK TABLES `profesor` WRITE;
 /*!40000 ALTER TABLE `profesor` DISABLE KEYS */;
-INSERT INTO `profesor` VALUES (1,'roger@gmail.com','catedratico','Roger','Calderon');
+INSERT INTO `profesor` VALUES (3,'Planta','Juan','Fajardo','coreeoo3');
 /*!40000 ALTER TABLE `profesor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +232,7 @@ CREATE TABLE `programa` (
   PRIMARY KEY (`id`),
   KEY `facultad_id` (`facultad_id`),
   CONSTRAINT `programa_ibfk_1` FOREIGN KEY (`facultad_id`) REFERENCES `facultad` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +241,7 @@ CREATE TABLE `programa` (
 
 LOCK TABLES `programa` WRITE;
 /*!40000 ALTER TABLE `programa` DISABLE KEYS */;
-INSERT INTO `programa` VALUES (3,'Sistemas',10.5,'2025-03-12',3),(4,'Ambiental',10,'2025-03-04',3);
+INSERT INTO `programa` VALUES (3,'Sistemas',10.5,'2025-03-12',3),(4,'Ambiental',10,'2025-03-19',3),(5,'Electronica',8,'2025-03-10',3);
 /*!40000 ALTER TABLE `programa` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -254,4 +254,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-04  3:03:06
+-- Dump completed on 2025-04-05 17:35:29
