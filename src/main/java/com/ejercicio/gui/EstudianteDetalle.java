@@ -46,7 +46,7 @@ public class EstudianteDetalle extends JFrame {
         txtCodigo = new JTextField(10);
         btnBuscar = new JButton("Buscar");
         btnBuscar.addActionListener(e -> buscarEstudiante());
-        searchPanel.add(new JLabel("Código:"));
+        searchPanel.add(new JLabel("Id:"));
         searchPanel.add(txtCodigo);
         searchPanel.add(btnBuscar);
         mainPanel.add(searchPanel, BorderLayout.NORTH);
